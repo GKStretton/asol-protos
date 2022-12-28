@@ -1,0 +1,7 @@
+// A Study of Light machine messages
+
+syntax = "proto3";
+
+message PingResponse {
+	string message = 1;
+}
