@@ -1,4 +1,4 @@
-module github.com/gkstretton/asol-protos/go
+module github.com/gkstretton/asol-protos
 
 go 1.19
 
