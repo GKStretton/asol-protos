@@ -2,6 +2,9 @@
 
 syntax = "proto3";
 
+package machine;
+option go_package = "github.com/gkstretton/asol-protos/go/machinepb";
+
 message PingResponse {
-	string message = 1;
+	uint32 number = 1;
 }
