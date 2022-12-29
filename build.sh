@@ -5,7 +5,7 @@ PROTO_PATH=./proto
 C_OUT_DIR=../c
 GO_OUT_DIR=../go
 PYTHON_OUT_DIR=../python
-GO_MODULE=github.com/gkstretton/asol-protos/go/machinepb
+GO_MODULE=github.com/gkstretton/asol-protos/go
 
 cd $PROTO_PATH
 
@@ -29,7 +29,7 @@ $NANOPB_ROOT_DIR/generator-bin/protoc \
 
 # Build protos for go
 mkdir -p $GO_OUT_DIR/machinepb
-protoc --go_out $GO_OUT_DIR/machinepb --go_opt=module=$GO_MODULE ./machine.proto
+protoc --go_out $GO_OUT_DIR/machinepb --go_opt=module=$GO_MODULE/machinepb ./machine.proto
 
 cd $GO_OUT_DIR
 go mod init $GO_MODULE

@@ -1,4 +1,4 @@
-module github.com/gkstretton/asol-protos/go/machinepb
+module github.com/gkstretton/asol-protos/go
 
 go 1.19
 
