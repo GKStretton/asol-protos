@@ -9,4 +9,21 @@
 PB_BIND(machine_PingResponse, machine_PingResponse, AUTO)
 
 
+PB_BIND(machine_PipetteState, machine_PipetteState, AUTO)
+
+
+PB_BIND(machine_CollectionRequest, machine_CollectionRequest, AUTO)
+
+
+PB_BIND(machine_MovementDetails, machine_MovementDetails, AUTO)
+
+
+PB_BIND(machine_CalibrationState, machine_CalibrationState, AUTO)
+
+
+PB_BIND(machine_StateReport, machine_StateReport, AUTO)
+
+
+
+
 

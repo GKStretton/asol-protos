@@ -8,3 +8,72 @@ option go_package = "github.com/gkstretton/asol-protos/go/machinepb";
 message PingResponse {
 	uint32 number = 1;
 }
+
+enum Mode {
+	UNDEFINED_MODE = 0;
+	MANUAL = 1;
+	AUTONOMOUS = 2;
+}
+
+enum Status {
+	UNDEFINED_STATUS = 0;
+	E_STOP_ACTIVE = 5;
+	SLEEPING = 6;
+	SHUTTING_DOWN = 9;
+	WAKING_UP = 10;
+	CALIBRATING = 20;
+	IDLE = 30;
+	FILLING_BOWL = 40;
+	DRAINING_BOWL = 41;
+	CLEANING_BOWL = 42;
+	DISPENSING = 50;
+	COLLECTING = 60;
+	NAVIGATING_IK = 70;
+}
+
+message PipetteState {
+	bool spent = 1;
+	uint32 vial_held = 2;
+	float volume_target_ul = 3;
+}
+
+message CollectionRequest {
+	bool completed = 1;
+	uint64 request_number = 2;
+	uint64 vial_number = 3;
+	float volume_ul = 4;
+}
+
+message MovementDetails {
+	// ik target from -1 to 1
+	float target_x_unit = 1;
+	// ik target from -1 to 1
+	float target_y_unit = 2;
+	// fk target in degrees
+	float target_ring_deg = 10;
+	// fk target in degrees
+	float target_yaw_deg = 11;
+	// @exclude not adding current positions here, because
+	// these reports are sent when something changes, not
+	// regularly. Regular info can come through a controls
+	// / realtime report.
+}
+
+message CalibrationState {
+	bool fully_calibrated = 1;
+}
+
+message StateReport {
+	// Microseconds since cpu started. Note rollover.
+	// uint32 timestamp_cpu_us = 1;
+	reserved 1;
+	// timestamp in microseconds since unix epoch, UTC. Added
+	// by gateway since firmware doesn't know real time.
+	uint64 timestamp_unix_micros = 2;
+	Mode mode = 4;
+	Status status = 5;
+	PipetteState pipette_state = 10;
+	CollectionRequest collection_request = 11;
+	MovementDetails movement_details = 12;
+	CalibrationState calibration_state = 13;
+}
