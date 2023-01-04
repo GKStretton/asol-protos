@@ -75,3 +75,7 @@ message StateReport {
 	CollectionRequest collection_request = 11;
 	MovementDetails movement_details = 12;
 }
+
+message StateReportList {
+	repeated StateReport StateReports = 1;
+}

@@ -36,6 +36,10 @@ typedef enum _machine_Status {
 } machine_Status;
 
 /* Struct definitions */
+typedef struct _machine_StateReportList { 
+    pb_callback_t StateReports;
+} machine_StateReportList;
+
 typedef struct _machine_CollectionRequest { 
     bool completed;
     uint64_t request_number;
@@ -102,13 +106,16 @@ extern "C" {
 #define machine_CollectionRequest_init_default   {0, 0, 0, 0}
 #define machine_MovementDetails_init_default     {0, 0, 0, 0}
 #define machine_StateReport_init_default         {0, _machine_Mode_MIN, _machine_Status_MIN, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default}
+#define machine_StateReportList_init_default     {{{NULL}, NULL}}
 #define machine_PingResponse_init_zero           {0}
 #define machine_PipetteState_init_zero           {0, 0, 0}
 #define machine_CollectionRequest_init_zero      {0, 0, 0, 0}
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0}
 #define machine_StateReport_init_zero            {0, _machine_Mode_MIN, _machine_Status_MIN, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero}
+#define machine_StateReportList_init_zero        {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
+#define machine_StateReportList_StateReports_tag 1
 #define machine_CollectionRequest_completed_tag  1
 #define machine_CollectionRequest_request_number_tag 2
 #define machine_CollectionRequest_vial_number_tag 3
@@ -170,11 +177,18 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  movement_details,  12)
 #define machine_StateReport_collection_request_MSGTYPE machine_CollectionRequest
 #define machine_StateReport_movement_details_MSGTYPE machine_MovementDetails
 
+#define machine_StateReportList_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, MESSAGE,  StateReports,      1)
+#define machine_StateReportList_CALLBACK pb_default_field_callback
+#define machine_StateReportList_DEFAULT NULL
+#define machine_StateReportList_StateReports_MSGTYPE machine_StateReport
+
 extern const pb_msgdesc_t machine_PingResponse_msg;
 extern const pb_msgdesc_t machine_PipetteState_msg;
 extern const pb_msgdesc_t machine_CollectionRequest_msg;
 extern const pb_msgdesc_t machine_MovementDetails_msg;
 extern const pb_msgdesc_t machine_StateReport_msg;
+extern const pb_msgdesc_t machine_StateReportList_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define machine_PingResponse_fields &machine_PingResponse_msg
@@ -182,8 +196,10 @@ extern const pb_msgdesc_t machine_StateReport_msg;
 #define machine_CollectionRequest_fields &machine_CollectionRequest_msg
 #define machine_MovementDetails_fields &machine_MovementDetails_msg
 #define machine_StateReport_fields &machine_StateReport_msg
+#define machine_StateReportList_fields &machine_StateReportList_msg
 
 /* Maximum encoded size of messages (where known) */
+/* machine_StateReportList_size depends on runtime parameters */
 #define machine_CollectionRequest_size           29
 #define machine_MovementDetails_size             20
 #define machine_PingResponse_size                6

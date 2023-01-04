@@ -21,6 +21,9 @@ PB_BIND(machine_MovementDetails, machine_MovementDetails, AUTO)
 PB_BIND(machine_StateReport, machine_StateReport, AUTO)
 
 
+PB_BIND(machine_StateReportList, machine_StateReportList, AUTO)
+
+
 
 
 
