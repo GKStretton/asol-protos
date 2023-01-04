@@ -17,16 +17,19 @@ enum Mode {
 
 enum Status {
 	UNDEFINED_STATUS = 0;
+	ERROR = 1;
 	E_STOP_ACTIVE = 5;
 	SLEEPING = 6;
 	SHUTTING_DOWN = 9;
 	WAKING_UP = 10;
 	CALIBRATING = 20;
-	IDLE = 30;
+	IDLE_STATIONARY = 30;
+	IDLE_MOVING = 31;
 	FILLING_BOWL = 40;
 	DRAINING_BOWL = 41;
 	CLEANING_BOWL = 42;
 	DISPENSING = 50;
+	WAITING_FOR_DISPENSE = 55;
 	COLLECTING = 60;
 	NAVIGATING_IK = 70;
 }
@@ -59,10 +62,6 @@ message MovementDetails {
 	// / realtime report.
 }
 
-message CalibrationState {
-	bool fully_calibrated = 1;
-}
-
 message StateReport {
 	// Microseconds since cpu started. Note rollover.
 	// uint32 timestamp_cpu_us = 1;
@@ -75,5 +74,4 @@ message StateReport {
 	PipetteState pipette_state = 10;
 	CollectionRequest collection_request = 11;
 	MovementDetails movement_details = 12;
-	CalibrationState calibration_state = 13;
 }
