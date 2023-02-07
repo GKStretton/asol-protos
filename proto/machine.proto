@@ -62,6 +62,22 @@ message MovementDetails {
 	// / realtime report.
 }
 
+enum FluidType {
+	FLUID_UNDEFINED = 0;
+	DRAIN = 1;
+	WATER = 2;
+	MILK = 3;
+}
+message FluidRequest {
+	FluidType fluidType = 1;
+	float volume_ml = 2;
+	bool complete = 3;
+}
+
+message FluidDetails {
+	float bowl_fluid_level_ml = 1;
+}
+
 message StateReport {
 	// Microseconds since cpu started. Note rollover.
 	// uint32 timestamp_cpu_us = 1;
@@ -74,6 +90,8 @@ message StateReport {
 	PipetteState pipette_state = 10;
 	CollectionRequest collection_request = 11;
 	MovementDetails movement_details = 12;
+	FluidRequest fluid_request = 13;
+	FluidDetails fluid_details = 14;
 }
 
 message StateReportList {
