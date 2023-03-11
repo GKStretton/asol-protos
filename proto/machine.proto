@@ -92,8 +92,9 @@ message StateReport {
 	MovementDetails movement_details = 12;
 	FluidRequest fluid_request = 13;
 	FluidDetails fluid_details = 14;
-	// populated by backend, useful in post-processing
-	bool paused = 20;
+	// the following are populated by the backend, useful in post-processing
+	bool paused = 50;
+	string timestamp_readable = 51;
 }
 
 message StateReportList {
