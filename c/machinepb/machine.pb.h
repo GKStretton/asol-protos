@@ -94,6 +94,8 @@ typedef struct _machine_StateReport {
     uint64_t timestamp_unix_micros;
     machine_Mode mode;
     machine_Status status;
+    /* Useful for synchronisation with footage */
+    bool lights_on;
     bool has_pipette_state;
     machine_PipetteState pipette_state;
     bool has_collection_request;
@@ -135,7 +137,7 @@ extern "C" {
 #define machine_MovementDetails_init_default     {0, 0, 0, 0}
 #define machine_FluidRequest_init_default        {_machine_FluidType_MIN, 0, 0}
 #define machine_FluidDetails_init_default        {0}
-#define machine_StateReport_init_default         {0, _machine_Mode_MIN, _machine_Status_MIN, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default, 0, {{NULL}, NULL}}
+#define machine_StateReport_init_default         {0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default, 0, {{NULL}, NULL}}
 #define machine_StateReportList_init_default     {{{NULL}, NULL}}
 #define machine_PingResponse_init_zero           {0}
 #define machine_PipetteState_init_zero           {0, 0, 0}
@@ -143,7 +145,7 @@ extern "C" {
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0}
 #define machine_FluidRequest_init_zero           {_machine_FluidType_MIN, 0, 0}
 #define machine_FluidDetails_init_zero           {0}
-#define machine_StateReport_init_zero            {0, _machine_Mode_MIN, _machine_Status_MIN, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero, 0, {{NULL}, NULL}}
+#define machine_StateReport_init_zero            {0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero, 0, {{NULL}, NULL}}
 #define machine_StateReportList_init_zero        {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
@@ -167,6 +169,7 @@ extern "C" {
 #define machine_StateReport_timestamp_unix_micros_tag 2
 #define machine_StateReport_mode_tag             4
 #define machine_StateReport_status_tag           5
+#define machine_StateReport_lights_on_tag        6
 #define machine_StateReport_pipette_state_tag    10
 #define machine_StateReport_collection_request_tag 11
 #define machine_StateReport_movement_details_tag 12
@@ -220,6 +223,7 @@ X(a, STATIC,   SINGULAR, FLOAT,    bowl_fluid_level_ml,   1)
 X(a, STATIC,   SINGULAR, UINT64,   timestamp_unix_micros,   2) \
 X(a, STATIC,   SINGULAR, UENUM,    mode,              4) \
 X(a, STATIC,   SINGULAR, UENUM,    status,            5) \
+X(a, STATIC,   SINGULAR, BOOL,     lights_on,         6) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  pipette_state,    10) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  collection_request,  11) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  movement_details,  12) \

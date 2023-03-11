@@ -87,6 +87,8 @@ message StateReport {
 	uint64 timestamp_unix_micros = 2;
 	Mode mode = 4;
 	Status status = 5;
+	// Useful for synchronisation with footage
+	bool lights_on = 6;
 	PipetteState pipette_state = 10;
 	CollectionRequest collection_request = 11;
 	MovementDetails movement_details = 12;
