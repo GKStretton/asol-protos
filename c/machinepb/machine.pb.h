@@ -104,6 +104,8 @@ typedef struct _machine_StateReport {
     machine_FluidRequest fluid_request;
     bool has_fluid_details;
     machine_FluidDetails fluid_details;
+    /* populated by backend, useful in post-processing */
+    bool paused;
 } machine_StateReport;
 
 
@@ -132,7 +134,7 @@ extern "C" {
 #define machine_MovementDetails_init_default     {0, 0, 0, 0}
 #define machine_FluidRequest_init_default        {_machine_FluidType_MIN, 0, 0}
 #define machine_FluidDetails_init_default        {0}
-#define machine_StateReport_init_default         {0, _machine_Mode_MIN, _machine_Status_MIN, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default}
+#define machine_StateReport_init_default         {0, _machine_Mode_MIN, _machine_Status_MIN, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default, 0}
 #define machine_StateReportList_init_default     {{{NULL}, NULL}}
 #define machine_PingResponse_init_zero           {0}
 #define machine_PipetteState_init_zero           {0, 0, 0}
@@ -140,7 +142,7 @@ extern "C" {
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0}
 #define machine_FluidRequest_init_zero           {_machine_FluidType_MIN, 0, 0}
 #define machine_FluidDetails_init_zero           {0}
-#define machine_StateReport_init_zero            {0, _machine_Mode_MIN, _machine_Status_MIN, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero}
+#define machine_StateReport_init_zero            {0, _machine_Mode_MIN, _machine_Status_MIN, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero, 0}
 #define machine_StateReportList_init_zero        {{{NULL}, NULL}}
 
 /* Field tags (for use in manual encoding/decoding) */
@@ -169,6 +171,7 @@ extern "C" {
 #define machine_StateReport_movement_details_tag 12
 #define machine_StateReport_fluid_request_tag    13
 #define machine_StateReport_fluid_details_tag    14
+#define machine_StateReport_paused_tag           20
 
 /* Struct field encoding specification for nanopb */
 #define machine_PingResponse_FIELDLIST(X, a) \
@@ -219,7 +222,8 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  pipette_state,    10) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  collection_request,  11) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  movement_details,  12) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  fluid_request,    13) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  fluid_details,    14)
+X(a, STATIC,   OPTIONAL, MESSAGE,  fluid_details,    14) \
+X(a, STATIC,   SINGULAR, BOOL,     paused,           20)
 #define machine_StateReport_CALLBACK NULL
 #define machine_StateReport_DEFAULT NULL
 #define machine_StateReport_pipette_state_MSGTYPE machine_PipetteState
@@ -261,7 +265,7 @@ extern const pb_msgdesc_t machine_StateReportList_msg;
 #define machine_MovementDetails_size             20
 #define machine_PingResponse_size                6
 #define machine_PipetteState_size                13
-#define machine_StateReport_size                 101
+#define machine_StateReport_size                 104
 
 #ifdef __cplusplus
 } /* extern "C" */
