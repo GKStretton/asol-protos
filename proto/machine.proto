@@ -50,6 +50,8 @@ message MovementDetails {
 	float target_x_unit = 1;
 	// ik target from -1 to 1
 	float target_y_unit = 2;
+	// ik z target in mm
+	float target_z_ik = 5;
 	// fk target in degrees
 	float target_ring_deg = 10;
 	// fk target in degrees
