@@ -37,9 +37,7 @@ typedef enum _machine_FluidType {
     machine_FluidType_FLUID_UNDEFINED = 0, 
     machine_FluidType_DRAIN = 1, 
     machine_FluidType_WATER = 2, 
-    machine_FluidType_MILK = 3, 
-    /* water + drain */
-    machine_FluidType_RINSE = 4 
+    machine_FluidType_MILK = 3 
 } machine_FluidType;
 
 /* Struct definitions */
@@ -62,6 +60,9 @@ typedef struct _machine_FluidRequest {
     machine_FluidType fluidType;
     float volume_ml;
     bool complete;
+    /* if true, open drain while request is taking place
+ (e.g. for rinsing with water) */
+    bool open_drain;
 } machine_FluidRequest;
 
 typedef struct _machine_MovementDetails { 
@@ -124,8 +125,8 @@ typedef struct _machine_StateReport {
 #define _machine_Status_ARRAYSIZE ((machine_Status)(machine_Status_NAVIGATING_OUTER+1))
 
 #define _machine_FluidType_MIN machine_FluidType_FLUID_UNDEFINED
-#define _machine_FluidType_MAX machine_FluidType_RINSE
-#define _machine_FluidType_ARRAYSIZE ((machine_FluidType)(machine_FluidType_RINSE+1))
+#define _machine_FluidType_MAX machine_FluidType_MILK
+#define _machine_FluidType_ARRAYSIZE ((machine_FluidType)(machine_FluidType_MILK+1))
 
 
 #ifdef __cplusplus
@@ -137,7 +138,7 @@ extern "C" {
 #define machine_PipetteState_init_default        {0, 0, 0}
 #define machine_CollectionRequest_init_default   {0, 0, 0, 0}
 #define machine_MovementDetails_init_default     {0, 0, 0, 0, 0}
-#define machine_FluidRequest_init_default        {_machine_FluidType_MIN, 0, 0}
+#define machine_FluidRequest_init_default        {_machine_FluidType_MIN, 0, 0, 0}
 #define machine_FluidDetails_init_default        {0}
 #define machine_StateReport_init_default         {0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default, 0, {{NULL}, NULL}}
 #define machine_StateReportList_init_default     {{{NULL}, NULL}}
@@ -145,7 +146,7 @@ extern "C" {
 #define machine_PipetteState_init_zero           {0, 0, 0}
 #define machine_CollectionRequest_init_zero      {0, 0, 0, 0}
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0, 0}
-#define machine_FluidRequest_init_zero           {_machine_FluidType_MIN, 0, 0}
+#define machine_FluidRequest_init_zero           {_machine_FluidType_MIN, 0, 0, 0}
 #define machine_FluidDetails_init_zero           {0}
 #define machine_StateReport_init_zero            {0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero, 0, {{NULL}, NULL}}
 #define machine_StateReportList_init_zero        {{{NULL}, NULL}}
@@ -160,6 +161,7 @@ extern "C" {
 #define machine_FluidRequest_fluidType_tag       1
 #define machine_FluidRequest_volume_ml_tag       2
 #define machine_FluidRequest_complete_tag        3
+#define machine_FluidRequest_open_drain_tag      4
 #define machine_MovementDetails_target_x_unit_tag 1
 #define machine_MovementDetails_target_y_unit_tag 2
 #define machine_MovementDetails_target_z_ik_tag  5
@@ -214,7 +216,8 @@ X(a, STATIC,   SINGULAR, FLOAT,    target_yaw_deg,   11)
 #define machine_FluidRequest_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UENUM,    fluidType,         1) \
 X(a, STATIC,   SINGULAR, FLOAT,    volume_ml,         2) \
-X(a, STATIC,   SINGULAR, BOOL,     complete,          3)
+X(a, STATIC,   SINGULAR, BOOL,     complete,          3) \
+X(a, STATIC,   SINGULAR, BOOL,     open_drain,        4)
 #define machine_FluidRequest_CALLBACK NULL
 #define machine_FluidRequest_DEFAULT NULL
 
@@ -273,7 +276,7 @@ extern const pb_msgdesc_t machine_StateReportList_msg;
 /* machine_StateReportList_size depends on runtime parameters */
 #define machine_CollectionRequest_size           29
 #define machine_FluidDetails_size                5
-#define machine_FluidRequest_size                9
+#define machine_FluidRequest_size                11
 #define machine_MovementDetails_size             25
 #define machine_PingResponse_size                6
 #define machine_PipetteState_size                13

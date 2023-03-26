@@ -67,13 +67,14 @@ enum FluidType {
 	DRAIN = 1;
 	WATER = 2;
 	MILK = 3;
-	// water + drain
-	RINSE = 4;
 }
 message FluidRequest {
 	FluidType fluidType = 1;
 	float volume_ml = 2;
 	bool complete = 3;
+	// if true, open drain while request is taking place
+	// (e.g. for rinsing with water)
+	bool open_drain = 4;
 }
 
 message FluidDetails {
