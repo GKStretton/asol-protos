@@ -37,7 +37,9 @@ typedef enum _machine_FluidType {
     machine_FluidType_FLUID_UNDEFINED = 0, 
     machine_FluidType_DRAIN = 1, 
     machine_FluidType_WATER = 2, 
-    machine_FluidType_MILK = 3 
+    machine_FluidType_MILK = 3, 
+    /* water + drain */
+    machine_FluidType_RINSE = 4 
 } machine_FluidType;
 
 /* Struct definitions */
@@ -122,8 +124,8 @@ typedef struct _machine_StateReport {
 #define _machine_Status_ARRAYSIZE ((machine_Status)(machine_Status_NAVIGATING_OUTER+1))
 
 #define _machine_FluidType_MIN machine_FluidType_FLUID_UNDEFINED
-#define _machine_FluidType_MAX machine_FluidType_MILK
-#define _machine_FluidType_ARRAYSIZE ((machine_FluidType)(machine_FluidType_MILK+1))
+#define _machine_FluidType_MAX machine_FluidType_RINSE
+#define _machine_FluidType_ARRAYSIZE ((machine_FluidType)(machine_FluidType_RINSE+1))
 
 
 #ifdef __cplusplus

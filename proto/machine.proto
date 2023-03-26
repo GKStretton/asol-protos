@@ -67,6 +67,8 @@ enum FluidType {
 	DRAIN = 1;
 	WATER = 2;
 	MILK = 3;
+	// water + drain
+	RINSE = 4;
 }
 message FluidRequest {
 	FluidType fluidType = 1;
