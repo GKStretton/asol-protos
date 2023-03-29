@@ -1,0 +1,3 @@
+constants:
+  GET_SESSION_RESP: "asol/session/get-resp"
+  GET_SESSION_REQ: "asol/session/get"

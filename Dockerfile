@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y unzip gcc-multilib
 RUN apt-get install -y python3 python3-pip
 
 # Install python-betterproto
+RUN pip3 install "betterproto[compiler]"
 RUN pip3 install betterproto
 
 

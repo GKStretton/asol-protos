@@ -35,6 +35,7 @@ typedef enum _machine_Status {
     machine_Status_CALIBRATING = 20, 
     machine_Status_IDLE_STATIONARY = 30, 
     machine_Status_IDLE_MOVING = 31, 
+    machine_Status_RINSING_PIPETTE = 40, 
     machine_Status_DISPENSING = 50, 
     machine_Status_WAITING_FOR_DISPENSE = 55, 
     machine_Status_COLLECTING = 60, 

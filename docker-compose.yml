@@ -6,3 +6,8 @@ services:
     command: bash ./build.sh
     volumes:
       - .:/src
+  xlangconstants:
+    image: gkstretton/x-lang-constants
+    volumes:
+      - ./constants:/input
+      - .:/output
