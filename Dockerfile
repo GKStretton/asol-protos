@@ -3,6 +3,13 @@ WORKDIR /src
 
 RUN apt-get update && apt-get install -y unzip gcc-multilib
 
+# Install Python and pip
+RUN apt-get install -y python3 python3-pip
+
+# Install python-betterproto
+RUN pip3 install betterproto
+
+
 # Install nanopb
 ARG NANOPB_VERSION=0.4.6
 RUN wget https://jpa.kapsi.fi/nanopb/download/nanopb-${NANOPB_VERSION}-linux-x86.tar.gz && \
@@ -19,6 +26,13 @@ RUN PROTOC_ZIP=protoc-${PROTOC_VERSION}-linux-x86_64.zip && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
     unzip -o $PROTOC_ZIP -d /usr/local 'include/*'  && \
     rm -f $PROTOC_ZIP
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
+
+# Install protoc-gen-ts
+RUN npm install -g ts-protoc-gen
 
 # Copy src code.
 COPY . .

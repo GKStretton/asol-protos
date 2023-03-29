@@ -9,6 +9,15 @@ message PingResponse {
 	uint32 number = 1;
 }
 
+// used in requests
+enum SolenoidValve {
+	VALVE_UNDEFINED = 0;
+	VALVE_DRAIN = 1;
+	VALVE_WATER = 2;
+	VALVE_MILK = 3;
+	VALVE_AIR = 4;
+}
+
 enum Mode {
 	UNDEFINED_MODE = 0;
 	MANUAL = 1;

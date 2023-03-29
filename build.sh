@@ -4,6 +4,7 @@ NANOPB_ROOT_DIR=/opt/nanopb-$NANOPB_VERSION-linux-x86
 PROTO_PATH=./proto
 C_OUT_DIR=../c
 GO_OUT_DIR=../go
+TYPESCRIPT_OUT_DIR=../typescript
 PYTHON_OUT_DIR=../python
 GO_MODULE=github.com/gkstretton/asol-protos
 
@@ -12,6 +13,7 @@ cd $PROTO_PATH
 mkdir -p $C_OUT_DIR
 mkdir -p $GO_OUT_DIR
 mkdir -p $PYTHON_OUT_DIR
+mkdir -p $TYPESCRIPT_OUT_DIR
 
 ###### C  ######
 
@@ -40,4 +42,9 @@ cd $PROTO_PATH
 
 ###### PYTHON ######
 mkdir -p $PYTHON_OUT_DIR/machinepb
-protoc --python_out $PYTHON_OUT_DIR/machinepb ./machine.proto
+protoc --python_betterproto_out $PYTHON_OUT_DIR/machinepb ./machine.proto
+
+
+###### TYPESCRIPT ######
+mkdir -p $TYPESCRIPT_OUT_DIR/machinepb
+protoc --ts_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
