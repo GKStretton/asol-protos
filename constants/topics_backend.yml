@@ -12,9 +12,6 @@ constants:
 
   TOPIC_STATE_REPORT_JSON: "asol/state-report-json"
 
-  TOPIC_CLOSE_BLIND: "asol/close_bedroom_blind"
-  TOPIC_OPEN_BLIND: "asol/open_bedroom_blind"
-
   TOPIC_KV_GET: "asol/kv/get/"
   TOPIC_KV_GET_RESP: "asol/kv/get-resp/"
   TOPIC_KV_SET: "asol/kv/set/"
@@ -22,3 +19,9 @@ constants:
 
   TOPIC_TRIGGER_DSLR: "asol/dslr-crop-capture"
   TOPIC_TRIGGER_DSLR_RESP: "asol/dslr-crop-capture-resp"
+
+  TOPIC_MONITOR_ON: "asol/monitor_on"
+  TOPIC_MONITOR_OFF: "asol/monitor_off"
+
+  TOPIC_CLOSE_BLIND: "asol/close_bedroom_blind"
+  TOPIC_OPEN_BLIND: "asol/open_bedroom_blind"
