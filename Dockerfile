@@ -33,7 +33,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 
 # Install protoc-gen-ts
-RUN npm install -g ts-protoc-gen
+RUN npm install -g ts-protoc-gen protoc-gen-js
 
 # Copy src code.
 COPY . .
