@@ -18,5 +18,7 @@
 #define TOPIC_STATE_REPORT_JSON "asol/state-report-json"
 #define TOPIC_STREAM_END "asol/stream/end"
 #define TOPIC_STREAM_START "asol/stream/begin"
+#define TOPIC_TRIGGER_DSLR "asol/dslr-crop-capture"
+#define TOPIC_TRIGGER_DSLR_RESP "asol/dslr-crop-capture-resp"
 
 #endif // MQTT_CONSTANTS_H

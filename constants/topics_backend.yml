@@ -19,3 +19,6 @@ constants:
   TOPIC_KV_GET_RESP: "asol/kv/get-resp/"
   TOPIC_KV_SET: "asol/kv/set/"
   TOPIC_KV_SET_RESP: "asol/kv/set-resp/"
+
+  TOPIC_TRIGGER_DSLR: "asol/dslr-crop-capture"
+  TOPIC_TRIGGER_DSLR_RESP: "asol/dslr-crop-capture-resp"

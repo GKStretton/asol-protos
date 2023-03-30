@@ -18,4 +18,6 @@ const (
 	TOPIC_STATE_REPORT_JSON string = "asol/state-report-json"
 	TOPIC_STREAM_END string = "asol/stream/end"
 	TOPIC_STREAM_START string = "asol/stream/begin"
+	TOPIC_TRIGGER_DSLR string = "asol/dslr-crop-capture"
+	TOPIC_TRIGGER_DSLR_RESP string = "asol/dslr-crop-capture-resp"
 )
