@@ -43,14 +43,9 @@ class Status(betterproto.Enum):
 
 class FluidType(betterproto.Enum):
     FLUID_UNDEFINED = 0
-    DRAIN = 1
-    WATER = 2
-    MILK = 3
-
-
-@dataclass
-class PingResponse(betterproto.Message):
-    number: int = betterproto.uint32_field(1)
+    FLUID_DRAIN = 1
+    FLUID_WATER = 2
+    FLUID_MILK = 3
 
 
 @dataclass

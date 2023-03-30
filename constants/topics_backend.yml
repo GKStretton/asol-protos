@@ -1,0 +1,16 @@
+constants:
+  TOPIC_SESSION_BEGIN: "asol/session/begin"
+  TOPIC_SESSION_BEGAN: "asol/session/began"
+  TOPIC_SESSION_END: "asol/session/end"
+  TOPIC_SESSION_ENDED: "asol/session/ended"
+  TOPIC_SESSION_PAUSE: "asol/session/pause"
+  TOPIC_SESSION_PAUSED: "asol/session/paused"
+  TOPIC_SESSION_RESUME: "asol/session/resume"
+  TOPIC_SESSION_RESUMED: "asol/session/resumed"
+  TOPIC_STREAM_START: "asol/stream/begin"
+  TOPIC_STREAM_END: "asol/stream/end"
+
+  TOPIC_STATE_REPORT_JSON: "asol/state-report-json"
+
+  TOPIC_CLOSE_BLIND: "asol/close_bedroom_blind"
+  TOPIC_OPEN_BLIND: "asol/open_bedroom_blind"

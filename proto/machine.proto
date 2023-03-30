@@ -5,10 +5,6 @@ syntax = "proto3";
 package machine;
 option go_package = "github.com/gkstretton/asol-protos/go/machinepb";
 
-message PingResponse {
-	uint32 number = 1;
-}
-
 // used in requests
 enum SolenoidValve {
 	VALVE_UNDEFINED = 0;
@@ -74,9 +70,9 @@ message MovementDetails {
 
 enum FluidType {
 	FLUID_UNDEFINED = 0;
-	DRAIN = 1;
-	WATER = 2;
-	MILK = 3;
+	FLUID_DRAIN = 1;
+	FLUID_WATER = 2;
+	FLUID_MILK = 3;
 }
 message FluidRequest {
 	FluidType fluidType = 1;
