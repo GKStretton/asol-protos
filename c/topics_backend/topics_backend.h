@@ -2,6 +2,10 @@
 #define MQTT_CONSTANTS_H
 
 #define TOPIC_CLOSE_BLIND "asol/close_bedroom_blind"
+#define TOPIC_KV_GET "asol/kv/get/"
+#define TOPIC_KV_GET_RESP "asol/kv/get-resp/"
+#define TOPIC_KV_SET "asol/kv/set/"
+#define TOPIC_KV_SET_RESP "asol/kv/set-resp/"
 #define TOPIC_OPEN_BLIND "asol/open_bedroom_blind"
 #define TOPIC_SESSION_BEGAN "asol/session/began"
 #define TOPIC_SESSION_BEGIN "asol/session/begin"

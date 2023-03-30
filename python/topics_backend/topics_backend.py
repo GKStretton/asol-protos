@@ -1,6 +1,10 @@
 from typing import Literal
 
 TOPIC_CLOSE_BLIND: Literal["asol/close_bedroom_blind"] = "asol/close_bedroom_blind"
+TOPIC_KV_GET: Literal["asol/kv/get/"] = "asol/kv/get/"
+TOPIC_KV_GET_RESP: Literal["asol/kv/get-resp/"] = "asol/kv/get-resp/"
+TOPIC_KV_SET: Literal["asol/kv/set/"] = "asol/kv/set/"
+TOPIC_KV_SET_RESP: Literal["asol/kv/set-resp/"] = "asol/kv/set-resp/"
 TOPIC_OPEN_BLIND: Literal["asol/open_bedroom_blind"] = "asol/open_bedroom_blind"
 TOPIC_SESSION_BEGAN: Literal["asol/session/began"] = "asol/session/began"
 TOPIC_SESSION_BEGIN: Literal["asol/session/begin"] = "asol/session/begin"

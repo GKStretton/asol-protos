@@ -1,5 +1,9 @@
 
 export const TOPIC_CLOSE_BLIND: string = "asol/close_bedroom_blind";
+export const TOPIC_KV_GET: string = "asol/kv/get/";
+export const TOPIC_KV_GET_RESP: string = "asol/kv/get-resp/";
+export const TOPIC_KV_SET: string = "asol/kv/set/";
+export const TOPIC_KV_SET_RESP: string = "asol/kv/set-resp/";
 export const TOPIC_OPEN_BLIND: string = "asol/open_bedroom_blind";
 export const TOPIC_SESSION_BEGAN: string = "asol/session/began";
 export const TOPIC_SESSION_BEGIN: string = "asol/session/begin";

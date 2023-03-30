@@ -14,3 +14,8 @@ constants:
 
   TOPIC_CLOSE_BLIND: "asol/close_bedroom_blind"
   TOPIC_OPEN_BLIND: "asol/open_bedroom_blind"
+
+  TOPIC_KV_GET: "asol/kv/get/"
+  TOPIC_KV_GET_RESP: "asol/kv/get-resp/"
+  TOPIC_KV_SET: "asol/kv/set/"
+  TOPIC_KV_SET_RESP: "asol/kv/set-resp/"
