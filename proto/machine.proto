@@ -111,3 +111,20 @@ message StateReport {
 message StateReportList {
 	repeated StateReport StateReports = 1;
 }
+
+/////////////////////////////////////////////
+// BACKEND STUFF
+// MAYBE MAKE SEPARATE PROTO IN FUTURE
+/////////////////////////////////////////////
+
+message SessionStatus {
+	uint64 id = 1;
+	bool paused = 2;
+	bool complete = 3;
+	bool production = 4;
+	uint64 production_id = 5;
+}
+
+message StreamStatus {
+	bool live = 1;
+}
