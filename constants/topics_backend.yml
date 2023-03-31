@@ -11,9 +11,11 @@ constants:
   TOPIC_STREAM_END: "asol/stream/end"
 
   TOPIC_STREAM_STATUS_GET: "asol/stream/status-get"
-  TOPIC_STREAM_STATUS_RESP: "asol/stream/status-resp"
+  TOPIC_STREAM_STATUS_RESP_JSON: "asol/stream/status-resp-json"
+  TOPIC_STREAM_STATUS_RESP_RAW: "asol/stream/status-resp-raw"
   TOPIC_SESSION_STATUS_GET: "asol/session/status-get"
-  TOPIC_SESSION_STATUS_RESP: "asol/session/status-resp"
+  TOPIC_SESSION_STATUS_RESP_JSON: "asol/session/status-resp-json"
+  TOPIC_SESSION_STATUS_RESP_RAW: "asol/session/status-resp-raw"
 
   TOPIC_STATE_REPORT_JSON: "asol/state-report-json"
 
