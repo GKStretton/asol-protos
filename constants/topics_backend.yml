@@ -10,6 +10,11 @@ constants:
   TOPIC_STREAM_START: "asol/stream/begin"
   TOPIC_STREAM_END: "asol/stream/end"
 
+  TOPIC_STREAM_STATUS_GET: "asol/stream/status-get"
+  TOPIC_STREAM_STATUS_RESP: "asol/stream/status-resp"
+  TOPIC_SESSION_STATUS_GET: "asol/session/status-get"
+  TOPIC_SESSION_STATUS_RESP: "asol/session/status-resp"
+
   TOPIC_STATE_REPORT_JSON: "asol/state-report-json"
 
   TOPIC_KV_GET: "asol/kv/get/"
