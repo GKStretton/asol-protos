@@ -25,3 +25,7 @@ constants:
 
   TOPIC_CLOSE_BLIND: "asol/close_bedroom_blind"
   TOPIC_OPEN_BLIND: "asol/open_bedroom_blind"
+
+  TOPIC_SMART_SWITCH: "cmnd/tasmota_sw1/Power1"
+  PAYLOAD_SMART_SWITCH_ON: "ON"
+  PAYLOAD_SMART_SWITCH_OFF: "OFF"

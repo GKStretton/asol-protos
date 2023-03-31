@@ -1,5 +1,7 @@
 from typing import Literal
 
+PAYLOAD_SMART_SWITCH_OFF: Literal["OFF"] = "OFF"
+PAYLOAD_SMART_SWITCH_ON: Literal["ON"] = "ON"
 TOPIC_CLOSE_BLIND: Literal["asol/close_bedroom_blind"] = "asol/close_bedroom_blind"
 TOPIC_KV_GET: Literal["asol/kv/get/"] = "asol/kv/get/"
 TOPIC_KV_GET_RESP: Literal["asol/kv/get-resp/"] = "asol/kv/get-resp/"
@@ -16,6 +18,7 @@ TOPIC_SESSION_PAUSE: Literal["asol/session/pause"] = "asol/session/pause"
 TOPIC_SESSION_PAUSED: Literal["asol/session/paused"] = "asol/session/paused"
 TOPIC_SESSION_RESUME: Literal["asol/session/resume"] = "asol/session/resume"
 TOPIC_SESSION_RESUMED: Literal["asol/session/resumed"] = "asol/session/resumed"
+TOPIC_SMART_SWITCH: Literal["cmnd/tasmota_sw1/Power1"] = "cmnd/tasmota_sw1/Power1"
 TOPIC_STATE_REPORT_JSON: Literal["asol/state-report-json"] = "asol/state-report-json"
 TOPIC_STREAM_END: Literal["asol/stream/end"] = "asol/stream/end"
 TOPIC_STREAM_START: Literal["asol/stream/begin"] = "asol/stream/begin"

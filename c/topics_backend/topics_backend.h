@@ -1,6 +1,8 @@
 #ifndef MQTT_CONSTANTS_H
 #define MQTT_CONSTANTS_H
 
+#define PAYLOAD_SMART_SWITCH_OFF "OFF"
+#define PAYLOAD_SMART_SWITCH_ON "ON"
 #define TOPIC_CLOSE_BLIND "asol/close_bedroom_blind"
 #define TOPIC_KV_GET "asol/kv/get/"
 #define TOPIC_KV_GET_RESP "asol/kv/get-resp/"
@@ -17,6 +19,7 @@
 #define TOPIC_SESSION_PAUSED "asol/session/paused"
 #define TOPIC_SESSION_RESUME "asol/session/resume"
 #define TOPIC_SESSION_RESUMED "asol/session/resumed"
+#define TOPIC_SMART_SWITCH "cmnd/tasmota_sw1/Power1"
 #define TOPIC_STATE_REPORT_JSON "asol/state-report-json"
 #define TOPIC_STREAM_END "asol/stream/end"
 #define TOPIC_STREAM_START "asol/stream/begin"
