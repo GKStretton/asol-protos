@@ -1296,6 +1296,7 @@ proto.machine.StateReport.prototype.toObject = function(opt_includeInstance) {
 proto.machine.StateReport.toObject = function(includeInstance, msg) {
   var f, obj = {
     timestampUnixMicros: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    startupCounter: jspb.Message.getFieldWithDefault(msg, 3, 0),
     mode: jspb.Message.getFieldWithDefault(msg, 4, 0),
     status: jspb.Message.getFieldWithDefault(msg, 5, 0),
     lightsOn: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
@@ -1345,6 +1346,10 @@ proto.machine.StateReport.deserializeBinaryFromReader = function(msg, reader) {
     case 2:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setTimestampUnixMicros(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setStartupCounter(value);
       break;
     case 4:
       var value = /** @type {!proto.machine.Mode} */ (reader.readEnum());
@@ -1424,6 +1429,13 @@ proto.machine.StateReport.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeUint64(
       2,
+      f
+    );
+  }
+  f = message.getStartupCounter();
+  if (f !== 0) {
+    writer.writeUint64(
+      3,
       f
     );
   }
@@ -1520,6 +1532,24 @@ proto.machine.StateReport.prototype.getTimestampUnixMicros = function() {
  */
 proto.machine.StateReport.prototype.setTimestampUnixMicros = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional uint64 startup_counter = 3;
+ * @return {number}
+ */
+proto.machine.StateReport.prototype.getStartupCounter = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.machine.StateReport} returns this
+ */
+proto.machine.StateReport.prototype.setStartupCounter = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 

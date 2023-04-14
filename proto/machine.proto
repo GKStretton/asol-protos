@@ -96,6 +96,8 @@ message StateReport {
 	// timestamp in microseconds since unix epoch, UTC. Added
 	// by gateway since firmware doesn't know real time.
 	uint64 timestamp_unix_micros = 2;
+	// incremented on startup, currently 1 byte
+	uint64 startup_counter = 3;
 	Mode mode = 4;
 	Status status = 5;
 	// Useful for synchronisation with footage
