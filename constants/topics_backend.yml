@@ -39,3 +39,5 @@ constants:
 
   TOPIC_STILLS_GENERATED: "asol/stills-generated"
   TOPIC_VIDEOS_GENERATED: "asol/videos-generated"
+
+  TOPIC_MARK_FAILED_DISPENSE: "asol/mark-failed-dispense"

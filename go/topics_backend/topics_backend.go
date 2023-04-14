@@ -8,6 +8,7 @@ const (
 	TOPIC_KV_GET_RESP string = "asol/kv/get-resp/"
 	TOPIC_KV_SET string = "asol/kv/set/"
 	TOPIC_KV_SET_RESP string = "asol/kv/set-resp/"
+	TOPIC_MARK_FAILED_DISPENSE string = "asol/mark-failed-dispense"
 	TOPIC_MONITOR_OFF string = "asol/monitor_off"
 	TOPIC_MONITOR_ON string = "asol/monitor_on"
 	TOPIC_OPEN_BLIND string = "asol/open_bedroom_blind"
