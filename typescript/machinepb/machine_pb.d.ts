@@ -13,6 +13,9 @@ export class PipetteState extends jspb.Message {
   getVolumeTargetUl(): number;
   setVolumeTargetUl(value: number): void;
 
+  getDispenseRequestNumber(): number;
+  setDispenseRequestNumber(value: number): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PipetteState.AsObject;
   static toObject(includeInstance: boolean, msg: PipetteState): PipetteState.AsObject;
@@ -28,6 +31,7 @@ export namespace PipetteState {
     spent: boolean,
     vialHeld: number,
     volumeTargetUl: number,
+    dispenseRequestNumber: number,
   }
 }
 

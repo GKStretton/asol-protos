@@ -95,6 +95,8 @@ typedef struct _machine_PipetteState {
     bool spent;
     uint32_t vial_held;
     float volume_target_ul;
+    /* incremented every time a dispense is requested */
+    uint32_t dispense_request_number;
 } machine_PipetteState;
 
 typedef struct _machine_SessionStatus { 
@@ -156,7 +158,7 @@ extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define machine_PipetteState_init_default        {0, 0, 0}
+#define machine_PipetteState_init_default        {0, 0, 0, 0}
 #define machine_CollectionRequest_init_default   {0, 0, 0, 0}
 #define machine_MovementDetails_init_default     {0, 0, 0, 0, 0}
 #define machine_FluidRequest_init_default        {_machine_FluidType_MIN, 0, 0, 0}
@@ -165,7 +167,7 @@ extern "C" {
 #define machine_StateReportList_init_default     {{{NULL}, NULL}}
 #define machine_SessionStatus_init_default       {0, 0, 0, 0, 0}
 #define machine_StreamStatus_init_default        {0}
-#define machine_PipetteState_init_zero           {0, 0, 0}
+#define machine_PipetteState_init_zero           {0, 0, 0, 0}
 #define machine_CollectionRequest_init_zero      {0, 0, 0, 0}
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0, 0}
 #define machine_FluidRequest_init_zero           {_machine_FluidType_MIN, 0, 0, 0}
@@ -194,6 +196,7 @@ extern "C" {
 #define machine_PipetteState_spent_tag           1
 #define machine_PipetteState_vial_held_tag       2
 #define machine_PipetteState_volume_target_ul_tag 3
+#define machine_PipetteState_dispense_request_number_tag 4
 #define machine_SessionStatus_id_tag             1
 #define machine_SessionStatus_paused_tag         2
 #define machine_SessionStatus_complete_tag       3
@@ -216,7 +219,8 @@ extern "C" {
 #define machine_PipetteState_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, BOOL,     spent,             1) \
 X(a, STATIC,   SINGULAR, UINT32,   vial_held,         2) \
-X(a, STATIC,   SINGULAR, FLOAT,    volume_target_ul,   3)
+X(a, STATIC,   SINGULAR, FLOAT,    volume_target_ul,   3) \
+X(a, STATIC,   SINGULAR, UINT32,   dispense_request_number,   4)
 #define machine_PipetteState_CALLBACK NULL
 #define machine_PipetteState_DEFAULT NULL
 
@@ -318,7 +322,7 @@ extern const pb_msgdesc_t machine_StreamStatus_msg;
 #define machine_FluidDetails_size                5
 #define machine_FluidRequest_size                11
 #define machine_MovementDetails_size             25
-#define machine_PipetteState_size                13
+#define machine_PipetteState_size                19
 #define machine_SessionStatus_size               28
 #define machine_StreamStatus_size                2
 

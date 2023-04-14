@@ -257,7 +257,8 @@ proto.machine.PipetteState.toObject = function(includeInstance, msg) {
   var f, obj = {
     spent: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     vialHeld: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    volumeTargetUl: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0)
+    volumeTargetUl: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0),
+    dispenseRequestNumber: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -306,6 +307,10 @@ proto.machine.PipetteState.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {number} */ (reader.readFloat());
       msg.setVolumeTargetUl(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setDispenseRequestNumber(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -353,6 +358,13 @@ proto.machine.PipetteState.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0.0) {
     writer.writeFloat(
       3,
+      f
+    );
+  }
+  f = message.getDispenseRequestNumber();
+  if (f !== 0) {
+    writer.writeUint32(
+      4,
       f
     );
   }
@@ -410,6 +422,24 @@ proto.machine.PipetteState.prototype.getVolumeTargetUl = function() {
  */
 proto.machine.PipetteState.prototype.setVolumeTargetUl = function(value) {
   return jspb.Message.setProto3FloatField(this, 3, value);
+};
+
+
+/**
+ * optional uint32 dispense_request_number = 4;
+ * @return {number}
+ */
+proto.machine.PipetteState.prototype.getDispenseRequestNumber = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.machine.PipetteState} returns this
+ */
+proto.machine.PipetteState.prototype.setDispenseRequestNumber = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 

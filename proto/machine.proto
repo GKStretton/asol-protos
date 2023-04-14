@@ -42,6 +42,8 @@ message PipetteState {
 	bool spent = 1;
 	uint32 vial_held = 2;
 	float volume_target_ul = 3;
+	// incremented every time a dispense is requested
+	uint32 dispense_request_number = 4;
 }
 
 message CollectionRequest {

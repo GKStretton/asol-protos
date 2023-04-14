@@ -53,6 +53,8 @@ class PipetteState(betterproto.Message):
     spent: bool = betterproto.bool_field(1)
     vial_held: int = betterproto.uint32_field(2)
     volume_target_ul: float = betterproto.float_field(3)
+    # incremented every time a dispense is requested
+    dispense_request_number: int = betterproto.uint32_field(4)
 
 
 @dataclass
