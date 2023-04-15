@@ -51,6 +51,11 @@ typedef enum _machine_FluidType {
 } machine_FluidType;
 
 /* Struct definitions */
+typedef struct _machine_DispenseMetadataMap { 
+    /* [startupCounter]_[dispenseRequestNumber] */
+    pb_callback_t dispense_metadata;
+} machine_DispenseMetadataMap;
+
 typedef struct _machine_StateReportList { 
     pb_callback_t StateReports;
 } machine_StateReportList;
@@ -61,6 +66,12 @@ typedef struct _machine_CollectionRequest {
     uint64_t vial_number;
     float volume_ul;
 } machine_CollectionRequest;
+
+typedef struct _machine_DispenseMetadata { 
+    uint64_t startupCounter;
+    uint64_t dispenseRequestNumber;
+    bool failedDispense;
+} machine_DispenseMetadata;
 
 typedef struct _machine_FluidDetails { 
     float bowl_fluid_level_ml;
@@ -110,6 +121,12 @@ typedef struct _machine_SessionStatus {
 typedef struct _machine_StreamStatus { 
     bool live;
 } machine_StreamStatus;
+
+typedef struct _machine_DispenseMetadataMap_DispenseMetadataEntry { 
+    pb_callback_t key;
+    bool has_value;
+    machine_DispenseMetadata value;
+} machine_DispenseMetadataMap_DispenseMetadataEntry;
 
 typedef struct _machine_StateReport { 
     /* timestamp in microseconds since unix epoch, UTC. Added
@@ -169,6 +186,9 @@ extern "C" {
 #define machine_StateReportList_init_default     {{{NULL}, NULL}}
 #define machine_SessionStatus_init_default       {0, 0, 0, 0, 0}
 #define machine_StreamStatus_init_default        {0}
+#define machine_DispenseMetadataMap_init_default {{{NULL}, NULL}}
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_init_default {{{NULL}, NULL}, false, machine_DispenseMetadata_init_default}
+#define machine_DispenseMetadata_init_default    {0, 0, 0}
 #define machine_PipetteState_init_zero           {0, 0, 0, 0}
 #define machine_CollectionRequest_init_zero      {0, 0, 0, 0}
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0, 0}
@@ -178,13 +198,20 @@ extern "C" {
 #define machine_StateReportList_init_zero        {{{NULL}, NULL}}
 #define machine_SessionStatus_init_zero          {0, 0, 0, 0, 0}
 #define machine_StreamStatus_init_zero           {0}
+#define machine_DispenseMetadataMap_init_zero    {{{NULL}, NULL}}
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_init_zero {{{NULL}, NULL}, false, machine_DispenseMetadata_init_zero}
+#define machine_DispenseMetadata_init_zero       {0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
+#define machine_DispenseMetadataMap_dispense_metadata_tag 1
 #define machine_StateReportList_StateReports_tag 1
 #define machine_CollectionRequest_completed_tag  1
 #define machine_CollectionRequest_request_number_tag 2
 #define machine_CollectionRequest_vial_number_tag 3
 #define machine_CollectionRequest_volume_ul_tag  4
+#define machine_DispenseMetadata_startupCounter_tag 1
+#define machine_DispenseMetadata_dispenseRequestNumber_tag 2
+#define machine_DispenseMetadata_failedDispense_tag 3
 #define machine_FluidDetails_bowl_fluid_level_ml_tag 1
 #define machine_FluidRequest_fluidType_tag       1
 #define machine_FluidRequest_volume_ml_tag       2
@@ -205,6 +232,8 @@ extern "C" {
 #define machine_SessionStatus_production_tag     4
 #define machine_SessionStatus_production_id_tag  5
 #define machine_StreamStatus_live_tag            1
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_key_tag 1
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_value_tag 2
 #define machine_StateReport_timestamp_unix_micros_tag 2
 #define machine_StateReport_startup_counter_tag  3
 #define machine_StateReport_mode_tag             4
@@ -298,6 +327,26 @@ X(a, STATIC,   SINGULAR, BOOL,     live,              1)
 #define machine_StreamStatus_CALLBACK NULL
 #define machine_StreamStatus_DEFAULT NULL
 
+#define machine_DispenseMetadataMap_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, MESSAGE,  dispense_metadata,   1)
+#define machine_DispenseMetadataMap_CALLBACK pb_default_field_callback
+#define machine_DispenseMetadataMap_DEFAULT NULL
+#define machine_DispenseMetadataMap_dispense_metadata_MSGTYPE machine_DispenseMetadataMap_DispenseMetadataEntry
+
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_CALLBACK pb_default_field_callback
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_DEFAULT NULL
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_value_MSGTYPE machine_DispenseMetadata
+
+#define machine_DispenseMetadata_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UINT64,   startupCounter,    1) \
+X(a, STATIC,   SINGULAR, UINT64,   dispenseRequestNumber,   2) \
+X(a, STATIC,   SINGULAR, BOOL,     failedDispense,    3)
+#define machine_DispenseMetadata_CALLBACK NULL
+#define machine_DispenseMetadata_DEFAULT NULL
+
 extern const pb_msgdesc_t machine_PipetteState_msg;
 extern const pb_msgdesc_t machine_CollectionRequest_msg;
 extern const pb_msgdesc_t machine_MovementDetails_msg;
@@ -307,6 +356,9 @@ extern const pb_msgdesc_t machine_StateReport_msg;
 extern const pb_msgdesc_t machine_StateReportList_msg;
 extern const pb_msgdesc_t machine_SessionStatus_msg;
 extern const pb_msgdesc_t machine_StreamStatus_msg;
+extern const pb_msgdesc_t machine_DispenseMetadataMap_msg;
+extern const pb_msgdesc_t machine_DispenseMetadataMap_DispenseMetadataEntry_msg;
+extern const pb_msgdesc_t machine_DispenseMetadata_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define machine_PipetteState_fields &machine_PipetteState_msg
@@ -318,11 +370,17 @@ extern const pb_msgdesc_t machine_StreamStatus_msg;
 #define machine_StateReportList_fields &machine_StateReportList_msg
 #define machine_SessionStatus_fields &machine_SessionStatus_msg
 #define machine_StreamStatus_fields &machine_StreamStatus_msg
+#define machine_DispenseMetadataMap_fields &machine_DispenseMetadataMap_msg
+#define machine_DispenseMetadataMap_DispenseMetadataEntry_fields &machine_DispenseMetadataMap_DispenseMetadataEntry_msg
+#define machine_DispenseMetadata_fields &machine_DispenseMetadata_msg
 
 /* Maximum encoded size of messages (where known) */
 /* machine_StateReport_size depends on runtime parameters */
 /* machine_StateReportList_size depends on runtime parameters */
+/* machine_DispenseMetadataMap_size depends on runtime parameters */
+/* machine_DispenseMetadataMap_DispenseMetadataEntry_size depends on runtime parameters */
 #define machine_CollectionRequest_size           29
+#define machine_DispenseMetadata_size            24
 #define machine_FluidDetails_size                5
 #define machine_FluidRequest_size                11
 #define machine_MovementDetails_size             25

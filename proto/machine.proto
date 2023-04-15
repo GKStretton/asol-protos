@@ -132,3 +132,14 @@ message SessionStatus {
 message StreamStatus {
 	bool live = 1;
 }
+
+message DispenseMetadataMap {
+	// [startupCounter]_[dispenseRequestNumber]
+	map<string, DispenseMetadata> dispense_metadata = 1;
+}
+
+message DispenseMetadata {
+	uint64 startupCounter = 1;
+	uint64 dispenseRequestNumber = 2;
+	bool failedDispense = 3;
+}

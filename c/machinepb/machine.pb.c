@@ -33,6 +33,15 @@ PB_BIND(machine_SessionStatus, machine_SessionStatus, AUTO)
 PB_BIND(machine_StreamStatus, machine_StreamStatus, AUTO)
 
 
+PB_BIND(machine_DispenseMetadataMap, machine_DispenseMetadataMap, AUTO)
+
+
+PB_BIND(machine_DispenseMetadataMap_DispenseMetadataEntry, machine_DispenseMetadataMap_DispenseMetadataEntry, AUTO)
+
+
+PB_BIND(machine_DispenseMetadata, machine_DispenseMetadata, AUTO)
+
+
 
 
 
