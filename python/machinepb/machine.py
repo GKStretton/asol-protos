@@ -145,3 +145,5 @@ class DispenseMetadataMap(betterproto.Message):
 @dataclass
 class DispenseMetadata(betterproto.Message):
     failed_dispense: bool = betterproto.bool_field(1)
+    # how many ms later than expected the dispense happened
+    dispense_delay_ms: int = betterproto.uint64_field(2)

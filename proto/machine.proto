@@ -140,4 +140,6 @@ message DispenseMetadataMap {
 
 message DispenseMetadata {
 	bool failedDispense = 1;
+	// how many ms later than expected the dispense happened
+	uint64 dispenseDelayMs = 2;
 }

@@ -330,6 +330,9 @@ export class DispenseMetadata extends jspb.Message {
   getFaileddispense(): boolean;
   setFaileddispense(value: boolean): void;
 
+  getDispensedelayms(): number;
+  setDispensedelayms(value: number): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DispenseMetadata.AsObject;
   static toObject(includeInstance: boolean, msg: DispenseMetadata): DispenseMetadata.AsObject;
@@ -343,6 +346,7 @@ export class DispenseMetadata extends jspb.Message {
 export namespace DispenseMetadata {
   export type AsObject = {
     faileddispense: boolean,
+    dispensedelayms: number,
   }
 }
 

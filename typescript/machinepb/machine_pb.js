@@ -2578,7 +2578,8 @@ proto.machine.DispenseMetadata.prototype.toObject = function(opt_includeInstance
  */
 proto.machine.DispenseMetadata.toObject = function(includeInstance, msg) {
   var f, obj = {
-    faileddispense: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
+    faileddispense: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    dispensedelayms: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -2619,6 +2620,10 @@ proto.machine.DispenseMetadata.deserializeBinaryFromReader = function(msg, reade
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setFaileddispense(value);
       break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setDispensedelayms(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2655,6 +2660,13 @@ proto.machine.DispenseMetadata.serializeBinaryToWriter = function(message, write
       f
     );
   }
+  f = message.getDispensedelayms();
+  if (f !== 0) {
+    writer.writeUint64(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -2673,6 +2685,24 @@ proto.machine.DispenseMetadata.prototype.getFaileddispense = function() {
  */
 proto.machine.DispenseMetadata.prototype.setFaileddispense = function(value) {
   return jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional uint64 dispenseDelayMs = 2;
+ * @return {number}
+ */
+proto.machine.DispenseMetadata.prototype.getDispensedelayms = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.machine.DispenseMetadata} returns this
+ */
+proto.machine.DispenseMetadata.prototype.setDispensedelayms = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
