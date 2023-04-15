@@ -139,7 +139,5 @@ message DispenseMetadataMap {
 }
 
 message DispenseMetadata {
-	uint64 startupCounter = 1;
-	uint64 dispenseRequestNumber = 2;
-	bool failedDispense = 3;
+	bool failedDispense = 1;
 }

@@ -144,6 +144,4 @@ class DispenseMetadataMap(betterproto.Message):
 
 @dataclass
 class DispenseMetadata(betterproto.Message):
-    startup_counter: int = betterproto.uint64_field(1)
-    dispense_request_number: int = betterproto.uint64_field(2)
-    failed_dispense: bool = betterproto.bool_field(3)
+    failed_dispense: bool = betterproto.bool_field(1)

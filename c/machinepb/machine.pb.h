@@ -68,8 +68,6 @@ typedef struct _machine_CollectionRequest {
 } machine_CollectionRequest;
 
 typedef struct _machine_DispenseMetadata { 
-    uint64_t startupCounter;
-    uint64_t dispenseRequestNumber;
     bool failedDispense;
 } machine_DispenseMetadata;
 
@@ -188,7 +186,7 @@ extern "C" {
 #define machine_StreamStatus_init_default        {0}
 #define machine_DispenseMetadataMap_init_default {{{NULL}, NULL}}
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_default {{{NULL}, NULL}, false, machine_DispenseMetadata_init_default}
-#define machine_DispenseMetadata_init_default    {0, 0, 0}
+#define machine_DispenseMetadata_init_default    {0}
 #define machine_PipetteState_init_zero           {0, 0, 0, 0}
 #define machine_CollectionRequest_init_zero      {0, 0, 0, 0}
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0, 0}
@@ -200,7 +198,7 @@ extern "C" {
 #define machine_StreamStatus_init_zero           {0}
 #define machine_DispenseMetadataMap_init_zero    {{{NULL}, NULL}}
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_zero {{{NULL}, NULL}, false, machine_DispenseMetadata_init_zero}
-#define machine_DispenseMetadata_init_zero       {0, 0, 0}
+#define machine_DispenseMetadata_init_zero       {0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define machine_DispenseMetadataMap_dispense_metadata_tag 1
@@ -209,9 +207,7 @@ extern "C" {
 #define machine_CollectionRequest_request_number_tag 2
 #define machine_CollectionRequest_vial_number_tag 3
 #define machine_CollectionRequest_volume_ul_tag  4
-#define machine_DispenseMetadata_startupCounter_tag 1
-#define machine_DispenseMetadata_dispenseRequestNumber_tag 2
-#define machine_DispenseMetadata_failedDispense_tag 3
+#define machine_DispenseMetadata_failedDispense_tag 1
 #define machine_FluidDetails_bowl_fluid_level_ml_tag 1
 #define machine_FluidRequest_fluidType_tag       1
 #define machine_FluidRequest_volume_ml_tag       2
@@ -341,9 +337,7 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_value_MSGTYPE machine_DispenseMetadata
 
 #define machine_DispenseMetadata_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UINT64,   startupCounter,    1) \
-X(a, STATIC,   SINGULAR, UINT64,   dispenseRequestNumber,   2) \
-X(a, STATIC,   SINGULAR, BOOL,     failedDispense,    3)
+X(a, STATIC,   SINGULAR, BOOL,     failedDispense,    1)
 #define machine_DispenseMetadata_CALLBACK NULL
 #define machine_DispenseMetadata_DEFAULT NULL
 
@@ -380,7 +374,7 @@ extern const pb_msgdesc_t machine_DispenseMetadata_msg;
 /* machine_DispenseMetadataMap_size depends on runtime parameters */
 /* machine_DispenseMetadataMap_DispenseMetadataEntry_size depends on runtime parameters */
 #define machine_CollectionRequest_size           29
-#define machine_DispenseMetadata_size            24
+#define machine_DispenseMetadata_size            2
 #define machine_FluidDetails_size                5
 #define machine_FluidRequest_size                11
 #define machine_MovementDetails_size             25
