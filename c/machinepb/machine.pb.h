@@ -151,6 +151,8 @@ typedef struct _machine_StateReport {
     /* the following are populated by the backend, useful in post-processing */
     bool paused;
     pb_callback_t timestamp_readable;
+    /* e.g. 0001.jpg */
+    pb_callback_t latest_dslr_filename;
 } machine_StateReport;
 
 
@@ -182,7 +184,7 @@ extern "C" {
 #define machine_MovementDetails_init_default     {0, 0, 0, 0, 0}
 #define machine_FluidRequest_init_default        {_machine_FluidType_MIN, 0, 0, 0}
 #define machine_FluidDetails_init_default        {0}
-#define machine_StateReport_init_default         {0, 0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default, 0, {{NULL}, NULL}}
+#define machine_StateReport_init_default         {0, 0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default, 0, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_StateReportList_init_default     {{{NULL}, NULL}}
 #define machine_SessionStatus_init_default       {0, 0, 0, 0, 0}
 #define machine_StreamStatus_init_default        {0}
@@ -194,7 +196,7 @@ extern "C" {
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0, 0}
 #define machine_FluidRequest_init_zero           {_machine_FluidType_MIN, 0, 0, 0}
 #define machine_FluidDetails_init_zero           {0}
-#define machine_StateReport_init_zero            {0, 0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero, 0, {{NULL}, NULL}}
+#define machine_StateReport_init_zero            {0, 0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero, 0, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_StateReportList_init_zero        {{{NULL}, NULL}}
 #define machine_SessionStatus_init_zero          {0, 0, 0, 0, 0}
 #define machine_StreamStatus_init_zero           {0}
@@ -245,6 +247,7 @@ extern "C" {
 #define machine_StateReport_fluid_details_tag    14
 #define machine_StateReport_paused_tag           50
 #define machine_StateReport_timestamp_readable_tag 51
+#define machine_StateReport_latest_dslr_filename_tag 52
 
 /* Struct field encoding specification for nanopb */
 #define machine_PipetteState_FIELDLIST(X, a) \
@@ -297,7 +300,8 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  movement_details,  12) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  fluid_request,    13) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  fluid_details,    14) \
 X(a, STATIC,   SINGULAR, BOOL,     paused,           50) \
-X(a, CALLBACK, SINGULAR, STRING,   timestamp_readable,  51)
+X(a, CALLBACK, SINGULAR, STRING,   timestamp_readable,  51) \
+X(a, CALLBACK, SINGULAR, STRING,   latest_dslr_filename,  52)
 #define machine_StateReport_CALLBACK pb_default_field_callback
 #define machine_StateReport_DEFAULT NULL
 #define machine_StateReport_pipette_state_MSGTYPE machine_PipetteState

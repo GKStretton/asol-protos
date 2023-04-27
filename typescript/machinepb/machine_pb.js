@@ -1350,7 +1350,8 @@ proto.machine.StateReport.toObject = function(includeInstance, msg) {
     fluidRequest: (f = msg.getFluidRequest()) && proto.machine.FluidRequest.toObject(includeInstance, f),
     fluidDetails: (f = msg.getFluidDetails()) && proto.machine.FluidDetails.toObject(includeInstance, f),
     paused: jspb.Message.getBooleanFieldWithDefault(msg, 50, false),
-    timestampReadable: jspb.Message.getFieldWithDefault(msg, 51, "")
+    timestampReadable: jspb.Message.getFieldWithDefault(msg, 51, ""),
+    latestDslrFilename: jspb.Message.getFieldWithDefault(msg, 52, "")
   };
 
   if (includeInstance) {
@@ -1439,6 +1440,10 @@ proto.machine.StateReport.deserializeBinaryFromReader = function(msg, reader) {
     case 51:
       var value = /** @type {string} */ (reader.readString());
       msg.setTimestampReadable(value);
+      break;
+    case 52:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLatestDslrFilename(value);
       break;
     default:
       reader.skipField();
@@ -1555,6 +1560,13 @@ proto.machine.StateReport.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       51,
+      f
+    );
+  }
+  f = message.getLatestDslrFilename();
+  if (f.length > 0) {
+    writer.writeString(
+      52,
       f
     );
   }
@@ -1869,6 +1881,24 @@ proto.machine.StateReport.prototype.getTimestampReadable = function() {
  */
 proto.machine.StateReport.prototype.setTimestampReadable = function(value) {
   return jspb.Message.setProto3StringField(this, 51, value);
+};
+
+
+/**
+ * optional string latest_dslr_filename = 52;
+ * @return {string}
+ */
+proto.machine.StateReport.prototype.getLatestDslrFilename = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 52, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.machine.StateReport} returns this
+ */
+proto.machine.StateReport.prototype.setLatestDslrFilename = function(value) {
+  return jspb.Message.setProto3StringField(this, 52, value);
 };
 
 

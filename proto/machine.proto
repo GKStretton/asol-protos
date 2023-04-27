@@ -110,6 +110,8 @@ message StateReport {
 	// the following are populated by the backend, useful in post-processing
 	bool paused = 50;
 	string timestamp_readable = 51;
+	// e.g. 0001.jpg
+	string latest_dslr_filename = 52;
 }
 
 message StateReportList {
