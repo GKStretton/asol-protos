@@ -202,8 +202,8 @@ export class StateReport extends jspb.Message {
   getTimestampReadable(): string;
   setTimestampReadable(value: string): void;
 
-  getLatestDslrFilename(): string;
-  setLatestDslrFilename(value: string): void;
+  getLatestDslrFileNumber(): number;
+  setLatestDslrFileNumber(value: number): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): StateReport.AsObject;
@@ -229,7 +229,7 @@ export namespace StateReport {
     fluidDetails?: FluidDetails.AsObject,
     paused: boolean,
     timestampReadable: string,
-    latestDslrFilename: string,
+    latestDslrFileNumber: number,
   }
 }
 
