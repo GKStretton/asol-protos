@@ -42,7 +42,7 @@ PB_BIND(machine_DispenseMetadataMap_DispenseMetadataEntry, machine_DispenseMetad
 PB_BIND(machine_DispenseMetadata, machine_DispenseMetadata, AUTO)
 
 
-PB_BIND(machine_SessionContentStatuses, machine_SessionContentStatuses, AUTO)
+PB_BIND(machine_ContentTypeStatuses, machine_ContentTypeStatuses, AUTO)
 
 
 PB_BIND(machine_ContentTypeStatus, machine_ContentTypeStatus, AUTO)

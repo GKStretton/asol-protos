@@ -354,23 +354,23 @@ export namespace DispenseMetadata {
   }
 }
 
-export class SessionContentStatuses extends jspb.Message {
+export class ContentTypeStatuses extends jspb.Message {
   clearContentStatusesList(): void;
   getContentStatusesList(): Array<ContentTypeStatus>;
   setContentStatusesList(value: Array<ContentTypeStatus>): void;
   addContentStatuses(value?: ContentTypeStatus, index?: number): ContentTypeStatus;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): SessionContentStatuses.AsObject;
-  static toObject(includeInstance: boolean, msg: SessionContentStatuses): SessionContentStatuses.AsObject;
+  toObject(includeInstance?: boolean): ContentTypeStatuses.AsObject;
+  static toObject(includeInstance: boolean, msg: ContentTypeStatuses): ContentTypeStatuses.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: SessionContentStatuses, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): SessionContentStatuses;
-  static deserializeBinaryFromReader(message: SessionContentStatuses, reader: jspb.BinaryReader): SessionContentStatuses;
+  static serializeBinaryToWriter(message: ContentTypeStatuses, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ContentTypeStatuses;
+  static deserializeBinaryFromReader(message: ContentTypeStatuses, reader: jspb.BinaryReader): ContentTypeStatuses;
 }
 
-export namespace SessionContentStatuses {
+export namespace ContentTypeStatuses {
   export type AsObject = {
     contentStatusesList: Array<ContentTypeStatus.AsObject>,
   }

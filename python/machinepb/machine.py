@@ -171,7 +171,7 @@ class DispenseMetadata(betterproto.Message):
 
 
 @dataclass
-class SessionContentStatuses(betterproto.Message):
+class ContentTypeStatuses(betterproto.Message):
     """statuses for all the content types for a specific session"""
 
     content_statuses: List["ContentTypeStatus"] = betterproto.message_field(1)

@@ -156,7 +156,7 @@ enum ContentType {
 }
 
 // statuses for all the content types for a specific session
-message SessionContentStatuses {
+message ContentTypeStatuses {
 	repeated ContentTypeStatus content_statuses = 1;
 }
 
