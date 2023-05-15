@@ -174,16 +174,18 @@ class DispenseMetadata(betterproto.Message):
 class ContentTypeStatuses(betterproto.Message):
     """statuses for all the content types for a specific session"""
 
-    content_statuses: List["ContentTypeStatus"] = betterproto.message_field(1)
+    # str(ContentType) -> ContentTypeStatus
+    content_statuses: Dict[str, "ContentTypeStatus"] = betterproto.map_field(
+        1, betterproto.TYPE_STRING, betterproto.TYPE_MESSAGE
+    )
 
 
 @dataclass
 class ContentTypeStatus(betterproto.Message):
-    content_type: "ContentType" = betterproto.enum_field(1)
-    raw_title: str = betterproto.string_field(2)
-    raw_description: str = betterproto.string_field(3)
-    caption: str = betterproto.string_field(4)
-    posts: List["Post"] = betterproto.message_field(5)
+    raw_title: str = betterproto.string_field(1)
+    raw_description: str = betterproto.string_field(2)
+    caption: str = betterproto.string_field(3)
+    posts: List["Post"] = betterproto.message_field(4)
 
 
 @dataclass

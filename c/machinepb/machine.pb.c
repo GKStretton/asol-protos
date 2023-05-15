@@ -45,6 +45,9 @@ PB_BIND(machine_DispenseMetadata, machine_DispenseMetadata, AUTO)
 PB_BIND(machine_ContentTypeStatuses, machine_ContentTypeStatuses, AUTO)
 
 
+PB_BIND(machine_ContentTypeStatuses_ContentStatusesEntry, machine_ContentTypeStatuses_ContentStatusesEntry, AUTO)
+
+
 PB_BIND(machine_ContentTypeStatus, machine_ContentTypeStatus, AUTO)
 
 

@@ -355,11 +355,8 @@ export namespace DispenseMetadata {
 }
 
 export class ContentTypeStatuses extends jspb.Message {
-  clearContentStatusesList(): void;
-  getContentStatusesList(): Array<ContentTypeStatus>;
-  setContentStatusesList(value: Array<ContentTypeStatus>): void;
-  addContentStatuses(value?: ContentTypeStatus, index?: number): ContentTypeStatus;
-
+  getContentStatusesMap(): jspb.Map<string, ContentTypeStatus>;
+  clearContentStatusesMap(): void;
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ContentTypeStatuses.AsObject;
   static toObject(includeInstance: boolean, msg: ContentTypeStatuses): ContentTypeStatuses.AsObject;
@@ -372,14 +369,11 @@ export class ContentTypeStatuses extends jspb.Message {
 
 export namespace ContentTypeStatuses {
   export type AsObject = {
-    contentStatusesList: Array<ContentTypeStatus.AsObject>,
+    contentStatusesMap: Array<[string, ContentTypeStatus.AsObject]>,
   }
 }
 
 export class ContentTypeStatus extends jspb.Message {
-  getContentType(): ContentTypeMap[keyof ContentTypeMap];
-  setContentType(value: ContentTypeMap[keyof ContentTypeMap]): void;
-
   getRawTitle(): string;
   setRawTitle(value: string): void;
 
@@ -406,7 +400,6 @@ export class ContentTypeStatus extends jspb.Message {
 
 export namespace ContentTypeStatus {
   export type AsObject = {
-    contentType: ContentTypeMap[keyof ContentTypeMap],
     rawTitle: string,
     rawDescription: string,
     caption: string,

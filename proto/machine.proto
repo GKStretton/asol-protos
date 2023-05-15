@@ -157,15 +157,15 @@ enum ContentType {
 
 // statuses for all the content types for a specific session
 message ContentTypeStatuses {
-	repeated ContentTypeStatus content_statuses = 1;
+	// str(ContentType) -> ContentTypeStatus
+	map<string, ContentTypeStatus> content_statuses = 1;
 }
 
 message ContentTypeStatus {
-	ContentType content_type = 1;
-	string raw_title = 2;
-	string raw_description = 3;
-	string caption = 4;
-	repeated Post posts = 5;
+	string raw_title = 1;
+	string raw_description = 2;
+	string caption = 3;
+	repeated Post posts = 4;
 }
 
 enum SocialPlatform {

@@ -283,7 +283,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.machine.ContentTypeStatuses = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.machine.ContentTypeStatuses.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.machine.ContentTypeStatuses, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -2805,13 +2805,6 @@ proto.machine.DispenseMetadata.prototype.setDispensedelayms = function(value) {
 
 
 
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.machine.ContentTypeStatuses.repeatedFields_ = [1];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -2843,8 +2836,7 @@ proto.machine.ContentTypeStatuses.prototype.toObject = function(opt_includeInsta
  */
 proto.machine.ContentTypeStatuses.toObject = function(includeInstance, msg) {
   var f, obj = {
-    contentStatusesList: jspb.Message.toObjectList(msg.getContentStatusesList(),
-    proto.machine.ContentTypeStatus.toObject, includeInstance)
+    contentStatusesMap: (f = msg.getContentStatusesMap()) ? f.toObject(includeInstance, proto.machine.ContentTypeStatus.toObject) : []
   };
 
   if (includeInstance) {
@@ -2882,9 +2874,10 @@ proto.machine.ContentTypeStatuses.deserializeBinaryFromReader = function(msg, re
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = new proto.machine.ContentTypeStatus;
-      reader.readMessage(value,proto.machine.ContentTypeStatus.deserializeBinaryFromReader);
-      msg.addContentStatuses(value);
+      var value = msg.getContentStatusesMap();
+      reader.readMessage(value, function(message, reader) {
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.machine.ContentTypeStatus.deserializeBinaryFromReader, "", new proto.machine.ContentTypeStatus());
+         });
       break;
     default:
       reader.skipField();
@@ -2915,52 +2908,33 @@ proto.machine.ContentTypeStatuses.prototype.serializeBinary = function() {
  */
 proto.machine.ContentTypeStatuses.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getContentStatusesList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      1,
-      f,
-      proto.machine.ContentTypeStatus.serializeBinaryToWriter
-    );
+  f = message.getContentStatusesMap(true);
+  if (f && f.getLength() > 0) {
+    f.serializeBinary(1, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.machine.ContentTypeStatus.serializeBinaryToWriter);
   }
 };
 
 
 /**
- * repeated ContentTypeStatus content_statuses = 1;
- * @return {!Array<!proto.machine.ContentTypeStatus>}
+ * map<string, ContentTypeStatus> content_statuses = 1;
+ * @param {boolean=} opt_noLazyCreate Do not create the map if
+ * empty, instead returning `undefined`
+ * @return {!jspb.Map<string,!proto.machine.ContentTypeStatus>}
  */
-proto.machine.ContentTypeStatuses.prototype.getContentStatusesList = function() {
-  return /** @type{!Array<!proto.machine.ContentTypeStatus>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.machine.ContentTypeStatus, 1));
+proto.machine.ContentTypeStatuses.prototype.getContentStatusesMap = function(opt_noLazyCreate) {
+  return /** @type {!jspb.Map<string,!proto.machine.ContentTypeStatus>} */ (
+      jspb.Message.getMapField(this, 1, opt_noLazyCreate,
+      proto.machine.ContentTypeStatus));
 };
 
 
 /**
- * @param {!Array<!proto.machine.ContentTypeStatus>} value
- * @return {!proto.machine.ContentTypeStatuses} returns this
-*/
-proto.machine.ContentTypeStatuses.prototype.setContentStatusesList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 1, value);
-};
-
-
-/**
- * @param {!proto.machine.ContentTypeStatus=} opt_value
- * @param {number=} opt_index
- * @return {!proto.machine.ContentTypeStatus}
- */
-proto.machine.ContentTypeStatuses.prototype.addContentStatuses = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.machine.ContentTypeStatus, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears values from the map. The map will be non-null.
  * @return {!proto.machine.ContentTypeStatuses} returns this
  */
-proto.machine.ContentTypeStatuses.prototype.clearContentStatusesList = function() {
-  return this.setContentStatusesList([]);
+proto.machine.ContentTypeStatuses.prototype.clearContentStatusesMap = function() {
+  this.getContentStatusesMap().clear();
+  return this;
 };
 
 
@@ -2970,7 +2944,7 @@ proto.machine.ContentTypeStatuses.prototype.clearContentStatusesList = function(
  * @private {!Array<number>}
  * @const
  */
-proto.machine.ContentTypeStatus.repeatedFields_ = [5];
+proto.machine.ContentTypeStatus.repeatedFields_ = [4];
 
 
 
@@ -3003,10 +2977,9 @@ proto.machine.ContentTypeStatus.prototype.toObject = function(opt_includeInstanc
  */
 proto.machine.ContentTypeStatus.toObject = function(includeInstance, msg) {
   var f, obj = {
-    contentType: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    rawTitle: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    rawDescription: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    caption: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    rawTitle: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    rawDescription: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    caption: jspb.Message.getFieldWithDefault(msg, 3, ""),
     postsList: jspb.Message.toObjectList(msg.getPostsList(),
     proto.machine.Post.toObject, includeInstance)
   };
@@ -3046,22 +3019,18 @@ proto.machine.ContentTypeStatus.deserializeBinaryFromReader = function(msg, read
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!proto.machine.ContentType} */ (reader.readEnum());
-      msg.setContentType(value);
-      break;
-    case 2:
       var value = /** @type {string} */ (reader.readString());
       msg.setRawTitle(value);
       break;
-    case 3:
+    case 2:
       var value = /** @type {string} */ (reader.readString());
       msg.setRawDescription(value);
       break;
-    case 4:
+    case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setCaption(value);
       break;
-    case 5:
+    case 4:
       var value = new proto.machine.Post;
       reader.readMessage(value,proto.machine.Post.deserializeBinaryFromReader);
       msg.addPosts(value);
@@ -3095,38 +3064,31 @@ proto.machine.ContentTypeStatus.prototype.serializeBinary = function() {
  */
 proto.machine.ContentTypeStatus.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getContentType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
   f = message.getRawTitle();
   if (f.length > 0) {
     writer.writeString(
-      2,
+      1,
       f
     );
   }
   f = message.getRawDescription();
   if (f.length > 0) {
     writer.writeString(
-      3,
+      2,
       f
     );
   }
   f = message.getCaption();
   if (f.length > 0) {
     writer.writeString(
-      4,
+      3,
       f
     );
   }
   f = message.getPostsList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      5,
+      4,
       f,
       proto.machine.Post.serializeBinaryToWriter
     );
@@ -3135,29 +3097,11 @@ proto.machine.ContentTypeStatus.serializeBinaryToWriter = function(message, writ
 
 
 /**
- * optional ContentType content_type = 1;
- * @return {!proto.machine.ContentType}
- */
-proto.machine.ContentTypeStatus.prototype.getContentType = function() {
-  return /** @type {!proto.machine.ContentType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/**
- * @param {!proto.machine.ContentType} value
- * @return {!proto.machine.ContentTypeStatus} returns this
- */
-proto.machine.ContentTypeStatus.prototype.setContentType = function(value) {
-  return jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-/**
- * optional string raw_title = 2;
+ * optional string raw_title = 1;
  * @return {string}
  */
 proto.machine.ContentTypeStatus.prototype.getRawTitle = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -3166,16 +3110,16 @@ proto.machine.ContentTypeStatus.prototype.getRawTitle = function() {
  * @return {!proto.machine.ContentTypeStatus} returns this
  */
 proto.machine.ContentTypeStatus.prototype.setRawTitle = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional string raw_description = 3;
+ * optional string raw_description = 2;
  * @return {string}
  */
 proto.machine.ContentTypeStatus.prototype.getRawDescription = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -3184,16 +3128,16 @@ proto.machine.ContentTypeStatus.prototype.getRawDescription = function() {
  * @return {!proto.machine.ContentTypeStatus} returns this
  */
 proto.machine.ContentTypeStatus.prototype.setRawDescription = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional string caption = 4;
+ * optional string caption = 3;
  * @return {string}
  */
 proto.machine.ContentTypeStatus.prototype.getCaption = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -3202,17 +3146,17 @@ proto.machine.ContentTypeStatus.prototype.getCaption = function() {
  * @return {!proto.machine.ContentTypeStatus} returns this
  */
 proto.machine.ContentTypeStatus.prototype.setCaption = function(value) {
-  return jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * repeated Post posts = 5;
+ * repeated Post posts = 4;
  * @return {!Array<!proto.machine.Post>}
  */
 proto.machine.ContentTypeStatus.prototype.getPostsList = function() {
   return /** @type{!Array<!proto.machine.Post>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.machine.Post, 5));
+    jspb.Message.getRepeatedWrapperField(this, proto.machine.Post, 4));
 };
 
 
@@ -3221,7 +3165,7 @@ proto.machine.ContentTypeStatus.prototype.getPostsList = function() {
  * @return {!proto.machine.ContentTypeStatus} returns this
 */
 proto.machine.ContentTypeStatus.prototype.setPostsList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 5, value);
+  return jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
 
 
@@ -3231,7 +3175,7 @@ proto.machine.ContentTypeStatus.prototype.setPostsList = function(value) {
  * @return {!proto.machine.Post}
  */
 proto.machine.ContentTypeStatus.prototype.addPosts = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 5, opt_value, proto.machine.Post, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.machine.Post, opt_index);
 };
 
 

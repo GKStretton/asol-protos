@@ -70,6 +70,13 @@ typedef enum _machine_SocialPlatform {
 } machine_SocialPlatform;
 
 /* Struct definitions */
+typedef struct _machine_ContentTypeStatus { 
+    pb_callback_t raw_title;
+    pb_callback_t raw_description;
+    pb_callback_t caption;
+    pb_callback_t posts;
+} machine_ContentTypeStatus;
+
 typedef struct _machine_ContentTypeStatuses { 
     pb_callback_t content_statuses;
 } machine_ContentTypeStatuses;
@@ -90,17 +97,16 @@ typedef struct _machine_CollectionRequest {
     float volume_ul;
 } machine_CollectionRequest;
 
-typedef struct _machine_ContentTypeStatus { 
-    machine_ContentType content_type;
+typedef struct _machine_ContentTypeStatuses_ContentStatusesEntry { 
+    pb_callback_t key;
     /* e.g. subreddit */
-    pb_callback_t raw_title;
-    pb_callback_t raw_description;
-    pb_callback_t caption;
-    pb_callback_t posts;
-} machine_ContentTypeStatus;
+    bool has_value;
+    machine_ContentTypeStatus value;
+} machine_ContentTypeStatuses_ContentStatusesEntry;
 
 /* statuses for all the content types for a specific session */
 typedef struct _machine_DispenseMetadata { 
+    /* str(ContentType) -> ContentTypeStatus */
     bool failedDispense;
     uint64_t dispenseDelayMs;
 } machine_DispenseMetadata;
@@ -244,7 +250,8 @@ extern "C" {
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_default {{{NULL}, NULL}, false, machine_DispenseMetadata_init_default}
 #define machine_DispenseMetadata_init_default    {0, 0}
 #define machine_ContentTypeStatuses_init_default {{{NULL}, NULL}}
-#define machine_ContentTypeStatus_init_default   {_machine_ContentType_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define machine_ContentTypeStatuses_ContentStatusesEntry_init_default {{{NULL}, NULL}, false, machine_ContentTypeStatus_init_default}
+#define machine_ContentTypeStatus_init_default   {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_default                {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
 #define machine_PipetteState_init_zero           {0, 0, 0, 0}
 #define machine_CollectionRequest_init_zero      {0, 0, 0, 0}
@@ -259,10 +266,15 @@ extern "C" {
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_zero {{{NULL}, NULL}, false, machine_DispenseMetadata_init_zero}
 #define machine_DispenseMetadata_init_zero       {0, 0}
 #define machine_ContentTypeStatuses_init_zero    {{{NULL}, NULL}}
-#define machine_ContentTypeStatus_init_zero      {_machine_ContentType_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define machine_ContentTypeStatuses_ContentStatusesEntry_init_zero {{{NULL}, NULL}, false, machine_ContentTypeStatus_init_zero}
+#define machine_ContentTypeStatus_init_zero      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_zero                   {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
+#define machine_ContentTypeStatus_raw_title_tag  1
+#define machine_ContentTypeStatus_raw_description_tag 2
+#define machine_ContentTypeStatus_caption_tag    3
+#define machine_ContentTypeStatus_posts_tag      4
 #define machine_ContentTypeStatuses_content_statuses_tag 1
 #define machine_DispenseMetadataMap_dispense_metadata_tag 1
 #define machine_StateReportList_StateReports_tag 1
@@ -270,11 +282,8 @@ extern "C" {
 #define machine_CollectionRequest_request_number_tag 2
 #define machine_CollectionRequest_vial_number_tag 3
 #define machine_CollectionRequest_volume_ul_tag  4
-#define machine_ContentTypeStatus_content_type_tag 1
-#define machine_ContentTypeStatus_raw_title_tag  2
-#define machine_ContentTypeStatus_raw_description_tag 3
-#define machine_ContentTypeStatus_caption_tag    4
-#define machine_ContentTypeStatus_posts_tag      5
+#define machine_ContentTypeStatuses_ContentStatusesEntry_key_tag 1
+#define machine_ContentTypeStatuses_ContentStatusesEntry_value_tag 2
 #define machine_DispenseMetadata_failedDispense_tag 1
 #define machine_DispenseMetadata_dispenseDelayMs_tag 2
 #define machine_FluidDetails_bowl_fluid_level_ml_tag 1
@@ -425,14 +434,20 @@ X(a, STATIC,   SINGULAR, UINT64,   dispenseDelayMs,   2)
 X(a, CALLBACK, REPEATED, MESSAGE,  content_statuses,   1)
 #define machine_ContentTypeStatuses_CALLBACK pb_default_field_callback
 #define machine_ContentTypeStatuses_DEFAULT NULL
-#define machine_ContentTypeStatuses_content_statuses_MSGTYPE machine_ContentTypeStatus
+#define machine_ContentTypeStatuses_content_statuses_MSGTYPE machine_ContentTypeStatuses_ContentStatusesEntry
+
+#define machine_ContentTypeStatuses_ContentStatusesEntry_FIELDLIST(X, a) \
+X(a, CALLBACK, SINGULAR, STRING,   key,               1) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
+#define machine_ContentTypeStatuses_ContentStatusesEntry_CALLBACK pb_default_field_callback
+#define machine_ContentTypeStatuses_ContentStatusesEntry_DEFAULT NULL
+#define machine_ContentTypeStatuses_ContentStatusesEntry_value_MSGTYPE machine_ContentTypeStatus
 
 #define machine_ContentTypeStatus_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, UENUM,    content_type,      1) \
-X(a, CALLBACK, SINGULAR, STRING,   raw_title,         2) \
-X(a, CALLBACK, SINGULAR, STRING,   raw_description,   3) \
-X(a, CALLBACK, SINGULAR, STRING,   caption,           4) \
-X(a, CALLBACK, REPEATED, MESSAGE,  posts,             5)
+X(a, CALLBACK, SINGULAR, STRING,   raw_title,         1) \
+X(a, CALLBACK, SINGULAR, STRING,   raw_description,   2) \
+X(a, CALLBACK, SINGULAR, STRING,   caption,           3) \
+X(a, CALLBACK, REPEATED, MESSAGE,  posts,             4)
 #define machine_ContentTypeStatus_CALLBACK pb_default_field_callback
 #define machine_ContentTypeStatus_DEFAULT NULL
 #define machine_ContentTypeStatus_posts_MSGTYPE machine_Post
@@ -462,6 +477,7 @@ extern const pb_msgdesc_t machine_DispenseMetadataMap_msg;
 extern const pb_msgdesc_t machine_DispenseMetadataMap_DispenseMetadataEntry_msg;
 extern const pb_msgdesc_t machine_DispenseMetadata_msg;
 extern const pb_msgdesc_t machine_ContentTypeStatuses_msg;
+extern const pb_msgdesc_t machine_ContentTypeStatuses_ContentStatusesEntry_msg;
 extern const pb_msgdesc_t machine_ContentTypeStatus_msg;
 extern const pb_msgdesc_t machine_Post_msg;
 
@@ -479,6 +495,7 @@ extern const pb_msgdesc_t machine_Post_msg;
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_fields &machine_DispenseMetadataMap_DispenseMetadataEntry_msg
 #define machine_DispenseMetadata_fields &machine_DispenseMetadata_msg
 #define machine_ContentTypeStatuses_fields &machine_ContentTypeStatuses_msg
+#define machine_ContentTypeStatuses_ContentStatusesEntry_fields &machine_ContentTypeStatuses_ContentStatusesEntry_msg
 #define machine_ContentTypeStatus_fields &machine_ContentTypeStatus_msg
 #define machine_Post_fields &machine_Post_msg
 
@@ -488,6 +505,7 @@ extern const pb_msgdesc_t machine_Post_msg;
 /* machine_DispenseMetadataMap_size depends on runtime parameters */
 /* machine_DispenseMetadataMap_DispenseMetadataEntry_size depends on runtime parameters */
 /* machine_ContentTypeStatuses_size depends on runtime parameters */
+/* machine_ContentTypeStatuses_ContentStatusesEntry_size depends on runtime parameters */
 /* machine_ContentTypeStatus_size depends on runtime parameters */
 /* machine_Post_size depends on runtime parameters */
 #define machine_CollectionRequest_size           29
