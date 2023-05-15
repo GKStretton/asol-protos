@@ -145,3 +145,49 @@ message DispenseMetadata {
 	// how many ms later than expected the dispense happened
 	uint64 dispenseDelayMs = 2;
 }
+
+enum ContentType {
+	CONTENT_TYPE_UNDEFINED = 0;
+	CONTENT_TYPE_LONGFORM = 1;
+	CONTENT_TYPE_SHORTFORM = 2;
+	CONTENT_TYPE_CLEANING = 3;
+	CONTENT_TYPE_DSLR = 4;
+	CONTENT_TYPE_STILL = 5;
+}
+
+// statuses for all the content types for a specific session
+message SessionContentStatuses {
+	repeated ContentTypeStatus content_statuses = 1;
+}
+
+message ContentTypeStatus {
+	ContentType content_type = 1;
+	string raw_title = 2;
+	string raw_description = 3;
+	string caption = 4;
+	repeated Post posts = 5;
+}
+
+enum SocialPlatform {
+	SOCIAL_PLATFORM_UNDEFINED = 0;
+	SOCIAL_PLATFORM_YOUTUBE = 1;
+	SOCIAL_PLATFORM_TIKTOK = 2;
+	SOCIAL_PLATFORM_INSTAGRAM = 3;
+	SOCIAL_PLATFORM_FACEBOOK = 4;
+	SOCIAL_PLATFORM_TWITTER = 5;
+	SOCIAL_PLATFORM_REDDIT = 6;
+}
+
+message Post {
+	SocialPlatform platform = 1;
+	// e.g. subreddit
+	string sub_platform = 2;
+	string title = 3;
+	string description = 4;
+	bool uploaded = 5;
+	string url = 6;
+	// if true and relevant, crosspost rather than reuploading, e.g. for reddit
+	bool crosspost = 7;
+	// seconds ts of when to publish. If 0, publish immediately, because 0 is in the past.
+	uint64 scheduled_unix_timetamp = 8;
+}
