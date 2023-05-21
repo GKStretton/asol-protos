@@ -79,6 +79,7 @@ typedef struct _machine_ContentTypeStatus {
 
 typedef struct _machine_ContentTypeStatuses { 
     pb_callback_t content_statuses;
+    pb_callback_t splashtext;
 } machine_ContentTypeStatuses;
 
 typedef struct _machine_DispenseMetadataMap { 
@@ -108,6 +109,7 @@ typedef struct _machine_ContentTypeStatuses_ContentStatusesEntry {
 typedef struct _machine_DispenseMetadata { 
     /* str(ContentType) -> ContentTypeStatus */
     bool failedDispense;
+    /* splashtext for this session */
     uint64_t dispenseDelayMs;
 } machine_DispenseMetadata;
 
@@ -249,7 +251,7 @@ extern "C" {
 #define machine_DispenseMetadataMap_init_default {{{NULL}, NULL}}
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_default {{{NULL}, NULL}, false, machine_DispenseMetadata_init_default}
 #define machine_DispenseMetadata_init_default    {0, 0}
-#define machine_ContentTypeStatuses_init_default {{{NULL}, NULL}}
+#define machine_ContentTypeStatuses_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_ContentTypeStatuses_ContentStatusesEntry_init_default {{{NULL}, NULL}, false, machine_ContentTypeStatus_init_default}
 #define machine_ContentTypeStatus_init_default   {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_default                {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
@@ -265,7 +267,7 @@ extern "C" {
 #define machine_DispenseMetadataMap_init_zero    {{{NULL}, NULL}}
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_zero {{{NULL}, NULL}, false, machine_DispenseMetadata_init_zero}
 #define machine_DispenseMetadata_init_zero       {0, 0}
-#define machine_ContentTypeStatuses_init_zero    {{{NULL}, NULL}}
+#define machine_ContentTypeStatuses_init_zero    {{{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_ContentTypeStatuses_ContentStatusesEntry_init_zero {{{NULL}, NULL}, false, machine_ContentTypeStatus_init_zero}
 #define machine_ContentTypeStatus_init_zero      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_zero                   {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
@@ -274,8 +276,9 @@ extern "C" {
 #define machine_ContentTypeStatus_raw_title_tag  1
 #define machine_ContentTypeStatus_raw_description_tag 2
 #define machine_ContentTypeStatus_caption_tag    3
-#define machine_ContentTypeStatus_posts_tag      4
+#define machine_ContentTypeStatus_posts_tag      5
 #define machine_ContentTypeStatuses_content_statuses_tag 1
+#define machine_ContentTypeStatuses_splashtext_tag 2
 #define machine_DispenseMetadataMap_dispense_metadata_tag 1
 #define machine_StateReportList_StateReports_tag 1
 #define machine_CollectionRequest_completed_tag  1
@@ -431,7 +434,8 @@ X(a, STATIC,   SINGULAR, UINT64,   dispenseDelayMs,   2)
 #define machine_DispenseMetadata_DEFAULT NULL
 
 #define machine_ContentTypeStatuses_FIELDLIST(X, a) \
-X(a, CALLBACK, REPEATED, MESSAGE,  content_statuses,   1)
+X(a, CALLBACK, REPEATED, MESSAGE,  content_statuses,   1) \
+X(a, CALLBACK, SINGULAR, STRING,   splashtext,        2)
 #define machine_ContentTypeStatuses_CALLBACK pb_default_field_callback
 #define machine_ContentTypeStatuses_DEFAULT NULL
 #define machine_ContentTypeStatuses_content_statuses_MSGTYPE machine_ContentTypeStatuses_ContentStatusesEntry
@@ -447,7 +451,7 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
 X(a, CALLBACK, SINGULAR, STRING,   raw_title,         1) \
 X(a, CALLBACK, SINGULAR, STRING,   raw_description,   2) \
 X(a, CALLBACK, SINGULAR, STRING,   caption,           3) \
-X(a, CALLBACK, REPEATED, MESSAGE,  posts,             4)
+X(a, CALLBACK, REPEATED, MESSAGE,  posts,             5)
 #define machine_ContentTypeStatus_CALLBACK pb_default_field_callback
 #define machine_ContentTypeStatus_DEFAULT NULL
 #define machine_ContentTypeStatus_posts_MSGTYPE machine_Post
