@@ -10,6 +10,42 @@
 #endif
 
 /* Enum definitions */
+typedef enum _machine_Node { 
+    machine_Node_UNDEFINED = 0, 
+    machine_Node_HOME = 4, 
+    machine_Node_HOME_TOP = 8, 
+    /* Above and inside test tube positions
+ Note; INSIDE positions are valid for a range of z values, determined outside Navigation. */
+    machine_Node_VIAL_1_ABOVE = 10, 
+    machine_Node_MIN_VIAL_ABOVE = 10, 
+    machine_Node_VIAL_1_INSIDE = 15, 
+    machine_Node_MIN_VIAL_INSIDE = 15, 
+    machine_Node_VIAL_2_ABOVE = 20, 
+    machine_Node_VIAL_2_INSIDE = 25, 
+    machine_Node_VIAL_3_ABOVE = 30, 
+    machine_Node_VIAL_3_INSIDE = 35, 
+    machine_Node_VIAL_4_ABOVE = 40, 
+    machine_Node_VIAL_4_INSIDE = 45, 
+    machine_Node_VIAL_5_ABOVE = 50, 
+    machine_Node_VIAL_5_INSIDE = 55, 
+    machine_Node_VIAL_6_ABOVE = 60, 
+    machine_Node_VIAL_6_INSIDE = 65, 
+    machine_Node_VIAL_7_ABOVE = 70, 
+    machine_Node_MAX_VIAL_ABOVE = 70, 
+    machine_Node_VIAL_7_INSIDE = 75, 
+    machine_Node_MAX_VIAL_INSIDE = 75, 
+    /* The node to enter the lower (vial) regions at */
+    machine_Node_LOW_ENTRY_POINT = 30, 
+    /* High z but otherwise aligned for rinse container */
+    machine_Node_RINSE_CONTAINER_ENTRY = 80, 
+    /* Low z and aligned for rinse container (in water) */
+    machine_Node_RINSE_CONTAINER_LOW = 85, 
+    machine_Node_OUTER_HANDOVER = 90, 
+    machine_Node_INNER_HANDOVER = 110, 
+    machine_Node_INVERSE_KINEMATICS_POSITION = 150, 
+    machine_Node_IDLE_LOCATION = 8 
+} machine_Node;
+
 /* used in requests */
 typedef enum _machine_SolenoidValve { 
     machine_SolenoidValve_VALVE_UNDEFINED = 0, 
@@ -209,6 +245,10 @@ typedef struct _machine_StateReport {
 
 
 /* Helper constants for enums */
+#define _machine_Node_MIN machine_Node_UNDEFINED
+#define _machine_Node_MAX machine_Node_INVERSE_KINEMATICS_POSITION
+#define _machine_Node_ARRAYSIZE ((machine_Node)(machine_Node_INVERSE_KINEMATICS_POSITION+1))
+
 #define _machine_SolenoidValve_MIN machine_SolenoidValve_VALVE_UNDEFINED
 #define _machine_SolenoidValve_MAX machine_SolenoidValve_VALVE_AIR
 #define _machine_SolenoidValve_ARRAYSIZE ((machine_SolenoidValve)(machine_SolenoidValve_VALVE_AIR+1))
