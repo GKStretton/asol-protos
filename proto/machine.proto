@@ -241,3 +241,9 @@ message Post {
 	// seconds ts of when to publish. If 0, publish immediately, because 0 is in the past.
 	uint64 scheduled_unix_timetamp = 8;
 }
+
+// emails used for administration, not intended for audience distribution
+message Email {
+	string subject = 1;
+	string body = 2;
+}

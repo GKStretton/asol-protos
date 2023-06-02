@@ -4,6 +4,7 @@ const (
 	PAYLOAD_SMART_SWITCH_OFF string = "OFF"
 	PAYLOAD_SMART_SWITCH_ON string = "ON"
 	TOPIC_CLOSE_BLIND string = "asol/close_bedroom_blind"
+	TOPIC_EMAIL_SEND string = "asol/send-email"
 	TOPIC_KV_GET string = "asol/kv/get/"
 	TOPIC_KV_GET_RESP string = "asol/kv/get-resp/"
 	TOPIC_KV_SET string = "asol/kv/set/"
