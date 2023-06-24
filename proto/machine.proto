@@ -209,6 +209,7 @@ message ContentTypeStatuses {
 	map<string, ContentTypeStatus> content_statuses = 1;
 	// splashtext for this session
 	string splashtext = 2;
+	uint64 splashtext_hue = 3;
 }
 
 message ContentTypeStatus {

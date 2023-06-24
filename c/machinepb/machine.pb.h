@@ -114,11 +114,6 @@ typedef struct _machine_ContentTypeStatus {
     pb_callback_t posts;
 } machine_ContentTypeStatus;
 
-typedef struct _machine_ContentTypeStatuses { 
-    pb_callback_t content_statuses;
-    pb_callback_t splashtext;
-} machine_ContentTypeStatuses;
-
 typedef struct _machine_DispenseMetadataMap { 
     /* [startupCounter]_[dispenseRequestNumber] */
     pb_callback_t dispense_metadata;
@@ -139,6 +134,12 @@ typedef struct _machine_CollectionRequest {
     uint64_t vial_number;
     float volume_ul;
 } machine_CollectionRequest;
+
+typedef struct _machine_ContentTypeStatuses { 
+    pb_callback_t content_statuses;
+    pb_callback_t splashtext;
+    uint64_t splashtext_hue;
+} machine_ContentTypeStatuses;
 
 typedef struct _machine_ContentTypeStatuses_ContentStatusesEntry { 
     pb_callback_t key;
@@ -297,7 +298,7 @@ extern "C" {
 #define machine_DispenseMetadataMap_init_default {{{NULL}, NULL}}
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_default {{{NULL}, NULL}, false, machine_DispenseMetadata_init_default}
 #define machine_DispenseMetadata_init_default    {0, 0}
-#define machine_ContentTypeStatuses_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
+#define machine_ContentTypeStatuses_init_default {{{NULL}, NULL}, {{NULL}, NULL}, 0}
 #define machine_ContentTypeStatuses_ContentStatusesEntry_init_default {{{NULL}, NULL}, false, machine_ContentTypeStatus_init_default}
 #define machine_ContentTypeStatus_init_default   {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_default                {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
@@ -314,7 +315,7 @@ extern "C" {
 #define machine_DispenseMetadataMap_init_zero    {{{NULL}, NULL}}
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_zero {{{NULL}, NULL}, false, machine_DispenseMetadata_init_zero}
 #define machine_DispenseMetadata_init_zero       {0, 0}
-#define machine_ContentTypeStatuses_init_zero    {{{NULL}, NULL}, {{NULL}, NULL}}
+#define machine_ContentTypeStatuses_init_zero    {{{NULL}, NULL}, {{NULL}, NULL}, 0}
 #define machine_ContentTypeStatuses_ContentStatusesEntry_init_zero {{{NULL}, NULL}, false, machine_ContentTypeStatus_init_zero}
 #define machine_ContentTypeStatus_init_zero      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_zero                   {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
@@ -325,8 +326,6 @@ extern "C" {
 #define machine_ContentTypeStatus_raw_description_tag 2
 #define machine_ContentTypeStatus_caption_tag    3
 #define machine_ContentTypeStatus_posts_tag      5
-#define machine_ContentTypeStatuses_content_statuses_tag 1
-#define machine_ContentTypeStatuses_splashtext_tag 2
 #define machine_DispenseMetadataMap_dispense_metadata_tag 1
 #define machine_Email_subject_tag                1
 #define machine_Email_body_tag                   2
@@ -335,6 +334,9 @@ extern "C" {
 #define machine_CollectionRequest_request_number_tag 2
 #define machine_CollectionRequest_vial_number_tag 3
 #define machine_CollectionRequest_volume_ul_tag  4
+#define machine_ContentTypeStatuses_content_statuses_tag 1
+#define machine_ContentTypeStatuses_splashtext_tag 2
+#define machine_ContentTypeStatuses_splashtext_hue_tag 3
 #define machine_ContentTypeStatuses_ContentStatusesEntry_key_tag 1
 #define machine_ContentTypeStatuses_ContentStatusesEntry_value_tag 2
 #define machine_DispenseMetadata_failedDispense_tag 1
@@ -485,7 +487,8 @@ X(a, STATIC,   SINGULAR, UINT64,   dispenseDelayMs,   2)
 
 #define machine_ContentTypeStatuses_FIELDLIST(X, a) \
 X(a, CALLBACK, REPEATED, MESSAGE,  content_statuses,   1) \
-X(a, CALLBACK, SINGULAR, STRING,   splashtext,        2)
+X(a, CALLBACK, SINGULAR, STRING,   splashtext,        2) \
+X(a, STATIC,   SINGULAR, UINT64,   splashtext_hue,    3)
 #define machine_ContentTypeStatuses_CALLBACK pb_default_field_callback
 #define machine_ContentTypeStatuses_DEFAULT NULL
 #define machine_ContentTypeStatuses_content_statuses_MSGTYPE machine_ContentTypeStatuses_ContentStatusesEntry
