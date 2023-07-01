@@ -57,6 +57,12 @@ PB_BIND(machine_Post, machine_Post, AUTO)
 PB_BIND(machine_Email, machine_Email, AUTO)
 
 
+PB_BIND(machine_VialProfile, machine_VialProfile, AUTO)
+
+
+PB_BIND(machine_SystemVialConfiguration, machine_SystemVialConfiguration, AUTO)
+
+
 
 
 

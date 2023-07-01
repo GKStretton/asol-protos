@@ -1584,6 +1584,185 @@ func (x *Email) GetBody() string {
 	return ""
 }
 
+// This contains information about each vial/test tube.
+//
+// These should be maintained over time by the frontend interface and the backend
+// in response to dispenses.
+//
+// The current value is copied into session files when a session starts if it's in
+// the system.
+type VialProfile struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// incremental unique id for each vial in and out the system
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// this should have a complete description of the mixture, including base
+	// fluids and the percentage makeup of each. This may be augmented by
+	// quantised makeup data in future.
+	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	// the pipette slop, how much extra volume to move on the first dispense
+	SlopUl float32 `protobuf:"fixed32,3,opt,name=slop_ul,json=slopUl,proto3" json:"slop_ul,omitempty"`
+	// how much volume to dispense each time
+	DispenseVolumeUl float32 `protobuf:"fixed32,4,opt,name=dispense_volume_ul,json=dispenseVolumeUl,proto3" json:"dispense_volume_ul,omitempty"`
+	// how long after dispense to slow down the footage in the videos
+	FootageDelayMs float32 `protobuf:"fixed32,5,opt,name=footage_delay_ms,json=footageDelayMs,proto3" json:"footage_delay_ms,omitempty"`
+	// how long to keep the footage slowed down in the videos
+	FootageDurationMs float32 `protobuf:"fixed32,6,opt,name=footage_duration_ms,json=footageDurationMs,proto3" json:"footage_duration_ms,omitempty"`
+	// what speed to give the footage in the videos
+	FootageSpeedMult float32 `protobuf:"fixed32,7,opt,name=footage_speed_mult,json=footageSpeedMult,proto3" json:"footage_speed_mult,omitempty"`
+	// Volume when this was first put in vial
+	InitialVolumeUl float32 `protobuf:"fixed32,8,opt,name=initial_volume_ul,json=initialVolumeUl,proto3" json:"initial_volume_ul,omitempty"`
+	// Current volume. Note this will be just volume at start of session in
+	// session files.
+	CurrentVolumeUl float32 `protobuf:"fixed32,9,opt,name=current_volume_ul,json=currentVolumeUl,proto3" json:"current_volume_ul,omitempty"`
+}
+
+func (x *VialProfile) Reset() {
+	*x = VialProfile{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_machine_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VialProfile) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VialProfile) ProtoMessage() {}
+
+func (x *VialProfile) ProtoReflect() protoreflect.Message {
+	mi := &file_machine_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VialProfile.ProtoReflect.Descriptor instead.
+func (*VialProfile) Descriptor() ([]byte, []int) {
+	return file_machine_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *VialProfile) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *VialProfile) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *VialProfile) GetSlopUl() float32 {
+	if x != nil {
+		return x.SlopUl
+	}
+	return 0
+}
+
+func (x *VialProfile) GetDispenseVolumeUl() float32 {
+	if x != nil {
+		return x.DispenseVolumeUl
+	}
+	return 0
+}
+
+func (x *VialProfile) GetFootageDelayMs() float32 {
+	if x != nil {
+		return x.FootageDelayMs
+	}
+	return 0
+}
+
+func (x *VialProfile) GetFootageDurationMs() float32 {
+	if x != nil {
+		return x.FootageDurationMs
+	}
+	return 0
+}
+
+func (x *VialProfile) GetFootageSpeedMult() float32 {
+	if x != nil {
+		return x.FootageSpeedMult
+	}
+	return 0
+}
+
+func (x *VialProfile) GetInitialVolumeUl() float32 {
+	if x != nil {
+		return x.InitialVolumeUl
+	}
+	return 0
+}
+
+func (x *VialProfile) GetCurrentVolumeUl() float32 {
+	if x != nil {
+		return x.CurrentVolumeUl
+	}
+	return 0
+}
+
+// contains a list of vials, where the index is the corresponding vial position
+// in the system, offset by 1. Index 0 is vial position 1.
+type SystemVialConfiguration struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vials []*VialProfile `protobuf:"bytes,1,rep,name=vials,proto3" json:"vials,omitempty"`
+}
+
+func (x *SystemVialConfiguration) Reset() {
+	*x = SystemVialConfiguration{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_machine_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SystemVialConfiguration) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SystemVialConfiguration) ProtoMessage() {}
+
+func (x *SystemVialConfiguration) ProtoReflect() protoreflect.Message {
+	mi := &file_machine_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SystemVialConfiguration.ProtoReflect.Descriptor instead.
+func (*SystemVialConfiguration) Descriptor() ([]byte, []int) {
+	return file_machine_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *SystemVialConfiguration) GetVials() []*VialProfile {
+	if x != nil {
+		return x.Vials
+	}
+	return nil
+}
+
 var File_machine_proto protoreflect.FileDescriptor
 
 var file_machine_proto_rawDesc = []byte{
@@ -1762,6 +1941,33 @@ var file_machine_proto_rawDesc = []byte{
 	0x69, 0x6c, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x75, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x12, 0x0a, 0x04,
 	0x62, 0x6f, 0x64, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x62, 0x6f, 0x64, 0x79,
+	0x22, 0xe6, 0x02, 0x0a, 0x0b, 0x56, 0x69, 0x61, 0x6c, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64,
+	0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x17, 0x0a, 0x07, 0x73, 0x6c, 0x6f, 0x70, 0x5f, 0x75, 0x6c, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x02, 0x52, 0x06, 0x73, 0x6c, 0x6f, 0x70, 0x55, 0x6c, 0x12, 0x2c, 0x0a, 0x12, 0x64,
+	0x69, 0x73, 0x70, 0x65, 0x6e, 0x73, 0x65, 0x5f, 0x76, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x5f, 0x75,
+	0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x02, 0x52, 0x10, 0x64, 0x69, 0x73, 0x70, 0x65, 0x6e, 0x73,
+	0x65, 0x56, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x55, 0x6c, 0x12, 0x28, 0x0a, 0x10, 0x66, 0x6f, 0x6f,
+	0x74, 0x61, 0x67, 0x65, 0x5f, 0x64, 0x65, 0x6c, 0x61, 0x79, 0x5f, 0x6d, 0x73, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x02, 0x52, 0x0e, 0x66, 0x6f, 0x6f, 0x74, 0x61, 0x67, 0x65, 0x44, 0x65, 0x6c, 0x61,
+	0x79, 0x4d, 0x73, 0x12, 0x2e, 0x0a, 0x13, 0x66, 0x6f, 0x6f, 0x74, 0x61, 0x67, 0x65, 0x5f, 0x64,
+	0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6d, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x02,
+	0x52, 0x11, 0x66, 0x6f, 0x6f, 0x74, 0x61, 0x67, 0x65, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x4d, 0x73, 0x12, 0x2c, 0x0a, 0x12, 0x66, 0x6f, 0x6f, 0x74, 0x61, 0x67, 0x65, 0x5f, 0x73,
+	0x70, 0x65, 0x65, 0x64, 0x5f, 0x6d, 0x75, 0x6c, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x02, 0x52,
+	0x10, 0x66, 0x6f, 0x6f, 0x74, 0x61, 0x67, 0x65, 0x53, 0x70, 0x65, 0x65, 0x64, 0x4d, 0x75, 0x6c,
+	0x74, 0x12, 0x2a, 0x0a, 0x11, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x5f, 0x76, 0x6f, 0x6c,
+	0x75, 0x6d, 0x65, 0x5f, 0x75, 0x6c, 0x18, 0x08, 0x20, 0x01, 0x28, 0x02, 0x52, 0x0f, 0x69, 0x6e,
+	0x69, 0x74, 0x69, 0x61, 0x6c, 0x56, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x55, 0x6c, 0x12, 0x2a, 0x0a,
+	0x11, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x5f, 0x76, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x5f,
+	0x75, 0x6c, 0x18, 0x09, 0x20, 0x01, 0x28, 0x02, 0x52, 0x0f, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e,
+	0x74, 0x56, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x55, 0x6c, 0x22, 0x45, 0x0a, 0x17, 0x53, 0x79, 0x73,
+	0x74, 0x65, 0x6d, 0x56, 0x69, 0x61, 0x6c, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2a, 0x0a, 0x05, 0x76, 0x69, 0x61, 0x6c, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x69,
+	0x61, 0x6c, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x05, 0x76, 0x69, 0x61, 0x6c, 0x73,
 	0x2a, 0xac, 0x04, 0x0a, 0x04, 0x4e, 0x6f, 0x64, 0x65, 0x12, 0x0d, 0x0a, 0x09, 0x55, 0x4e, 0x44,
 	0x45, 0x46, 0x49, 0x4e, 0x45, 0x44, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x48, 0x4f, 0x4d, 0x45,
 	0x10, 0x04, 0x12, 0x0c, 0x0a, 0x08, 0x48, 0x4f, 0x4d, 0x45, 0x5f, 0x54, 0x4f, 0x50, 0x10, 0x08,
@@ -1874,32 +2080,34 @@ func file_machine_proto_rawDescGZIP() []byte {
 }
 
 var file_machine_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
-var file_machine_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_machine_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_machine_proto_goTypes = []interface{}{
-	(Node)(0),                   // 0: machine.Node
-	(SolenoidValve)(0),          // 1: machine.SolenoidValve
-	(Mode)(0),                   // 2: machine.Mode
-	(Status)(0),                 // 3: machine.Status
-	(FluidType)(0),              // 4: machine.FluidType
-	(ContentType)(0),            // 5: machine.ContentType
-	(SocialPlatform)(0),         // 6: machine.SocialPlatform
-	(*PipetteState)(nil),        // 7: machine.PipetteState
-	(*CollectionRequest)(nil),   // 8: machine.CollectionRequest
-	(*MovementDetails)(nil),     // 9: machine.MovementDetails
-	(*FluidRequest)(nil),        // 10: machine.FluidRequest
-	(*FluidDetails)(nil),        // 11: machine.FluidDetails
-	(*StateReport)(nil),         // 12: machine.StateReport
-	(*StateReportList)(nil),     // 13: machine.StateReportList
-	(*SessionStatus)(nil),       // 14: machine.SessionStatus
-	(*StreamStatus)(nil),        // 15: machine.StreamStatus
-	(*DispenseMetadataMap)(nil), // 16: machine.DispenseMetadataMap
-	(*DispenseMetadata)(nil),    // 17: machine.DispenseMetadata
-	(*ContentTypeStatuses)(nil), // 18: machine.ContentTypeStatuses
-	(*ContentTypeStatus)(nil),   // 19: machine.ContentTypeStatus
-	(*Post)(nil),                // 20: machine.Post
-	(*Email)(nil),               // 21: machine.Email
-	nil,                         // 22: machine.DispenseMetadataMap.DispenseMetadataEntry
-	nil,                         // 23: machine.ContentTypeStatuses.ContentStatusesEntry
+	(Node)(0),                       // 0: machine.Node
+	(SolenoidValve)(0),              // 1: machine.SolenoidValve
+	(Mode)(0),                       // 2: machine.Mode
+	(Status)(0),                     // 3: machine.Status
+	(FluidType)(0),                  // 4: machine.FluidType
+	(ContentType)(0),                // 5: machine.ContentType
+	(SocialPlatform)(0),             // 6: machine.SocialPlatform
+	(*PipetteState)(nil),            // 7: machine.PipetteState
+	(*CollectionRequest)(nil),       // 8: machine.CollectionRequest
+	(*MovementDetails)(nil),         // 9: machine.MovementDetails
+	(*FluidRequest)(nil),            // 10: machine.FluidRequest
+	(*FluidDetails)(nil),            // 11: machine.FluidDetails
+	(*StateReport)(nil),             // 12: machine.StateReport
+	(*StateReportList)(nil),         // 13: machine.StateReportList
+	(*SessionStatus)(nil),           // 14: machine.SessionStatus
+	(*StreamStatus)(nil),            // 15: machine.StreamStatus
+	(*DispenseMetadataMap)(nil),     // 16: machine.DispenseMetadataMap
+	(*DispenseMetadata)(nil),        // 17: machine.DispenseMetadata
+	(*ContentTypeStatuses)(nil),     // 18: machine.ContentTypeStatuses
+	(*ContentTypeStatus)(nil),       // 19: machine.ContentTypeStatus
+	(*Post)(nil),                    // 20: machine.Post
+	(*Email)(nil),                   // 21: machine.Email
+	(*VialProfile)(nil),             // 22: machine.VialProfile
+	(*SystemVialConfiguration)(nil), // 23: machine.SystemVialConfiguration
+	nil,                             // 24: machine.DispenseMetadataMap.DispenseMetadataEntry
+	nil,                             // 25: machine.ContentTypeStatuses.ContentStatusesEntry
 }
 var file_machine_proto_depIdxs = []int32{
 	4,  // 0: machine.FluidRequest.fluidType:type_name -> machine.FluidType
@@ -1911,17 +2119,18 @@ var file_machine_proto_depIdxs = []int32{
 	10, // 6: machine.StateReport.fluid_request:type_name -> machine.FluidRequest
 	11, // 7: machine.StateReport.fluid_details:type_name -> machine.FluidDetails
 	12, // 8: machine.StateReportList.StateReports:type_name -> machine.StateReport
-	22, // 9: machine.DispenseMetadataMap.dispense_metadata:type_name -> machine.DispenseMetadataMap.DispenseMetadataEntry
-	23, // 10: machine.ContentTypeStatuses.content_statuses:type_name -> machine.ContentTypeStatuses.ContentStatusesEntry
+	24, // 9: machine.DispenseMetadataMap.dispense_metadata:type_name -> machine.DispenseMetadataMap.DispenseMetadataEntry
+	25, // 10: machine.ContentTypeStatuses.content_statuses:type_name -> machine.ContentTypeStatuses.ContentStatusesEntry
 	20, // 11: machine.ContentTypeStatus.posts:type_name -> machine.Post
 	6,  // 12: machine.Post.platform:type_name -> machine.SocialPlatform
-	17, // 13: machine.DispenseMetadataMap.DispenseMetadataEntry.value:type_name -> machine.DispenseMetadata
-	19, // 14: machine.ContentTypeStatuses.ContentStatusesEntry.value:type_name -> machine.ContentTypeStatus
-	15, // [15:15] is the sub-list for method output_type
-	15, // [15:15] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	22, // 13: machine.SystemVialConfiguration.vials:type_name -> machine.VialProfile
+	17, // 14: machine.DispenseMetadataMap.DispenseMetadataEntry.value:type_name -> machine.DispenseMetadata
+	19, // 15: machine.ContentTypeStatuses.ContentStatusesEntry.value:type_name -> machine.ContentTypeStatus
+	16, // [16:16] is the sub-list for method output_type
+	16, // [16:16] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_machine_proto_init() }
@@ -2110,6 +2319,30 @@ func file_machine_proto_init() {
 				return nil
 			}
 		}
+		file_machine_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VialProfile); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_machine_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SystemVialConfiguration); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2117,7 +2350,7 @@ func file_machine_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_machine_proto_rawDesc,
 			NumEnums:      7,
-			NumMessages:   17,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

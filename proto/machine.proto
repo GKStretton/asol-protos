@@ -248,3 +248,46 @@ message Email {
 	string subject = 1;
 	string body = 2;
 }
+
+/*
+This contains information about each vial/test tube.
+
+These should be maintained over time by the frontend interface and the backend
+in response to dispenses.
+
+The current value is copied into session files when a session starts if it's in
+the system.
+*/
+message VialProfile {
+	// incremental unique id for each vial in and out the system
+	uint64 id = 1;
+	// this should have a complete description of the mixture, including base
+	// fluids and the percentage makeup of each. This may be augmented by
+	// quantised makeup data in future.
+	string description = 2;
+	// the pipette slop, how much extra volume to move on the first dispense
+	float slop_ul = 3;
+	// how much volume to dispense each time
+	float dispense_volume_ul = 4;
+
+	//* The following may be derived from detailed mixture properties in future
+
+	// how long after dispense to slow down the footage in the videos
+	float footage_delay_ms = 5;
+	// how long to keep the footage slowed down in the videos
+	float footage_duration_ms = 6;
+	// what speed to give the footage in the videos
+	float footage_speed_mult = 7;
+
+	// Volume when this was first put in vial
+	float initial_volume_ul = 8;
+	// Current volume. Note this will be just volume at start of session in
+	// session files.
+	float current_volume_ul = 9;
+}
+
+// contains a list of vials, where the index is the corresponding vial position
+// in the system, offset by 1. Index 0 is vial position 1.
+message SystemVialConfiguration {
+	repeated VialProfile vials = 1;
+}

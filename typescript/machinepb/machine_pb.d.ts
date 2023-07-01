@@ -487,6 +487,80 @@ export namespace Email {
   }
 }
 
+export class VialProfile extends jspb.Message {
+  getId(): number;
+  setId(value: number): void;
+
+  getDescription(): string;
+  setDescription(value: string): void;
+
+  getSlopUl(): number;
+  setSlopUl(value: number): void;
+
+  getDispenseVolumeUl(): number;
+  setDispenseVolumeUl(value: number): void;
+
+  getFootageDelayMs(): number;
+  setFootageDelayMs(value: number): void;
+
+  getFootageDurationMs(): number;
+  setFootageDurationMs(value: number): void;
+
+  getFootageSpeedMult(): number;
+  setFootageSpeedMult(value: number): void;
+
+  getInitialVolumeUl(): number;
+  setInitialVolumeUl(value: number): void;
+
+  getCurrentVolumeUl(): number;
+  setCurrentVolumeUl(value: number): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): VialProfile.AsObject;
+  static toObject(includeInstance: boolean, msg: VialProfile): VialProfile.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: VialProfile, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): VialProfile;
+  static deserializeBinaryFromReader(message: VialProfile, reader: jspb.BinaryReader): VialProfile;
+}
+
+export namespace VialProfile {
+  export type AsObject = {
+    id: number,
+    description: string,
+    slopUl: number,
+    dispenseVolumeUl: number,
+    footageDelayMs: number,
+    footageDurationMs: number,
+    footageSpeedMult: number,
+    initialVolumeUl: number,
+    currentVolumeUl: number,
+  }
+}
+
+export class SystemVialConfiguration extends jspb.Message {
+  clearVialsList(): void;
+  getVialsList(): Array<VialProfile>;
+  setVialsList(value: Array<VialProfile>): void;
+  addVials(value?: VialProfile, index?: number): VialProfile;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SystemVialConfiguration.AsObject;
+  static toObject(includeInstance: boolean, msg: SystemVialConfiguration): SystemVialConfiguration.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: SystemVialConfiguration, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SystemVialConfiguration;
+  static deserializeBinaryFromReader(message: SystemVialConfiguration, reader: jspb.BinaryReader): SystemVialConfiguration;
+}
+
+export namespace SystemVialConfiguration {
+  export type AsObject = {
+    vialsList: Array<VialProfile.AsObject>,
+  }
+}
+
 export interface NodeMap {
   UNDEFINED: 0;
   HOME: 4;
