@@ -1,6 +1,8 @@
 #ifndef MQTT_CONSTANTS_H
 #define MQTT_CONSTANTS_H
 
+#define KV_KEY_ALL_VIAL_PROFILES "vial-profiles"
+#define KV_KEY_SYSTEM_VIAL_PROFILES "system-vial-profiles"
 #define PAYLOAD_SMART_SWITCH_OFF "OFF"
 #define PAYLOAD_SMART_SWITCH_ON "ON"
 #define TOPIC_CLOSE_BLIND "asol/close_bedroom_blind"
@@ -14,14 +16,6 @@
 #define TOPIC_MONITOR_OFF "asol/monitor_off"
 #define TOPIC_MONITOR_ON "asol/monitor_on"
 #define TOPIC_OPEN_BLIND "asol/open_bedroom_blind"
-#define TOPIC_PROFILES_LIST "asol/profiles/list"
-#define TOPIC_PROFILES_LIST_RESP "asol/profiles/list-resp"
-#define TOPIC_PROFILES_SYSTEM_UPDATE "asol/system-profiles/update"
-#define TOPIC_PROFILE_CREATE "asol/profile/create"
-#define TOPIC_PROFILE_DELETE "asol/profile/delete"
-#define TOPIC_PROFILE_GET "asol/profile/get"
-#define TOPIC_PROFILE_GET_RESP "asol/profile/get-resp"
-#define TOPIC_PROFILE_UPDATE "asol/profile/update"
 #define TOPIC_SESSION_BEGAN "asol/session/began"
 #define TOPIC_SESSION_BEGIN "asol/session/begin"
 #define TOPIC_SESSION_END "asol/session/end"
@@ -41,8 +35,6 @@
 #define TOPIC_STREAM_STATUS_GET "asol/stream/status-get"
 #define TOPIC_STREAM_STATUS_RESP_JSON "asol/stream/status-resp-json"
 #define TOPIC_STREAM_STATUS_RESP_RAW "asol/stream/status-resp-raw"
-#define TOPIC_SYSTEM_PROFILES_GET "asol/system-profiles/get"
-#define TOPIC_SYSTEM_PROFILES_GET_RESP "asol/system-profiles/get-resp"
 #define TOPIC_TRIGGER_DSLR "asol/dslr-crop-capture"
 #define TOPIC_TRIGGER_DSLR_RESP "asol/dslr-crop-capture-resp"
 #define TOPIC_VIDEOS_GENERATED "asol/videos-generated"

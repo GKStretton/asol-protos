@@ -45,17 +45,7 @@ constants:
 
   TOPIC_EMAIL_SEND: "asol/send-email"
 
-  TOPIC_PROFILES_LIST: "asol/profiles/list"
-  TOPIC_PROFILES_LIST_RESP: "asol/profiles/list-resp"
-
-  TOPIC_PROFILE_GET: "asol/profile/get"
-  TOPIC_PROFILE_GET_RESP: "asol/profile/get-resp"
-  TOPIC_PROFILE_CREATE: "asol/profile/create"
-  TOPIC_PROFILE_UPDATE: "asol/profile/update"
-  TOPIC_PROFILE_DELETE: "asol/profile/delete"
-
-  # Get the profile ids for the system positions (SystemVialConfiguration)
-  TOPIC_SYSTEM_PROFILES_GET: "asol/system-profiles/get"
-  TOPIC_SYSTEM_PROFILES_GET_RESP: "asol/system-profiles/get-resp"
-  # Update the profile ids for the system positions (SystemVialConfiguration)
-  TOPIC_PROFILES_SYSTEM_UPDATE: "asol/system-profiles/update"
+  # (VialProfileCollection)
+  KV_KEY_ALL_VIAL_PROFILES: "vial-profiles"
+  # (SystemVialConfiguration)
+  KV_KEY_SYSTEM_VIAL_PROFILES: "system-vial-profiles"
