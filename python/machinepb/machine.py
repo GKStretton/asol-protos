@@ -288,8 +288,31 @@ class VialProfile(betterproto.Message):
 @dataclass
 class SystemVialConfiguration(betterproto.Message):
     """
-    contains a list of vials, where the index is the corresponding vial
-    position in the system, offset by 1. Index 0 is vial position 1.
+    contains a map of the current vial positions to vial profile ids vial
+    position -> VialProfile id.
     """
 
-    vials: List["VialProfile"] = betterproto.message_field(1)
+    vials: Dict[int, int] = betterproto.map_field(
+        1, betterproto.TYPE_UINT64, betterproto.TYPE_UINT64
+    )
+
+
+@dataclass
+class VialProfileCollection(betterproto.Message):
+    """this is for all the VialProfiles, mapped by id."""
+
+    # VialProfile ID -> VialProfile
+    profiles: Dict[int, "VialProfile"] = betterproto.map_field(
+        1, betterproto.TYPE_UINT64, betterproto.TYPE_MESSAGE
+    )
+
+
+@dataclass
+class SystemVialConfigurationSnapshot(betterproto.Message):
+    """
+    contains a static snapshot of the VialProfiles for each system position
+    """
+
+    profiles: Dict[int, "VialProfile"] = betterproto.map_field(
+        1, betterproto.TYPE_UINT64, betterproto.TYPE_MESSAGE
+    )

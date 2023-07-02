@@ -119,8 +119,8 @@ typedef struct _machine_DispenseMetadataMap {
     pb_callback_t dispense_metadata;
 } machine_DispenseMetadataMap;
 
-/* contains a list of vials, where the index is the corresponding vial position
- in the system, offset by 1. Index 0 is vial position 1. */
+/* contains a map of the current vial positions to vial profile ids
+ vial position -> VialProfile id. */
 typedef struct _machine_Email { 
     pb_callback_t subject;
     pb_callback_t body;
@@ -130,9 +130,18 @@ typedef struct _machine_StateReportList {
     pb_callback_t StateReports;
 } machine_StateReportList;
 
+/* contains a static snapshot of the VialProfiles for each system position */
 typedef struct _machine_SystemVialConfiguration { 
     pb_callback_t vials;
 } machine_SystemVialConfiguration;
+
+typedef struct _machine_SystemVialConfigurationSnapshot { 
+    pb_callback_t profiles;
+} machine_SystemVialConfigurationSnapshot;
+
+typedef struct _machine_VialProfileCollection { 
+    pb_callback_t profiles;
+} machine_VialProfileCollection;
 
 typedef struct _machine_CollectionRequest { 
     bool completed;
@@ -239,7 +248,14 @@ typedef struct _machine_StreamStatus {
     bool live;
 } machine_StreamStatus;
 
+typedef struct _machine_SystemVialConfiguration_VialsEntry { 
+    uint64_t key;
+    uint64_t value;
+} machine_SystemVialConfiguration_VialsEntry;
+
+/* this is for all the VialProfiles, mapped by id. */
 typedef struct _machine_VialProfile { 
+    /* VialProfile ID -> VialProfile */
     uint64_t id;
     pb_callback_t description;
     float slop_ul;
@@ -284,6 +300,18 @@ typedef struct _machine_StateReport {
     /* e.g. 1 for 0001.jpg */
     uint64_t latest_dslr_file_number;
 } machine_StateReport;
+
+typedef struct _machine_SystemVialConfigurationSnapshot_ProfilesEntry { 
+    uint64_t key;
+    bool has_value;
+    machine_VialProfile value;
+} machine_SystemVialConfigurationSnapshot_ProfilesEntry;
+
+typedef struct _machine_VialProfileCollection_ProfilesEntry { 
+    uint64_t key;
+    bool has_value;
+    machine_VialProfile value;
+} machine_VialProfileCollection_ProfilesEntry;
 
 
 /* Helper constants for enums */
@@ -340,6 +368,11 @@ extern "C" {
 #define machine_Email_init_default               {{{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_VialProfile_init_default         {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0}
 #define machine_SystemVialConfiguration_init_default {{{NULL}, NULL}}
+#define machine_SystemVialConfiguration_VialsEntry_init_default {0, 0}
+#define machine_VialProfileCollection_init_default {{{NULL}, NULL}}
+#define machine_VialProfileCollection_ProfilesEntry_init_default {0, false, machine_VialProfile_init_default}
+#define machine_SystemVialConfigurationSnapshot_init_default {{{NULL}, NULL}}
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_init_default {0, false, machine_VialProfile_init_default}
 #define machine_PipetteState_init_zero           {0, 0, 0, 0}
 #define machine_CollectionRequest_init_zero      {0, 0, 0, 0}
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0, 0}
@@ -359,6 +392,11 @@ extern "C" {
 #define machine_Email_init_zero                  {{{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_VialProfile_init_zero            {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0}
 #define machine_SystemVialConfiguration_init_zero {{{NULL}, NULL}}
+#define machine_SystemVialConfiguration_VialsEntry_init_zero {0, 0}
+#define machine_VialProfileCollection_init_zero  {{{NULL}, NULL}}
+#define machine_VialProfileCollection_ProfilesEntry_init_zero {0, false, machine_VialProfile_init_zero}
+#define machine_SystemVialConfigurationSnapshot_init_zero {{{NULL}, NULL}}
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_init_zero {0, false, machine_VialProfile_init_zero}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define machine_ContentTypeStatus_raw_title_tag  1
@@ -370,6 +408,8 @@ extern "C" {
 #define machine_Email_body_tag                   2
 #define machine_StateReportList_StateReports_tag 1
 #define machine_SystemVialConfiguration_vials_tag 1
+#define machine_SystemVialConfigurationSnapshot_profiles_tag 1
+#define machine_VialProfileCollection_profiles_tag 1
 #define machine_CollectionRequest_completed_tag  1
 #define machine_CollectionRequest_request_number_tag 2
 #define machine_CollectionRequest_vial_number_tag 3
@@ -409,6 +449,8 @@ extern "C" {
 #define machine_SessionStatus_production_tag     4
 #define machine_SessionStatus_production_id_tag  5
 #define machine_StreamStatus_live_tag            1
+#define machine_SystemVialConfiguration_VialsEntry_key_tag 1
+#define machine_SystemVialConfiguration_VialsEntry_value_tag 2
 #define machine_VialProfile_id_tag               1
 #define machine_VialProfile_description_tag      2
 #define machine_VialProfile_slop_ul_tag          3
@@ -433,6 +475,10 @@ extern "C" {
 #define machine_StateReport_paused_tag           50
 #define machine_StateReport_timestamp_readable_tag 51
 #define machine_StateReport_latest_dslr_file_number_tag 52
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_key_tag 1
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_value_tag 2
+#define machine_VialProfileCollection_ProfilesEntry_key_tag 1
+#define machine_VialProfileCollection_ProfilesEntry_value_tag 2
 
 /* Struct field encoding specification for nanopb */
 #define machine_PipetteState_FIELDLIST(X, a) \
@@ -593,7 +639,39 @@ X(a, STATIC,   SINGULAR, FLOAT,    current_volume_ul,   9)
 X(a, CALLBACK, REPEATED, MESSAGE,  vials,             1)
 #define machine_SystemVialConfiguration_CALLBACK pb_default_field_callback
 #define machine_SystemVialConfiguration_DEFAULT NULL
-#define machine_SystemVialConfiguration_vials_MSGTYPE machine_VialProfile
+#define machine_SystemVialConfiguration_vials_MSGTYPE machine_SystemVialConfiguration_VialsEntry
+
+#define machine_SystemVialConfiguration_VialsEntry_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UINT64,   key,               1) \
+X(a, STATIC,   SINGULAR, UINT64,   value,             2)
+#define machine_SystemVialConfiguration_VialsEntry_CALLBACK NULL
+#define machine_SystemVialConfiguration_VialsEntry_DEFAULT NULL
+
+#define machine_VialProfileCollection_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, MESSAGE,  profiles,          1)
+#define machine_VialProfileCollection_CALLBACK pb_default_field_callback
+#define machine_VialProfileCollection_DEFAULT NULL
+#define machine_VialProfileCollection_profiles_MSGTYPE machine_VialProfileCollection_ProfilesEntry
+
+#define machine_VialProfileCollection_ProfilesEntry_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UINT64,   key,               1) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
+#define machine_VialProfileCollection_ProfilesEntry_CALLBACK NULL
+#define machine_VialProfileCollection_ProfilesEntry_DEFAULT NULL
+#define machine_VialProfileCollection_ProfilesEntry_value_MSGTYPE machine_VialProfile
+
+#define machine_SystemVialConfigurationSnapshot_FIELDLIST(X, a) \
+X(a, CALLBACK, REPEATED, MESSAGE,  profiles,          1)
+#define machine_SystemVialConfigurationSnapshot_CALLBACK pb_default_field_callback
+#define machine_SystemVialConfigurationSnapshot_DEFAULT NULL
+#define machine_SystemVialConfigurationSnapshot_profiles_MSGTYPE machine_SystemVialConfigurationSnapshot_ProfilesEntry
+
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UINT64,   key,               1) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_CALLBACK NULL
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_DEFAULT NULL
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_value_MSGTYPE machine_VialProfile
 
 extern const pb_msgdesc_t machine_PipetteState_msg;
 extern const pb_msgdesc_t machine_CollectionRequest_msg;
@@ -614,6 +692,11 @@ extern const pb_msgdesc_t machine_Post_msg;
 extern const pb_msgdesc_t machine_Email_msg;
 extern const pb_msgdesc_t machine_VialProfile_msg;
 extern const pb_msgdesc_t machine_SystemVialConfiguration_msg;
+extern const pb_msgdesc_t machine_SystemVialConfiguration_VialsEntry_msg;
+extern const pb_msgdesc_t machine_VialProfileCollection_msg;
+extern const pb_msgdesc_t machine_VialProfileCollection_ProfilesEntry_msg;
+extern const pb_msgdesc_t machine_SystemVialConfigurationSnapshot_msg;
+extern const pb_msgdesc_t machine_SystemVialConfigurationSnapshot_ProfilesEntry_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define machine_PipetteState_fields &machine_PipetteState_msg
@@ -635,6 +718,11 @@ extern const pb_msgdesc_t machine_SystemVialConfiguration_msg;
 #define machine_Email_fields &machine_Email_msg
 #define machine_VialProfile_fields &machine_VialProfile_msg
 #define machine_SystemVialConfiguration_fields &machine_SystemVialConfiguration_msg
+#define machine_SystemVialConfiguration_VialsEntry_fields &machine_SystemVialConfiguration_VialsEntry_msg
+#define machine_VialProfileCollection_fields &machine_VialProfileCollection_msg
+#define machine_VialProfileCollection_ProfilesEntry_fields &machine_VialProfileCollection_ProfilesEntry_msg
+#define machine_SystemVialConfigurationSnapshot_fields &machine_SystemVialConfigurationSnapshot_msg
+#define machine_SystemVialConfigurationSnapshot_ProfilesEntry_fields &machine_SystemVialConfigurationSnapshot_ProfilesEntry_msg
 
 /* Maximum encoded size of messages (where known) */
 /* machine_StateReport_size depends on runtime parameters */
@@ -648,6 +736,10 @@ extern const pb_msgdesc_t machine_SystemVialConfiguration_msg;
 /* machine_Email_size depends on runtime parameters */
 /* machine_VialProfile_size depends on runtime parameters */
 /* machine_SystemVialConfiguration_size depends on runtime parameters */
+/* machine_VialProfileCollection_size depends on runtime parameters */
+/* machine_VialProfileCollection_ProfilesEntry_size depends on runtime parameters */
+/* machine_SystemVialConfigurationSnapshot_size depends on runtime parameters */
+/* machine_SystemVialConfigurationSnapshot_ProfilesEntry_size depends on runtime parameters */
 #define machine_CollectionRequest_size           29
 #define machine_DispenseMetadata_size            13
 #define machine_FluidDetails_size                5
@@ -656,6 +748,7 @@ extern const pb_msgdesc_t machine_SystemVialConfiguration_msg;
 #define machine_PipetteState_size                19
 #define machine_SessionStatus_size               28
 #define machine_StreamStatus_size                2
+#define machine_SystemVialConfiguration_VialsEntry_size 22
 
 #ifdef __cplusplus
 } /* extern "C" */
