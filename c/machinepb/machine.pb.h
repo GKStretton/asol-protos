@@ -232,7 +232,8 @@ typedef struct _machine_Post {
     pb_callback_t url;
     /* what speed to give the footage in the videos */
     bool crosspost;
-    /* Volume when this was first put in vial */
+    /* if true, footage of this profile will not be treated differently
+ to other footage (no slowdown etc.) */
     uint64_t scheduled_unix_timetamp;
 } machine_Post;
 
@@ -263,6 +264,7 @@ typedef struct _machine_VialProfile {
     float footage_delay_ms;
     float footage_duration_ms;
     float footage_speed_mult;
+    bool footage_ignore;
     float initial_volume_ul;
     float current_volume_ul;
 } machine_VialProfile;
@@ -366,7 +368,7 @@ extern "C" {
 #define machine_ContentTypeStatus_init_default   {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_default                {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
 #define machine_Email_init_default               {{{NULL}, NULL}, {{NULL}, NULL}}
-#define machine_VialProfile_init_default         {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0}
+#define machine_VialProfile_init_default         {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0}
 #define machine_SystemVialConfiguration_init_default {{{NULL}, NULL}}
 #define machine_SystemVialConfiguration_VialsEntry_init_default {0, 0}
 #define machine_VialProfileCollection_init_default {{{NULL}, NULL}}
@@ -390,7 +392,7 @@ extern "C" {
 #define machine_ContentTypeStatus_init_zero      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_zero                   {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
 #define machine_Email_init_zero                  {{{NULL}, NULL}, {{NULL}, NULL}}
-#define machine_VialProfile_init_zero            {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0}
+#define machine_VialProfile_init_zero            {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0}
 #define machine_SystemVialConfiguration_init_zero {{{NULL}, NULL}}
 #define machine_SystemVialConfiguration_VialsEntry_init_zero {0, 0}
 #define machine_VialProfileCollection_init_zero  {{{NULL}, NULL}}
@@ -458,8 +460,9 @@ extern "C" {
 #define machine_VialProfile_footage_delay_ms_tag 5
 #define machine_VialProfile_footage_duration_ms_tag 6
 #define machine_VialProfile_footage_speed_mult_tag 7
-#define machine_VialProfile_initial_volume_ul_tag 8
-#define machine_VialProfile_current_volume_ul_tag 9
+#define machine_VialProfile_footage_ignore_tag   8
+#define machine_VialProfile_initial_volume_ul_tag 9
+#define machine_VialProfile_current_volume_ul_tag 10
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_key_tag 1
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_value_tag 2
 #define machine_StateReport_timestamp_unix_micros_tag 2
@@ -630,8 +633,9 @@ X(a, STATIC,   SINGULAR, FLOAT,    dispense_volume_ul,   4) \
 X(a, STATIC,   SINGULAR, FLOAT,    footage_delay_ms,   5) \
 X(a, STATIC,   SINGULAR, FLOAT,    footage_duration_ms,   6) \
 X(a, STATIC,   SINGULAR, FLOAT,    footage_speed_mult,   7) \
-X(a, STATIC,   SINGULAR, FLOAT,    initial_volume_ul,   8) \
-X(a, STATIC,   SINGULAR, FLOAT,    current_volume_ul,   9)
+X(a, STATIC,   SINGULAR, BOOL,     footage_ignore,    8) \
+X(a, STATIC,   SINGULAR, FLOAT,    initial_volume_ul,   9) \
+X(a, STATIC,   SINGULAR, FLOAT,    current_volume_ul,  10)
 #define machine_VialProfile_CALLBACK pb_default_field_callback
 #define machine_VialProfile_DEFAULT NULL
 

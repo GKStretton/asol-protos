@@ -278,12 +278,15 @@ message VialProfile {
 	float footage_duration_ms = 6;
 	// what speed to give the footage in the videos
 	float footage_speed_mult = 7;
+	// if true, footage of this profile will not be treated differently
+	// to other footage (no slowdown etc.)
+	bool footage_ignore = 8;
 
 	// Volume when this was first put in vial
-	float initial_volume_ul = 8;
+	float initial_volume_ul = 9;
 	// Current volume. Note this will be just volume at start of session in
 	// session files.
-	float current_volume_ul = 9;
+	float current_volume_ul = 10;
 }
 
 // contains a map of the current vial positions to vial profile ids
