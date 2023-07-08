@@ -189,9 +189,13 @@ message DispenseMetadataMap {
 }
 
 message DispenseMetadata {
-	bool failedDispense = 1;
+	bool failed_dispense = 1;
 	// how many ms later than expected the dispense happened
-	uint64 dispenseDelayMs = 2;
+	uint64 dispense_delay_ms = 2;
+	// if non-zero, override the vial profile's duration with this value.
+	uint64 min_duration_override_ms = 3;
+	// if non-zero, override the vial profile's speed with this value.
+	uint64 speed_mult_override = 4;
 }
 
 enum ContentType {
@@ -273,9 +277,9 @@ message VialProfile {
 	//* The following may be derived from detailed mixture properties in future
 
 	// how long after dispense to slow down the footage in the videos
-	float footage_delay_ms = 5;
+	uint64 footage_delay_ms = 5;
 	// how long to keep the footage slowed down in the videos
-	float footage_duration_ms = 6;
+	uint64 footage_min_duration_ms = 6;
 	// what speed to give the footage in the videos
 	float footage_speed_mult = 7;
 	// if true, footage of this profile will not be treated differently

@@ -166,9 +166,11 @@ typedef struct _machine_ContentTypeStatuses_ContentStatusesEntry {
 /* statuses for all the content types for a specific session */
 typedef struct _machine_DispenseMetadata { 
     /* str(ContentType) -> ContentTypeStatus */
-    bool failedDispense;
+    bool failed_dispense;
     /* splashtext for this session */
-    uint64_t dispenseDelayMs;
+    uint64_t dispense_delay_ms;
+    uint64_t min_duration_override_ms;
+    uint64_t speed_mult_override;
 } machine_DispenseMetadata;
 
 typedef struct _machine_FluidDetails { 
@@ -261,8 +263,8 @@ typedef struct _machine_VialProfile {
     pb_callback_t description;
     float slop_ul;
     float dispense_volume_ul;
-    float footage_delay_ms;
-    float footage_duration_ms;
+    uint64_t footage_delay_ms;
+    uint64_t footage_min_duration_ms;
     float footage_speed_mult;
     bool footage_ignore;
     float initial_volume_ul;
@@ -362,7 +364,7 @@ extern "C" {
 #define machine_StreamStatus_init_default        {0}
 #define machine_DispenseMetadataMap_init_default {{{NULL}, NULL}}
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_default {{{NULL}, NULL}, false, machine_DispenseMetadata_init_default}
-#define machine_DispenseMetadata_init_default    {0, 0}
+#define machine_DispenseMetadata_init_default    {0, 0, 0, 0}
 #define machine_ContentTypeStatuses_init_default {{{NULL}, NULL}, {{NULL}, NULL}, 0}
 #define machine_ContentTypeStatuses_ContentStatusesEntry_init_default {{{NULL}, NULL}, false, machine_ContentTypeStatus_init_default}
 #define machine_ContentTypeStatus_init_default   {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
@@ -386,7 +388,7 @@ extern "C" {
 #define machine_StreamStatus_init_zero           {0}
 #define machine_DispenseMetadataMap_init_zero    {{{NULL}, NULL}}
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_init_zero {{{NULL}, NULL}, false, machine_DispenseMetadata_init_zero}
-#define machine_DispenseMetadata_init_zero       {0, 0}
+#define machine_DispenseMetadata_init_zero       {0, 0, 0, 0}
 #define machine_ContentTypeStatuses_init_zero    {{{NULL}, NULL}, {{NULL}, NULL}, 0}
 #define machine_ContentTypeStatuses_ContentStatusesEntry_init_zero {{{NULL}, NULL}, false, machine_ContentTypeStatus_init_zero}
 #define machine_ContentTypeStatus_init_zero      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
@@ -421,8 +423,10 @@ extern "C" {
 #define machine_ContentTypeStatuses_splashtext_hue_tag 3
 #define machine_ContentTypeStatuses_ContentStatusesEntry_key_tag 1
 #define machine_ContentTypeStatuses_ContentStatusesEntry_value_tag 2
-#define machine_DispenseMetadata_failedDispense_tag 1
-#define machine_DispenseMetadata_dispenseDelayMs_tag 2
+#define machine_DispenseMetadata_failed_dispense_tag 1
+#define machine_DispenseMetadata_dispense_delay_ms_tag 2
+#define machine_DispenseMetadata_min_duration_override_ms_tag 3
+#define machine_DispenseMetadata_speed_mult_override_tag 4
 #define machine_FluidDetails_bowl_fluid_level_ml_tag 1
 #define machine_FluidRequest_fluidType_tag       1
 #define machine_FluidRequest_volume_ml_tag       2
@@ -458,7 +462,7 @@ extern "C" {
 #define machine_VialProfile_slop_ul_tag          3
 #define machine_VialProfile_dispense_volume_ul_tag 4
 #define machine_VialProfile_footage_delay_ms_tag 5
-#define machine_VialProfile_footage_duration_ms_tag 6
+#define machine_VialProfile_footage_min_duration_ms_tag 6
 #define machine_VialProfile_footage_speed_mult_tag 7
 #define machine_VialProfile_footage_ignore_tag   8
 #define machine_VialProfile_initial_volume_ul_tag 9
@@ -578,8 +582,10 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  value,             2)
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_value_MSGTYPE machine_DispenseMetadata
 
 #define machine_DispenseMetadata_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, BOOL,     failedDispense,    1) \
-X(a, STATIC,   SINGULAR, UINT64,   dispenseDelayMs,   2)
+X(a, STATIC,   SINGULAR, BOOL,     failed_dispense,   1) \
+X(a, STATIC,   SINGULAR, UINT64,   dispense_delay_ms,   2) \
+X(a, STATIC,   SINGULAR, UINT64,   min_duration_override_ms,   3) \
+X(a, STATIC,   SINGULAR, UINT64,   speed_mult_override,   4)
 #define machine_DispenseMetadata_CALLBACK NULL
 #define machine_DispenseMetadata_DEFAULT NULL
 
@@ -630,8 +636,8 @@ X(a, STATIC,   SINGULAR, UINT64,   id,                1) \
 X(a, CALLBACK, SINGULAR, STRING,   description,       2) \
 X(a, STATIC,   SINGULAR, FLOAT,    slop_ul,           3) \
 X(a, STATIC,   SINGULAR, FLOAT,    dispense_volume_ul,   4) \
-X(a, STATIC,   SINGULAR, FLOAT,    footage_delay_ms,   5) \
-X(a, STATIC,   SINGULAR, FLOAT,    footage_duration_ms,   6) \
+X(a, STATIC,   SINGULAR, UINT64,   footage_delay_ms,   5) \
+X(a, STATIC,   SINGULAR, UINT64,   footage_min_duration_ms,   6) \
 X(a, STATIC,   SINGULAR, FLOAT,    footage_speed_mult,   7) \
 X(a, STATIC,   SINGULAR, BOOL,     footage_ignore,    8) \
 X(a, STATIC,   SINGULAR, FLOAT,    initial_volume_ul,   9) \
@@ -745,7 +751,7 @@ extern const pb_msgdesc_t machine_SystemVialConfigurationSnapshot_ProfilesEntry_
 /* machine_SystemVialConfigurationSnapshot_size depends on runtime parameters */
 /* machine_SystemVialConfigurationSnapshot_ProfilesEntry_size depends on runtime parameters */
 #define machine_CollectionRequest_size           29
-#define machine_DispenseMetadata_size            13
+#define machine_DispenseMetadata_size            35
 #define machine_FluidDetails_size                5
 #define machine_FluidRequest_size                11
 #define machine_MovementDetails_size             25
