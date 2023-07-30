@@ -4,11 +4,12 @@ WORKDIR /src
 RUN apt-get update && apt-get install -y unzip gcc-multilib
 
 # Install Python and pip
-RUN apt-get install -y python3 python3-pip
+RUN apt-get install -y python3 python3-pip python3-venv
 
 # Install python-betterproto
-RUN pip3 install "betterproto[compiler]"
-RUN pip3 install betterproto
+# (maybe should use venv instead of break pkg, but it's a container so not too important)
+RUN pip3 install --break-system-packages "betterproto[compiler]"
+RUN pip3 install --break-system-packages betterproto
 
 
 # Install nanopb
@@ -33,7 +34,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 
 # Install protoc-gen-ts
-RUN npm install -g ts-protoc-gen protoc-gen-js
+# Hard to do json conversions with this library
+# RUN npm install -g ts-protoc-gen protoc-gen-js
+RUN npm install -g ts-proto
 
 # Copy src code.
 COPY . .

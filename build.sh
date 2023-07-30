@@ -47,5 +47,10 @@ protoc --python_betterproto_out $PYTHON_OUT_DIR/machinepb ./machine.proto
 
 ###### TYPESCRIPT ######
 mkdir -p $TYPESCRIPT_OUT_DIR/machinepb
-protoc --js_out=import_style=commonjs,binary:$TYPESCRIPT_OUT_DIR/machinepb ./machine.proto 
-protoc --ts_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
+
+# Hard to do JSON conversions with this generator
+# protoc --js_out=import_style=commonjs,binary:$TYPESCRIPT_OUT_DIR/machinepb ./machine.proto 
+# protoc --ts_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
+
+protoc --ts_proto_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
+
