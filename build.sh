@@ -52,5 +52,5 @@ mkdir -p $TYPESCRIPT_OUT_DIR/machinepb
 # protoc --js_out=import_style=commonjs,binary:$TYPESCRIPT_OUT_DIR/machinepb ./machine.proto 
 # protoc --ts_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
 
-protoc --ts_proto_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
+protoc --ts_proto_opt=esModuleInterop=true --ts_proto_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
 
