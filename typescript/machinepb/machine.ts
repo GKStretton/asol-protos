@@ -569,45 +569,45 @@ export function socialPlatformToJSON(object: SocialPlatform): string {
 
 export interface PipetteState {
   spent: boolean;
-  vialHeld: number;
-  volumeTargetUl: number;
+  vial_held: number;
+  volume_target_ul: number;
   /** incremented every time a dispense is requested */
-  dispenseRequestNumber: number;
+  dispense_request_number: number;
 }
 
 export interface CollectionRequest {
   completed: boolean;
-  requestNumber: number;
-  vialNumber: number;
-  volumeUl: number;
+  request_number: number;
+  vial_number: number;
+  volume_ul: number;
 }
 
 export interface MovementDetails {
   /** ik target from -1 to 1 */
-  targetXUnit: number;
+  target_x_unit: number;
   /** ik target from -1 to 1 */
-  targetYUnit: number;
+  target_y_unit: number;
   /** ik z target in mm */
-  targetZIk: number;
+  target_z_ik: number;
   /** fk target in degrees */
-  targetRingDeg: number;
+  target_ring_deg: number;
   /** fk target in degrees */
-  targetYawDeg: number;
+  target_yaw_deg: number;
 }
 
 export interface FluidRequest {
   fluidType: FluidType;
-  volumeMl: number;
+  volume_ml: number;
   complete: boolean;
   /**
    * if true, open drain while request is taking place
    * (e.g. for rinsing with water)
    */
-  openDrain: boolean;
+  open_drain: boolean;
 }
 
 export interface FluidDetails {
-  bowlFluidLevelMl: number;
+  bowl_fluid_level_ml: number;
 }
 
 export interface StateReport {
@@ -615,25 +615,25 @@ export interface StateReport {
    * timestamp in microseconds since unix epoch, UTC. Added
    * by gateway since firmware doesn't know real time.
    */
-  timestampUnixMicros: number;
+  timestamp_unix_micros: number;
   /** incremented on startup, currently 1 byte */
-  startupCounter: number;
+  startup_counter: number;
   mode: Mode;
   status: Status;
   /** Useful for synchronisation with footage */
-  lightsOn: boolean;
-  pipetteState: PipetteState | undefined;
-  collectionRequest: CollectionRequest | undefined;
-  movementDetails: MovementDetails | undefined;
-  fluidRequest: FluidRequest | undefined;
-  fluidDetails:
+  lights_on: boolean;
+  pipette_state: PipetteState | undefined;
+  collection_request: CollectionRequest | undefined;
+  movement_details: MovementDetails | undefined;
+  fluid_request: FluidRequest | undefined;
+  fluid_details:
     | FluidDetails
     | undefined;
   /** the following are populated by the backend, useful in post-processing */
   paused: boolean;
-  timestampReadable: string;
+  timestamp_readable: string;
   /** e.g. 1 for 0001.jpg */
-  latestDslrFileNumber: number;
+  latest_dslr_file_number: number;
 }
 
 export interface StateReportList {
@@ -645,7 +645,7 @@ export interface SessionStatus {
   paused: boolean;
   complete: boolean;
   production: boolean;
-  productionId: number;
+  production_id: number;
 }
 
 export interface StreamStatus {
@@ -654,7 +654,7 @@ export interface StreamStatus {
 
 export interface DispenseMetadataMap {
   /** [startupCounter]_[dispenseRequestNumber] */
-  dispenseMetadata: { [key: string]: DispenseMetadata };
+  dispense_metadata: { [key: string]: DispenseMetadata };
 }
 
 export interface DispenseMetadataMap_DispenseMetadataEntry {
@@ -663,22 +663,22 @@ export interface DispenseMetadataMap_DispenseMetadataEntry {
 }
 
 export interface DispenseMetadata {
-  failedDispense: boolean;
+  failed_dispense: boolean;
   /** how many ms later than expected the dispense happened */
-  dispenseDelayMs: number;
+  dispense_delay_ms: number;
   /** if non-zero, override the vial profile's duration with this value. */
-  minDurationOverrideMs: number;
+  min_duration_override_ms: number;
   /** if non-zero, override the vial profile's speed with this value. */
-  speedMultOverride: number;
+  speed_mult_override: number;
 }
 
 /** statuses for all the content types for a specific session */
 export interface ContentTypeStatuses {
   /** str(ContentType) -> ContentTypeStatus */
-  contentStatuses: { [key: string]: ContentTypeStatus };
+  content_statuses: { [key: string]: ContentTypeStatus };
   /** splashtext for this session */
   splashtext: string;
-  splashtextHue: number;
+  splashtext_hue: number;
 }
 
 export interface ContentTypeStatuses_ContentStatusesEntry {
@@ -687,8 +687,8 @@ export interface ContentTypeStatuses_ContentStatusesEntry {
 }
 
 export interface ContentTypeStatus {
-  rawTitle: string;
-  rawDescription: string;
+  raw_title: string;
+  raw_description: string;
   caption: string;
   posts: Post[];
 }
@@ -696,7 +696,7 @@ export interface ContentTypeStatus {
 export interface Post {
   platform: SocialPlatform;
   /** e.g. subreddit */
-  subPlatform: string;
+  sub_platform: string;
   title: string;
   description: string;
   uploaded: boolean;
@@ -704,7 +704,7 @@ export interface Post {
   /** if true and relevant, crosspost rather than reuploading, e.g. for reddit */
   crosspost: boolean;
   /** seconds ts of when to publish. If 0, publish immediately, because 0 is in the past. */
-  scheduledUnixTimetamp: number;
+  scheduled_unix_timetamp: number;
 }
 
 /** emails used for administration, not intended for audience distribution */
@@ -732,27 +732,27 @@ export interface VialProfile {
    */
   description: string;
   /** the pipette slop, how much extra volume to move on the first dispense */
-  slopUl: number;
+  slop_ul: number;
   /** how much volume to dispense each time */
-  dispenseVolumeUl: number;
+  dispense_volume_ul: number;
   /** how long after dispense to slow down the footage in the videos */
-  footageDelayMs: number;
+  footage_delay_ms: number;
   /** how long to keep the footage slowed down in the videos */
-  footageMinDurationMs: number;
+  footage_min_duration_ms: number;
   /** what speed to give the footage in the videos */
-  footageSpeedMult: number;
+  footage_speed_mult: number;
   /**
    * if true, footage of this profile will not be treated differently
    * to other footage (no slowdown etc.)
    */
-  footageIgnore: boolean;
+  footage_ignore: boolean;
   /** Volume when this was first put in vial */
-  initialVolumeUl: number;
+  initial_volume_ul: number;
   /**
    * Current volume. Note this will be just volume at start of session in
    * session files.
    */
-  currentVolumeUl: number;
+  current_volume_ul: number;
 }
 
 /**
@@ -790,7 +790,7 @@ export interface SystemVialConfigurationSnapshot_ProfilesEntry {
 }
 
 function createBasePipetteState(): PipetteState {
-  return { spent: false, vialHeld: 0, volumeTargetUl: 0, dispenseRequestNumber: 0 };
+  return { spent: false, vial_held: 0, volume_target_ul: 0, dispense_request_number: 0 };
 }
 
 export const PipetteState = {
@@ -798,14 +798,14 @@ export const PipetteState = {
     if (message.spent === true) {
       writer.uint32(8).bool(message.spent);
     }
-    if (message.vialHeld !== 0) {
-      writer.uint32(16).uint32(message.vialHeld);
+    if (message.vial_held !== 0) {
+      writer.uint32(16).uint32(message.vial_held);
     }
-    if (message.volumeTargetUl !== 0) {
-      writer.uint32(29).float(message.volumeTargetUl);
+    if (message.volume_target_ul !== 0) {
+      writer.uint32(29).float(message.volume_target_ul);
     }
-    if (message.dispenseRequestNumber !== 0) {
-      writer.uint32(32).uint32(message.dispenseRequestNumber);
+    if (message.dispense_request_number !== 0) {
+      writer.uint32(32).uint32(message.dispense_request_number);
     }
     return writer;
   },
@@ -829,21 +829,21 @@ export const PipetteState = {
             break;
           }
 
-          message.vialHeld = reader.uint32();
+          message.vial_held = reader.uint32();
           continue;
         case 3:
           if (tag !== 29) {
             break;
           }
 
-          message.volumeTargetUl = reader.float();
+          message.volume_target_ul = reader.float();
           continue;
         case 4:
           if (tag !== 32) {
             break;
           }
 
-          message.dispenseRequestNumber = reader.uint32();
+          message.dispense_request_number = reader.uint32();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -857,9 +857,9 @@ export const PipetteState = {
   fromJSON(object: any): PipetteState {
     return {
       spent: isSet(object.spent) ? Boolean(object.spent) : false,
-      vialHeld: isSet(object.vialHeld) ? Number(object.vialHeld) : 0,
-      volumeTargetUl: isSet(object.volumeTargetUl) ? Number(object.volumeTargetUl) : 0,
-      dispenseRequestNumber: isSet(object.dispenseRequestNumber) ? Number(object.dispenseRequestNumber) : 0,
+      vial_held: isSet(object.vial_held) ? Number(object.vial_held) : 0,
+      volume_target_ul: isSet(object.volume_target_ul) ? Number(object.volume_target_ul) : 0,
+      dispense_request_number: isSet(object.dispense_request_number) ? Number(object.dispense_request_number) : 0,
     };
   },
 
@@ -868,14 +868,14 @@ export const PipetteState = {
     if (message.spent === true) {
       obj.spent = message.spent;
     }
-    if (message.vialHeld !== 0) {
-      obj.vialHeld = Math.round(message.vialHeld);
+    if (message.vial_held !== 0) {
+      obj.vial_held = Math.round(message.vial_held);
     }
-    if (message.volumeTargetUl !== 0) {
-      obj.volumeTargetUl = message.volumeTargetUl;
+    if (message.volume_target_ul !== 0) {
+      obj.volume_target_ul = message.volume_target_ul;
     }
-    if (message.dispenseRequestNumber !== 0) {
-      obj.dispenseRequestNumber = Math.round(message.dispenseRequestNumber);
+    if (message.dispense_request_number !== 0) {
+      obj.dispense_request_number = Math.round(message.dispense_request_number);
     }
     return obj;
   },
@@ -886,15 +886,15 @@ export const PipetteState = {
   fromPartial<I extends Exact<DeepPartial<PipetteState>, I>>(object: I): PipetteState {
     const message = createBasePipetteState();
     message.spent = object.spent ?? false;
-    message.vialHeld = object.vialHeld ?? 0;
-    message.volumeTargetUl = object.volumeTargetUl ?? 0;
-    message.dispenseRequestNumber = object.dispenseRequestNumber ?? 0;
+    message.vial_held = object.vial_held ?? 0;
+    message.volume_target_ul = object.volume_target_ul ?? 0;
+    message.dispense_request_number = object.dispense_request_number ?? 0;
     return message;
   },
 };
 
 function createBaseCollectionRequest(): CollectionRequest {
-  return { completed: false, requestNumber: 0, vialNumber: 0, volumeUl: 0 };
+  return { completed: false, request_number: 0, vial_number: 0, volume_ul: 0 };
 }
 
 export const CollectionRequest = {
@@ -902,14 +902,14 @@ export const CollectionRequest = {
     if (message.completed === true) {
       writer.uint32(8).bool(message.completed);
     }
-    if (message.requestNumber !== 0) {
-      writer.uint32(16).uint64(message.requestNumber);
+    if (message.request_number !== 0) {
+      writer.uint32(16).uint64(message.request_number);
     }
-    if (message.vialNumber !== 0) {
-      writer.uint32(24).uint64(message.vialNumber);
+    if (message.vial_number !== 0) {
+      writer.uint32(24).uint64(message.vial_number);
     }
-    if (message.volumeUl !== 0) {
-      writer.uint32(37).float(message.volumeUl);
+    if (message.volume_ul !== 0) {
+      writer.uint32(37).float(message.volume_ul);
     }
     return writer;
   },
@@ -933,21 +933,21 @@ export const CollectionRequest = {
             break;
           }
 
-          message.requestNumber = longToNumber(reader.uint64() as Long);
+          message.request_number = longToNumber(reader.uint64() as Long);
           continue;
         case 3:
           if (tag !== 24) {
             break;
           }
 
-          message.vialNumber = longToNumber(reader.uint64() as Long);
+          message.vial_number = longToNumber(reader.uint64() as Long);
           continue;
         case 4:
           if (tag !== 37) {
             break;
           }
 
-          message.volumeUl = reader.float();
+          message.volume_ul = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -961,9 +961,9 @@ export const CollectionRequest = {
   fromJSON(object: any): CollectionRequest {
     return {
       completed: isSet(object.completed) ? Boolean(object.completed) : false,
-      requestNumber: isSet(object.requestNumber) ? Number(object.requestNumber) : 0,
-      vialNumber: isSet(object.vialNumber) ? Number(object.vialNumber) : 0,
-      volumeUl: isSet(object.volumeUl) ? Number(object.volumeUl) : 0,
+      request_number: isSet(object.request_number) ? Number(object.request_number) : 0,
+      vial_number: isSet(object.vial_number) ? Number(object.vial_number) : 0,
+      volume_ul: isSet(object.volume_ul) ? Number(object.volume_ul) : 0,
     };
   },
 
@@ -972,14 +972,14 @@ export const CollectionRequest = {
     if (message.completed === true) {
       obj.completed = message.completed;
     }
-    if (message.requestNumber !== 0) {
-      obj.requestNumber = Math.round(message.requestNumber);
+    if (message.request_number !== 0) {
+      obj.request_number = Math.round(message.request_number);
     }
-    if (message.vialNumber !== 0) {
-      obj.vialNumber = Math.round(message.vialNumber);
+    if (message.vial_number !== 0) {
+      obj.vial_number = Math.round(message.vial_number);
     }
-    if (message.volumeUl !== 0) {
-      obj.volumeUl = message.volumeUl;
+    if (message.volume_ul !== 0) {
+      obj.volume_ul = message.volume_ul;
     }
     return obj;
   },
@@ -990,33 +990,33 @@ export const CollectionRequest = {
   fromPartial<I extends Exact<DeepPartial<CollectionRequest>, I>>(object: I): CollectionRequest {
     const message = createBaseCollectionRequest();
     message.completed = object.completed ?? false;
-    message.requestNumber = object.requestNumber ?? 0;
-    message.vialNumber = object.vialNumber ?? 0;
-    message.volumeUl = object.volumeUl ?? 0;
+    message.request_number = object.request_number ?? 0;
+    message.vial_number = object.vial_number ?? 0;
+    message.volume_ul = object.volume_ul ?? 0;
     return message;
   },
 };
 
 function createBaseMovementDetails(): MovementDetails {
-  return { targetXUnit: 0, targetYUnit: 0, targetZIk: 0, targetRingDeg: 0, targetYawDeg: 0 };
+  return { target_x_unit: 0, target_y_unit: 0, target_z_ik: 0, target_ring_deg: 0, target_yaw_deg: 0 };
 }
 
 export const MovementDetails = {
   encode(message: MovementDetails, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.targetXUnit !== 0) {
-      writer.uint32(13).float(message.targetXUnit);
+    if (message.target_x_unit !== 0) {
+      writer.uint32(13).float(message.target_x_unit);
     }
-    if (message.targetYUnit !== 0) {
-      writer.uint32(21).float(message.targetYUnit);
+    if (message.target_y_unit !== 0) {
+      writer.uint32(21).float(message.target_y_unit);
     }
-    if (message.targetZIk !== 0) {
-      writer.uint32(45).float(message.targetZIk);
+    if (message.target_z_ik !== 0) {
+      writer.uint32(45).float(message.target_z_ik);
     }
-    if (message.targetRingDeg !== 0) {
-      writer.uint32(85).float(message.targetRingDeg);
+    if (message.target_ring_deg !== 0) {
+      writer.uint32(85).float(message.target_ring_deg);
     }
-    if (message.targetYawDeg !== 0) {
-      writer.uint32(93).float(message.targetYawDeg);
+    if (message.target_yaw_deg !== 0) {
+      writer.uint32(93).float(message.target_yaw_deg);
     }
     return writer;
   },
@@ -1033,35 +1033,35 @@ export const MovementDetails = {
             break;
           }
 
-          message.targetXUnit = reader.float();
+          message.target_x_unit = reader.float();
           continue;
         case 2:
           if (tag !== 21) {
             break;
           }
 
-          message.targetYUnit = reader.float();
+          message.target_y_unit = reader.float();
           continue;
         case 5:
           if (tag !== 45) {
             break;
           }
 
-          message.targetZIk = reader.float();
+          message.target_z_ik = reader.float();
           continue;
         case 10:
           if (tag !== 85) {
             break;
           }
 
-          message.targetRingDeg = reader.float();
+          message.target_ring_deg = reader.float();
           continue;
         case 11:
           if (tag !== 93) {
             break;
           }
 
-          message.targetYawDeg = reader.float();
+          message.target_yaw_deg = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1074,30 +1074,30 @@ export const MovementDetails = {
 
   fromJSON(object: any): MovementDetails {
     return {
-      targetXUnit: isSet(object.targetXUnit) ? Number(object.targetXUnit) : 0,
-      targetYUnit: isSet(object.targetYUnit) ? Number(object.targetYUnit) : 0,
-      targetZIk: isSet(object.targetZIk) ? Number(object.targetZIk) : 0,
-      targetRingDeg: isSet(object.targetRingDeg) ? Number(object.targetRingDeg) : 0,
-      targetYawDeg: isSet(object.targetYawDeg) ? Number(object.targetYawDeg) : 0,
+      target_x_unit: isSet(object.target_x_unit) ? Number(object.target_x_unit) : 0,
+      target_y_unit: isSet(object.target_y_unit) ? Number(object.target_y_unit) : 0,
+      target_z_ik: isSet(object.target_z_ik) ? Number(object.target_z_ik) : 0,
+      target_ring_deg: isSet(object.target_ring_deg) ? Number(object.target_ring_deg) : 0,
+      target_yaw_deg: isSet(object.target_yaw_deg) ? Number(object.target_yaw_deg) : 0,
     };
   },
 
   toJSON(message: MovementDetails): unknown {
     const obj: any = {};
-    if (message.targetXUnit !== 0) {
-      obj.targetXUnit = message.targetXUnit;
+    if (message.target_x_unit !== 0) {
+      obj.target_x_unit = message.target_x_unit;
     }
-    if (message.targetYUnit !== 0) {
-      obj.targetYUnit = message.targetYUnit;
+    if (message.target_y_unit !== 0) {
+      obj.target_y_unit = message.target_y_unit;
     }
-    if (message.targetZIk !== 0) {
-      obj.targetZIk = message.targetZIk;
+    if (message.target_z_ik !== 0) {
+      obj.target_z_ik = message.target_z_ik;
     }
-    if (message.targetRingDeg !== 0) {
-      obj.targetRingDeg = message.targetRingDeg;
+    if (message.target_ring_deg !== 0) {
+      obj.target_ring_deg = message.target_ring_deg;
     }
-    if (message.targetYawDeg !== 0) {
-      obj.targetYawDeg = message.targetYawDeg;
+    if (message.target_yaw_deg !== 0) {
+      obj.target_yaw_deg = message.target_yaw_deg;
     }
     return obj;
   },
@@ -1107,17 +1107,17 @@ export const MovementDetails = {
   },
   fromPartial<I extends Exact<DeepPartial<MovementDetails>, I>>(object: I): MovementDetails {
     const message = createBaseMovementDetails();
-    message.targetXUnit = object.targetXUnit ?? 0;
-    message.targetYUnit = object.targetYUnit ?? 0;
-    message.targetZIk = object.targetZIk ?? 0;
-    message.targetRingDeg = object.targetRingDeg ?? 0;
-    message.targetYawDeg = object.targetYawDeg ?? 0;
+    message.target_x_unit = object.target_x_unit ?? 0;
+    message.target_y_unit = object.target_y_unit ?? 0;
+    message.target_z_ik = object.target_z_ik ?? 0;
+    message.target_ring_deg = object.target_ring_deg ?? 0;
+    message.target_yaw_deg = object.target_yaw_deg ?? 0;
     return message;
   },
 };
 
 function createBaseFluidRequest(): FluidRequest {
-  return { fluidType: 0, volumeMl: 0, complete: false, openDrain: false };
+  return { fluidType: 0, volume_ml: 0, complete: false, open_drain: false };
 }
 
 export const FluidRequest = {
@@ -1125,14 +1125,14 @@ export const FluidRequest = {
     if (message.fluidType !== 0) {
       writer.uint32(8).int32(message.fluidType);
     }
-    if (message.volumeMl !== 0) {
-      writer.uint32(21).float(message.volumeMl);
+    if (message.volume_ml !== 0) {
+      writer.uint32(21).float(message.volume_ml);
     }
     if (message.complete === true) {
       writer.uint32(24).bool(message.complete);
     }
-    if (message.openDrain === true) {
-      writer.uint32(32).bool(message.openDrain);
+    if (message.open_drain === true) {
+      writer.uint32(32).bool(message.open_drain);
     }
     return writer;
   },
@@ -1156,7 +1156,7 @@ export const FluidRequest = {
             break;
           }
 
-          message.volumeMl = reader.float();
+          message.volume_ml = reader.float();
           continue;
         case 3:
           if (tag !== 24) {
@@ -1170,7 +1170,7 @@ export const FluidRequest = {
             break;
           }
 
-          message.openDrain = reader.bool();
+          message.open_drain = reader.bool();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1184,9 +1184,9 @@ export const FluidRequest = {
   fromJSON(object: any): FluidRequest {
     return {
       fluidType: isSet(object.fluidType) ? fluidTypeFromJSON(object.fluidType) : 0,
-      volumeMl: isSet(object.volumeMl) ? Number(object.volumeMl) : 0,
+      volume_ml: isSet(object.volume_ml) ? Number(object.volume_ml) : 0,
       complete: isSet(object.complete) ? Boolean(object.complete) : false,
-      openDrain: isSet(object.openDrain) ? Boolean(object.openDrain) : false,
+      open_drain: isSet(object.open_drain) ? Boolean(object.open_drain) : false,
     };
   },
 
@@ -1195,14 +1195,14 @@ export const FluidRequest = {
     if (message.fluidType !== 0) {
       obj.fluidType = fluidTypeToJSON(message.fluidType);
     }
-    if (message.volumeMl !== 0) {
-      obj.volumeMl = message.volumeMl;
+    if (message.volume_ml !== 0) {
+      obj.volume_ml = message.volume_ml;
     }
     if (message.complete === true) {
       obj.complete = message.complete;
     }
-    if (message.openDrain === true) {
-      obj.openDrain = message.openDrain;
+    if (message.open_drain === true) {
+      obj.open_drain = message.open_drain;
     }
     return obj;
   },
@@ -1213,21 +1213,21 @@ export const FluidRequest = {
   fromPartial<I extends Exact<DeepPartial<FluidRequest>, I>>(object: I): FluidRequest {
     const message = createBaseFluidRequest();
     message.fluidType = object.fluidType ?? 0;
-    message.volumeMl = object.volumeMl ?? 0;
+    message.volume_ml = object.volume_ml ?? 0;
     message.complete = object.complete ?? false;
-    message.openDrain = object.openDrain ?? false;
+    message.open_drain = object.open_drain ?? false;
     return message;
   },
 };
 
 function createBaseFluidDetails(): FluidDetails {
-  return { bowlFluidLevelMl: 0 };
+  return { bowl_fluid_level_ml: 0 };
 }
 
 export const FluidDetails = {
   encode(message: FluidDetails, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.bowlFluidLevelMl !== 0) {
-      writer.uint32(13).float(message.bowlFluidLevelMl);
+    if (message.bowl_fluid_level_ml !== 0) {
+      writer.uint32(13).float(message.bowl_fluid_level_ml);
     }
     return writer;
   },
@@ -1244,7 +1244,7 @@ export const FluidDetails = {
             break;
           }
 
-          message.bowlFluidLevelMl = reader.float();
+          message.bowl_fluid_level_ml = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1256,13 +1256,13 @@ export const FluidDetails = {
   },
 
   fromJSON(object: any): FluidDetails {
-    return { bowlFluidLevelMl: isSet(object.bowlFluidLevelMl) ? Number(object.bowlFluidLevelMl) : 0 };
+    return { bowl_fluid_level_ml: isSet(object.bowl_fluid_level_ml) ? Number(object.bowl_fluid_level_ml) : 0 };
   },
 
   toJSON(message: FluidDetails): unknown {
     const obj: any = {};
-    if (message.bowlFluidLevelMl !== 0) {
-      obj.bowlFluidLevelMl = message.bowlFluidLevelMl;
+    if (message.bowl_fluid_level_ml !== 0) {
+      obj.bowl_fluid_level_ml = message.bowl_fluid_level_ml;
     }
     return obj;
   },
@@ -1272,36 +1272,36 @@ export const FluidDetails = {
   },
   fromPartial<I extends Exact<DeepPartial<FluidDetails>, I>>(object: I): FluidDetails {
     const message = createBaseFluidDetails();
-    message.bowlFluidLevelMl = object.bowlFluidLevelMl ?? 0;
+    message.bowl_fluid_level_ml = object.bowl_fluid_level_ml ?? 0;
     return message;
   },
 };
 
 function createBaseStateReport(): StateReport {
   return {
-    timestampUnixMicros: 0,
-    startupCounter: 0,
+    timestamp_unix_micros: 0,
+    startup_counter: 0,
     mode: 0,
     status: 0,
-    lightsOn: false,
-    pipetteState: undefined,
-    collectionRequest: undefined,
-    movementDetails: undefined,
-    fluidRequest: undefined,
-    fluidDetails: undefined,
+    lights_on: false,
+    pipette_state: undefined,
+    collection_request: undefined,
+    movement_details: undefined,
+    fluid_request: undefined,
+    fluid_details: undefined,
     paused: false,
-    timestampReadable: "",
-    latestDslrFileNumber: 0,
+    timestamp_readable: "",
+    latest_dslr_file_number: 0,
   };
 }
 
 export const StateReport = {
   encode(message: StateReport, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.timestampUnixMicros !== 0) {
-      writer.uint32(16).uint64(message.timestampUnixMicros);
+    if (message.timestamp_unix_micros !== 0) {
+      writer.uint32(16).uint64(message.timestamp_unix_micros);
     }
-    if (message.startupCounter !== 0) {
-      writer.uint32(24).uint64(message.startupCounter);
+    if (message.startup_counter !== 0) {
+      writer.uint32(24).uint64(message.startup_counter);
     }
     if (message.mode !== 0) {
       writer.uint32(32).int32(message.mode);
@@ -1309,32 +1309,32 @@ export const StateReport = {
     if (message.status !== 0) {
       writer.uint32(40).int32(message.status);
     }
-    if (message.lightsOn === true) {
-      writer.uint32(48).bool(message.lightsOn);
+    if (message.lights_on === true) {
+      writer.uint32(48).bool(message.lights_on);
     }
-    if (message.pipetteState !== undefined) {
-      PipetteState.encode(message.pipetteState, writer.uint32(82).fork()).ldelim();
+    if (message.pipette_state !== undefined) {
+      PipetteState.encode(message.pipette_state, writer.uint32(82).fork()).ldelim();
     }
-    if (message.collectionRequest !== undefined) {
-      CollectionRequest.encode(message.collectionRequest, writer.uint32(90).fork()).ldelim();
+    if (message.collection_request !== undefined) {
+      CollectionRequest.encode(message.collection_request, writer.uint32(90).fork()).ldelim();
     }
-    if (message.movementDetails !== undefined) {
-      MovementDetails.encode(message.movementDetails, writer.uint32(98).fork()).ldelim();
+    if (message.movement_details !== undefined) {
+      MovementDetails.encode(message.movement_details, writer.uint32(98).fork()).ldelim();
     }
-    if (message.fluidRequest !== undefined) {
-      FluidRequest.encode(message.fluidRequest, writer.uint32(106).fork()).ldelim();
+    if (message.fluid_request !== undefined) {
+      FluidRequest.encode(message.fluid_request, writer.uint32(106).fork()).ldelim();
     }
-    if (message.fluidDetails !== undefined) {
-      FluidDetails.encode(message.fluidDetails, writer.uint32(114).fork()).ldelim();
+    if (message.fluid_details !== undefined) {
+      FluidDetails.encode(message.fluid_details, writer.uint32(114).fork()).ldelim();
     }
     if (message.paused === true) {
       writer.uint32(400).bool(message.paused);
     }
-    if (message.timestampReadable !== "") {
-      writer.uint32(410).string(message.timestampReadable);
+    if (message.timestamp_readable !== "") {
+      writer.uint32(410).string(message.timestamp_readable);
     }
-    if (message.latestDslrFileNumber !== 0) {
-      writer.uint32(416).uint64(message.latestDslrFileNumber);
+    if (message.latest_dslr_file_number !== 0) {
+      writer.uint32(416).uint64(message.latest_dslr_file_number);
     }
     return writer;
   },
@@ -1351,14 +1351,14 @@ export const StateReport = {
             break;
           }
 
-          message.timestampUnixMicros = longToNumber(reader.uint64() as Long);
+          message.timestamp_unix_micros = longToNumber(reader.uint64() as Long);
           continue;
         case 3:
           if (tag !== 24) {
             break;
           }
 
-          message.startupCounter = longToNumber(reader.uint64() as Long);
+          message.startup_counter = longToNumber(reader.uint64() as Long);
           continue;
         case 4:
           if (tag !== 32) {
@@ -1379,42 +1379,42 @@ export const StateReport = {
             break;
           }
 
-          message.lightsOn = reader.bool();
+          message.lights_on = reader.bool();
           continue;
         case 10:
           if (tag !== 82) {
             break;
           }
 
-          message.pipetteState = PipetteState.decode(reader, reader.uint32());
+          message.pipette_state = PipetteState.decode(reader, reader.uint32());
           continue;
         case 11:
           if (tag !== 90) {
             break;
           }
 
-          message.collectionRequest = CollectionRequest.decode(reader, reader.uint32());
+          message.collection_request = CollectionRequest.decode(reader, reader.uint32());
           continue;
         case 12:
           if (tag !== 98) {
             break;
           }
 
-          message.movementDetails = MovementDetails.decode(reader, reader.uint32());
+          message.movement_details = MovementDetails.decode(reader, reader.uint32());
           continue;
         case 13:
           if (tag !== 106) {
             break;
           }
 
-          message.fluidRequest = FluidRequest.decode(reader, reader.uint32());
+          message.fluid_request = FluidRequest.decode(reader, reader.uint32());
           continue;
         case 14:
           if (tag !== 114) {
             break;
           }
 
-          message.fluidDetails = FluidDetails.decode(reader, reader.uint32());
+          message.fluid_details = FluidDetails.decode(reader, reader.uint32());
           continue;
         case 50:
           if (tag !== 400) {
@@ -1428,14 +1428,14 @@ export const StateReport = {
             break;
           }
 
-          message.timestampReadable = reader.string();
+          message.timestamp_readable = reader.string();
           continue;
         case 52:
           if (tag !== 416) {
             break;
           }
 
-          message.latestDslrFileNumber = longToNumber(reader.uint64() as Long);
+          message.latest_dslr_file_number = longToNumber(reader.uint64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1448,31 +1448,31 @@ export const StateReport = {
 
   fromJSON(object: any): StateReport {
     return {
-      timestampUnixMicros: isSet(object.timestampUnixMicros) ? Number(object.timestampUnixMicros) : 0,
-      startupCounter: isSet(object.startupCounter) ? Number(object.startupCounter) : 0,
+      timestamp_unix_micros: isSet(object.timestamp_unix_micros) ? Number(object.timestamp_unix_micros) : 0,
+      startup_counter: isSet(object.startup_counter) ? Number(object.startup_counter) : 0,
       mode: isSet(object.mode) ? modeFromJSON(object.mode) : 0,
       status: isSet(object.status) ? statusFromJSON(object.status) : 0,
-      lightsOn: isSet(object.lightsOn) ? Boolean(object.lightsOn) : false,
-      pipetteState: isSet(object.pipetteState) ? PipetteState.fromJSON(object.pipetteState) : undefined,
-      collectionRequest: isSet(object.collectionRequest)
-        ? CollectionRequest.fromJSON(object.collectionRequest)
+      lights_on: isSet(object.lights_on) ? Boolean(object.lights_on) : false,
+      pipette_state: isSet(object.pipette_state) ? PipetteState.fromJSON(object.pipette_state) : undefined,
+      collection_request: isSet(object.collection_request)
+        ? CollectionRequest.fromJSON(object.collection_request)
         : undefined,
-      movementDetails: isSet(object.movementDetails) ? MovementDetails.fromJSON(object.movementDetails) : undefined,
-      fluidRequest: isSet(object.fluidRequest) ? FluidRequest.fromJSON(object.fluidRequest) : undefined,
-      fluidDetails: isSet(object.fluidDetails) ? FluidDetails.fromJSON(object.fluidDetails) : undefined,
+      movement_details: isSet(object.movement_details) ? MovementDetails.fromJSON(object.movement_details) : undefined,
+      fluid_request: isSet(object.fluid_request) ? FluidRequest.fromJSON(object.fluid_request) : undefined,
+      fluid_details: isSet(object.fluid_details) ? FluidDetails.fromJSON(object.fluid_details) : undefined,
       paused: isSet(object.paused) ? Boolean(object.paused) : false,
-      timestampReadable: isSet(object.timestampReadable) ? String(object.timestampReadable) : "",
-      latestDslrFileNumber: isSet(object.latestDslrFileNumber) ? Number(object.latestDslrFileNumber) : 0,
+      timestamp_readable: isSet(object.timestamp_readable) ? String(object.timestamp_readable) : "",
+      latest_dslr_file_number: isSet(object.latest_dslr_file_number) ? Number(object.latest_dslr_file_number) : 0,
     };
   },
 
   toJSON(message: StateReport): unknown {
     const obj: any = {};
-    if (message.timestampUnixMicros !== 0) {
-      obj.timestampUnixMicros = Math.round(message.timestampUnixMicros);
+    if (message.timestamp_unix_micros !== 0) {
+      obj.timestamp_unix_micros = Math.round(message.timestamp_unix_micros);
     }
-    if (message.startupCounter !== 0) {
-      obj.startupCounter = Math.round(message.startupCounter);
+    if (message.startup_counter !== 0) {
+      obj.startup_counter = Math.round(message.startup_counter);
     }
     if (message.mode !== 0) {
       obj.mode = modeToJSON(message.mode);
@@ -1480,32 +1480,32 @@ export const StateReport = {
     if (message.status !== 0) {
       obj.status = statusToJSON(message.status);
     }
-    if (message.lightsOn === true) {
-      obj.lightsOn = message.lightsOn;
+    if (message.lights_on === true) {
+      obj.lights_on = message.lights_on;
     }
-    if (message.pipetteState !== undefined) {
-      obj.pipetteState = PipetteState.toJSON(message.pipetteState);
+    if (message.pipette_state !== undefined) {
+      obj.pipette_state = PipetteState.toJSON(message.pipette_state);
     }
-    if (message.collectionRequest !== undefined) {
-      obj.collectionRequest = CollectionRequest.toJSON(message.collectionRequest);
+    if (message.collection_request !== undefined) {
+      obj.collection_request = CollectionRequest.toJSON(message.collection_request);
     }
-    if (message.movementDetails !== undefined) {
-      obj.movementDetails = MovementDetails.toJSON(message.movementDetails);
+    if (message.movement_details !== undefined) {
+      obj.movement_details = MovementDetails.toJSON(message.movement_details);
     }
-    if (message.fluidRequest !== undefined) {
-      obj.fluidRequest = FluidRequest.toJSON(message.fluidRequest);
+    if (message.fluid_request !== undefined) {
+      obj.fluid_request = FluidRequest.toJSON(message.fluid_request);
     }
-    if (message.fluidDetails !== undefined) {
-      obj.fluidDetails = FluidDetails.toJSON(message.fluidDetails);
+    if (message.fluid_details !== undefined) {
+      obj.fluid_details = FluidDetails.toJSON(message.fluid_details);
     }
     if (message.paused === true) {
       obj.paused = message.paused;
     }
-    if (message.timestampReadable !== "") {
-      obj.timestampReadable = message.timestampReadable;
+    if (message.timestamp_readable !== "") {
+      obj.timestamp_readable = message.timestamp_readable;
     }
-    if (message.latestDslrFileNumber !== 0) {
-      obj.latestDslrFileNumber = Math.round(message.latestDslrFileNumber);
+    if (message.latest_dslr_file_number !== 0) {
+      obj.latest_dslr_file_number = Math.round(message.latest_dslr_file_number);
     }
     return obj;
   },
@@ -1515,29 +1515,29 @@ export const StateReport = {
   },
   fromPartial<I extends Exact<DeepPartial<StateReport>, I>>(object: I): StateReport {
     const message = createBaseStateReport();
-    message.timestampUnixMicros = object.timestampUnixMicros ?? 0;
-    message.startupCounter = object.startupCounter ?? 0;
+    message.timestamp_unix_micros = object.timestamp_unix_micros ?? 0;
+    message.startup_counter = object.startup_counter ?? 0;
     message.mode = object.mode ?? 0;
     message.status = object.status ?? 0;
-    message.lightsOn = object.lightsOn ?? false;
-    message.pipetteState = (object.pipetteState !== undefined && object.pipetteState !== null)
-      ? PipetteState.fromPartial(object.pipetteState)
+    message.lights_on = object.lights_on ?? false;
+    message.pipette_state = (object.pipette_state !== undefined && object.pipette_state !== null)
+      ? PipetteState.fromPartial(object.pipette_state)
       : undefined;
-    message.collectionRequest = (object.collectionRequest !== undefined && object.collectionRequest !== null)
-      ? CollectionRequest.fromPartial(object.collectionRequest)
+    message.collection_request = (object.collection_request !== undefined && object.collection_request !== null)
+      ? CollectionRequest.fromPartial(object.collection_request)
       : undefined;
-    message.movementDetails = (object.movementDetails !== undefined && object.movementDetails !== null)
-      ? MovementDetails.fromPartial(object.movementDetails)
+    message.movement_details = (object.movement_details !== undefined && object.movement_details !== null)
+      ? MovementDetails.fromPartial(object.movement_details)
       : undefined;
-    message.fluidRequest = (object.fluidRequest !== undefined && object.fluidRequest !== null)
-      ? FluidRequest.fromPartial(object.fluidRequest)
+    message.fluid_request = (object.fluid_request !== undefined && object.fluid_request !== null)
+      ? FluidRequest.fromPartial(object.fluid_request)
       : undefined;
-    message.fluidDetails = (object.fluidDetails !== undefined && object.fluidDetails !== null)
-      ? FluidDetails.fromPartial(object.fluidDetails)
+    message.fluid_details = (object.fluid_details !== undefined && object.fluid_details !== null)
+      ? FluidDetails.fromPartial(object.fluid_details)
       : undefined;
     message.paused = object.paused ?? false;
-    message.timestampReadable = object.timestampReadable ?? "";
-    message.latestDslrFileNumber = object.latestDslrFileNumber ?? 0;
+    message.timestamp_readable = object.timestamp_readable ?? "";
+    message.latest_dslr_file_number = object.latest_dslr_file_number ?? 0;
     return message;
   },
 };
@@ -1604,7 +1604,7 @@ export const StateReportList = {
 };
 
 function createBaseSessionStatus(): SessionStatus {
-  return { id: 0, paused: false, complete: false, production: false, productionId: 0 };
+  return { id: 0, paused: false, complete: false, production: false, production_id: 0 };
 }
 
 export const SessionStatus = {
@@ -1621,8 +1621,8 @@ export const SessionStatus = {
     if (message.production === true) {
       writer.uint32(32).bool(message.production);
     }
-    if (message.productionId !== 0) {
-      writer.uint32(40).uint64(message.productionId);
+    if (message.production_id !== 0) {
+      writer.uint32(40).uint64(message.production_id);
     }
     return writer;
   },
@@ -1667,7 +1667,7 @@ export const SessionStatus = {
             break;
           }
 
-          message.productionId = longToNumber(reader.uint64() as Long);
+          message.production_id = longToNumber(reader.uint64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1684,7 +1684,7 @@ export const SessionStatus = {
       paused: isSet(object.paused) ? Boolean(object.paused) : false,
       complete: isSet(object.complete) ? Boolean(object.complete) : false,
       production: isSet(object.production) ? Boolean(object.production) : false,
-      productionId: isSet(object.productionId) ? Number(object.productionId) : 0,
+      production_id: isSet(object.production_id) ? Number(object.production_id) : 0,
     };
   },
 
@@ -1702,8 +1702,8 @@ export const SessionStatus = {
     if (message.production === true) {
       obj.production = message.production;
     }
-    if (message.productionId !== 0) {
-      obj.productionId = Math.round(message.productionId);
+    if (message.production_id !== 0) {
+      obj.production_id = Math.round(message.production_id);
     }
     return obj;
   },
@@ -1717,7 +1717,7 @@ export const SessionStatus = {
     message.paused = object.paused ?? false;
     message.complete = object.complete ?? false;
     message.production = object.production ?? false;
-    message.productionId = object.productionId ?? 0;
+    message.production_id = object.production_id ?? 0;
     return message;
   },
 };
@@ -1780,12 +1780,12 @@ export const StreamStatus = {
 };
 
 function createBaseDispenseMetadataMap(): DispenseMetadataMap {
-  return { dispenseMetadata: {} };
+  return { dispense_metadata: {} };
 }
 
 export const DispenseMetadataMap = {
   encode(message: DispenseMetadataMap, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    Object.entries(message.dispenseMetadata).forEach(([key, value]) => {
+    Object.entries(message.dispense_metadata).forEach(([key, value]) => {
       DispenseMetadataMap_DispenseMetadataEntry.encode({ key: key as any, value }, writer.uint32(10).fork()).ldelim();
     });
     return writer;
@@ -1805,7 +1805,7 @@ export const DispenseMetadataMap = {
 
           const entry1 = DispenseMetadataMap_DispenseMetadataEntry.decode(reader, reader.uint32());
           if (entry1.value !== undefined) {
-            message.dispenseMetadata[entry1.key] = entry1.value;
+            message.dispense_metadata[entry1.key] = entry1.value;
           }
           continue;
       }
@@ -1819,8 +1819,8 @@ export const DispenseMetadataMap = {
 
   fromJSON(object: any): DispenseMetadataMap {
     return {
-      dispenseMetadata: isObject(object.dispenseMetadata)
-        ? Object.entries(object.dispenseMetadata).reduce<{ [key: string]: DispenseMetadata }>((acc, [key, value]) => {
+      dispense_metadata: isObject(object.dispense_metadata)
+        ? Object.entries(object.dispense_metadata).reduce<{ [key: string]: DispenseMetadata }>((acc, [key, value]) => {
           acc[key] = DispenseMetadata.fromJSON(value);
           return acc;
         }, {})
@@ -1830,12 +1830,12 @@ export const DispenseMetadataMap = {
 
   toJSON(message: DispenseMetadataMap): unknown {
     const obj: any = {};
-    if (message.dispenseMetadata) {
-      const entries = Object.entries(message.dispenseMetadata);
+    if (message.dispense_metadata) {
+      const entries = Object.entries(message.dispense_metadata);
       if (entries.length > 0) {
-        obj.dispenseMetadata = {};
+        obj.dispense_metadata = {};
         entries.forEach(([k, v]) => {
-          obj.dispenseMetadata[k] = DispenseMetadata.toJSON(v);
+          obj.dispense_metadata[k] = DispenseMetadata.toJSON(v);
         });
       }
     }
@@ -1847,7 +1847,7 @@ export const DispenseMetadataMap = {
   },
   fromPartial<I extends Exact<DeepPartial<DispenseMetadataMap>, I>>(object: I): DispenseMetadataMap {
     const message = createBaseDispenseMetadataMap();
-    message.dispenseMetadata = Object.entries(object.dispenseMetadata ?? {}).reduce<
+    message.dispense_metadata = Object.entries(object.dispense_metadata ?? {}).reduce<
       { [key: string]: DispenseMetadata }
     >((acc, [key, value]) => {
       if (value !== undefined) {
@@ -1940,22 +1940,22 @@ export const DispenseMetadataMap_DispenseMetadataEntry = {
 };
 
 function createBaseDispenseMetadata(): DispenseMetadata {
-  return { failedDispense: false, dispenseDelayMs: 0, minDurationOverrideMs: 0, speedMultOverride: 0 };
+  return { failed_dispense: false, dispense_delay_ms: 0, min_duration_override_ms: 0, speed_mult_override: 0 };
 }
 
 export const DispenseMetadata = {
   encode(message: DispenseMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.failedDispense === true) {
-      writer.uint32(8).bool(message.failedDispense);
+    if (message.failed_dispense === true) {
+      writer.uint32(8).bool(message.failed_dispense);
     }
-    if (message.dispenseDelayMs !== 0) {
-      writer.uint32(16).uint64(message.dispenseDelayMs);
+    if (message.dispense_delay_ms !== 0) {
+      writer.uint32(16).uint64(message.dispense_delay_ms);
     }
-    if (message.minDurationOverrideMs !== 0) {
-      writer.uint32(24).uint64(message.minDurationOverrideMs);
+    if (message.min_duration_override_ms !== 0) {
+      writer.uint32(24).uint64(message.min_duration_override_ms);
     }
-    if (message.speedMultOverride !== 0) {
-      writer.uint32(32).uint64(message.speedMultOverride);
+    if (message.speed_mult_override !== 0) {
+      writer.uint32(32).uint64(message.speed_mult_override);
     }
     return writer;
   },
@@ -1972,28 +1972,28 @@ export const DispenseMetadata = {
             break;
           }
 
-          message.failedDispense = reader.bool();
+          message.failed_dispense = reader.bool();
           continue;
         case 2:
           if (tag !== 16) {
             break;
           }
 
-          message.dispenseDelayMs = longToNumber(reader.uint64() as Long);
+          message.dispense_delay_ms = longToNumber(reader.uint64() as Long);
           continue;
         case 3:
           if (tag !== 24) {
             break;
           }
 
-          message.minDurationOverrideMs = longToNumber(reader.uint64() as Long);
+          message.min_duration_override_ms = longToNumber(reader.uint64() as Long);
           continue;
         case 4:
           if (tag !== 32) {
             break;
           }
 
-          message.speedMultOverride = longToNumber(reader.uint64() as Long);
+          message.speed_mult_override = longToNumber(reader.uint64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2006,26 +2006,26 @@ export const DispenseMetadata = {
 
   fromJSON(object: any): DispenseMetadata {
     return {
-      failedDispense: isSet(object.failedDispense) ? Boolean(object.failedDispense) : false,
-      dispenseDelayMs: isSet(object.dispenseDelayMs) ? Number(object.dispenseDelayMs) : 0,
-      minDurationOverrideMs: isSet(object.minDurationOverrideMs) ? Number(object.minDurationOverrideMs) : 0,
-      speedMultOverride: isSet(object.speedMultOverride) ? Number(object.speedMultOverride) : 0,
+      failed_dispense: isSet(object.failed_dispense) ? Boolean(object.failed_dispense) : false,
+      dispense_delay_ms: isSet(object.dispense_delay_ms) ? Number(object.dispense_delay_ms) : 0,
+      min_duration_override_ms: isSet(object.min_duration_override_ms) ? Number(object.min_duration_override_ms) : 0,
+      speed_mult_override: isSet(object.speed_mult_override) ? Number(object.speed_mult_override) : 0,
     };
   },
 
   toJSON(message: DispenseMetadata): unknown {
     const obj: any = {};
-    if (message.failedDispense === true) {
-      obj.failedDispense = message.failedDispense;
+    if (message.failed_dispense === true) {
+      obj.failed_dispense = message.failed_dispense;
     }
-    if (message.dispenseDelayMs !== 0) {
-      obj.dispenseDelayMs = Math.round(message.dispenseDelayMs);
+    if (message.dispense_delay_ms !== 0) {
+      obj.dispense_delay_ms = Math.round(message.dispense_delay_ms);
     }
-    if (message.minDurationOverrideMs !== 0) {
-      obj.minDurationOverrideMs = Math.round(message.minDurationOverrideMs);
+    if (message.min_duration_override_ms !== 0) {
+      obj.min_duration_override_ms = Math.round(message.min_duration_override_ms);
     }
-    if (message.speedMultOverride !== 0) {
-      obj.speedMultOverride = Math.round(message.speedMultOverride);
+    if (message.speed_mult_override !== 0) {
+      obj.speed_mult_override = Math.round(message.speed_mult_override);
     }
     return obj;
   },
@@ -2035,28 +2035,28 @@ export const DispenseMetadata = {
   },
   fromPartial<I extends Exact<DeepPartial<DispenseMetadata>, I>>(object: I): DispenseMetadata {
     const message = createBaseDispenseMetadata();
-    message.failedDispense = object.failedDispense ?? false;
-    message.dispenseDelayMs = object.dispenseDelayMs ?? 0;
-    message.minDurationOverrideMs = object.minDurationOverrideMs ?? 0;
-    message.speedMultOverride = object.speedMultOverride ?? 0;
+    message.failed_dispense = object.failed_dispense ?? false;
+    message.dispense_delay_ms = object.dispense_delay_ms ?? 0;
+    message.min_duration_override_ms = object.min_duration_override_ms ?? 0;
+    message.speed_mult_override = object.speed_mult_override ?? 0;
     return message;
   },
 };
 
 function createBaseContentTypeStatuses(): ContentTypeStatuses {
-  return { contentStatuses: {}, splashtext: "", splashtextHue: 0 };
+  return { content_statuses: {}, splashtext: "", splashtext_hue: 0 };
 }
 
 export const ContentTypeStatuses = {
   encode(message: ContentTypeStatuses, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    Object.entries(message.contentStatuses).forEach(([key, value]) => {
+    Object.entries(message.content_statuses).forEach(([key, value]) => {
       ContentTypeStatuses_ContentStatusesEntry.encode({ key: key as any, value }, writer.uint32(10).fork()).ldelim();
     });
     if (message.splashtext !== "") {
       writer.uint32(18).string(message.splashtext);
     }
-    if (message.splashtextHue !== 0) {
-      writer.uint32(24).uint64(message.splashtextHue);
+    if (message.splashtext_hue !== 0) {
+      writer.uint32(24).uint64(message.splashtext_hue);
     }
     return writer;
   },
@@ -2075,7 +2075,7 @@ export const ContentTypeStatuses = {
 
           const entry1 = ContentTypeStatuses_ContentStatusesEntry.decode(reader, reader.uint32());
           if (entry1.value !== undefined) {
-            message.contentStatuses[entry1.key] = entry1.value;
+            message.content_statuses[entry1.key] = entry1.value;
           }
           continue;
         case 2:
@@ -2090,7 +2090,7 @@ export const ContentTypeStatuses = {
             break;
           }
 
-          message.splashtextHue = longToNumber(reader.uint64() as Long);
+          message.splashtext_hue = longToNumber(reader.uint64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2103,33 +2103,33 @@ export const ContentTypeStatuses = {
 
   fromJSON(object: any): ContentTypeStatuses {
     return {
-      contentStatuses: isObject(object.contentStatuses)
-        ? Object.entries(object.contentStatuses).reduce<{ [key: string]: ContentTypeStatus }>((acc, [key, value]) => {
+      content_statuses: isObject(object.content_statuses)
+        ? Object.entries(object.content_statuses).reduce<{ [key: string]: ContentTypeStatus }>((acc, [key, value]) => {
           acc[key] = ContentTypeStatus.fromJSON(value);
           return acc;
         }, {})
         : {},
       splashtext: isSet(object.splashtext) ? String(object.splashtext) : "",
-      splashtextHue: isSet(object.splashtextHue) ? Number(object.splashtextHue) : 0,
+      splashtext_hue: isSet(object.splashtext_hue) ? Number(object.splashtext_hue) : 0,
     };
   },
 
   toJSON(message: ContentTypeStatuses): unknown {
     const obj: any = {};
-    if (message.contentStatuses) {
-      const entries = Object.entries(message.contentStatuses);
+    if (message.content_statuses) {
+      const entries = Object.entries(message.content_statuses);
       if (entries.length > 0) {
-        obj.contentStatuses = {};
+        obj.content_statuses = {};
         entries.forEach(([k, v]) => {
-          obj.contentStatuses[k] = ContentTypeStatus.toJSON(v);
+          obj.content_statuses[k] = ContentTypeStatus.toJSON(v);
         });
       }
     }
     if (message.splashtext !== "") {
       obj.splashtext = message.splashtext;
     }
-    if (message.splashtextHue !== 0) {
-      obj.splashtextHue = Math.round(message.splashtextHue);
+    if (message.splashtext_hue !== 0) {
+      obj.splashtext_hue = Math.round(message.splashtext_hue);
     }
     return obj;
   },
@@ -2139,17 +2139,16 @@ export const ContentTypeStatuses = {
   },
   fromPartial<I extends Exact<DeepPartial<ContentTypeStatuses>, I>>(object: I): ContentTypeStatuses {
     const message = createBaseContentTypeStatuses();
-    message.contentStatuses = Object.entries(object.contentStatuses ?? {}).reduce<{ [key: string]: ContentTypeStatus }>(
-      (acc, [key, value]) => {
-        if (value !== undefined) {
-          acc[key] = ContentTypeStatus.fromPartial(value);
-        }
-        return acc;
-      },
-      {},
-    );
+    message.content_statuses = Object.entries(object.content_statuses ?? {}).reduce<
+      { [key: string]: ContentTypeStatus }
+    >((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = ContentTypeStatus.fromPartial(value);
+      }
+      return acc;
+    }, {});
     message.splashtext = object.splashtext ?? "";
-    message.splashtextHue = object.splashtextHue ?? 0;
+    message.splashtext_hue = object.splashtext_hue ?? 0;
     return message;
   },
 };
@@ -2235,16 +2234,16 @@ export const ContentTypeStatuses_ContentStatusesEntry = {
 };
 
 function createBaseContentTypeStatus(): ContentTypeStatus {
-  return { rawTitle: "", rawDescription: "", caption: "", posts: [] };
+  return { raw_title: "", raw_description: "", caption: "", posts: [] };
 }
 
 export const ContentTypeStatus = {
   encode(message: ContentTypeStatus, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.rawTitle !== "") {
-      writer.uint32(10).string(message.rawTitle);
+    if (message.raw_title !== "") {
+      writer.uint32(10).string(message.raw_title);
     }
-    if (message.rawDescription !== "") {
-      writer.uint32(18).string(message.rawDescription);
+    if (message.raw_description !== "") {
+      writer.uint32(18).string(message.raw_description);
     }
     if (message.caption !== "") {
       writer.uint32(26).string(message.caption);
@@ -2267,14 +2266,14 @@ export const ContentTypeStatus = {
             break;
           }
 
-          message.rawTitle = reader.string();
+          message.raw_title = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.rawDescription = reader.string();
+          message.raw_description = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
@@ -2301,8 +2300,8 @@ export const ContentTypeStatus = {
 
   fromJSON(object: any): ContentTypeStatus {
     return {
-      rawTitle: isSet(object.rawTitle) ? String(object.rawTitle) : "",
-      rawDescription: isSet(object.rawDescription) ? String(object.rawDescription) : "",
+      raw_title: isSet(object.raw_title) ? String(object.raw_title) : "",
+      raw_description: isSet(object.raw_description) ? String(object.raw_description) : "",
       caption: isSet(object.caption) ? String(object.caption) : "",
       posts: Array.isArray(object?.posts) ? object.posts.map((e: any) => Post.fromJSON(e)) : [],
     };
@@ -2310,11 +2309,11 @@ export const ContentTypeStatus = {
 
   toJSON(message: ContentTypeStatus): unknown {
     const obj: any = {};
-    if (message.rawTitle !== "") {
-      obj.rawTitle = message.rawTitle;
+    if (message.raw_title !== "") {
+      obj.raw_title = message.raw_title;
     }
-    if (message.rawDescription !== "") {
-      obj.rawDescription = message.rawDescription;
+    if (message.raw_description !== "") {
+      obj.raw_description = message.raw_description;
     }
     if (message.caption !== "") {
       obj.caption = message.caption;
@@ -2330,8 +2329,8 @@ export const ContentTypeStatus = {
   },
   fromPartial<I extends Exact<DeepPartial<ContentTypeStatus>, I>>(object: I): ContentTypeStatus {
     const message = createBaseContentTypeStatus();
-    message.rawTitle = object.rawTitle ?? "";
-    message.rawDescription = object.rawDescription ?? "";
+    message.raw_title = object.raw_title ?? "";
+    message.raw_description = object.raw_description ?? "";
     message.caption = object.caption ?? "";
     message.posts = object.posts?.map((e) => Post.fromPartial(e)) || [];
     return message;
@@ -2341,13 +2340,13 @@ export const ContentTypeStatus = {
 function createBasePost(): Post {
   return {
     platform: 0,
-    subPlatform: "",
+    sub_platform: "",
     title: "",
     description: "",
     uploaded: false,
     url: "",
     crosspost: false,
-    scheduledUnixTimetamp: 0,
+    scheduled_unix_timetamp: 0,
   };
 }
 
@@ -2356,8 +2355,8 @@ export const Post = {
     if (message.platform !== 0) {
       writer.uint32(8).int32(message.platform);
     }
-    if (message.subPlatform !== "") {
-      writer.uint32(18).string(message.subPlatform);
+    if (message.sub_platform !== "") {
+      writer.uint32(18).string(message.sub_platform);
     }
     if (message.title !== "") {
       writer.uint32(26).string(message.title);
@@ -2374,8 +2373,8 @@ export const Post = {
     if (message.crosspost === true) {
       writer.uint32(56).bool(message.crosspost);
     }
-    if (message.scheduledUnixTimetamp !== 0) {
-      writer.uint32(64).uint64(message.scheduledUnixTimetamp);
+    if (message.scheduled_unix_timetamp !== 0) {
+      writer.uint32(64).uint64(message.scheduled_unix_timetamp);
     }
     return writer;
   },
@@ -2399,7 +2398,7 @@ export const Post = {
             break;
           }
 
-          message.subPlatform = reader.string();
+          message.sub_platform = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
@@ -2441,7 +2440,7 @@ export const Post = {
             break;
           }
 
-          message.scheduledUnixTimetamp = longToNumber(reader.uint64() as Long);
+          message.scheduled_unix_timetamp = longToNumber(reader.uint64() as Long);
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2455,13 +2454,13 @@ export const Post = {
   fromJSON(object: any): Post {
     return {
       platform: isSet(object.platform) ? socialPlatformFromJSON(object.platform) : 0,
-      subPlatform: isSet(object.subPlatform) ? String(object.subPlatform) : "",
+      sub_platform: isSet(object.sub_platform) ? String(object.sub_platform) : "",
       title: isSet(object.title) ? String(object.title) : "",
       description: isSet(object.description) ? String(object.description) : "",
       uploaded: isSet(object.uploaded) ? Boolean(object.uploaded) : false,
       url: isSet(object.url) ? String(object.url) : "",
       crosspost: isSet(object.crosspost) ? Boolean(object.crosspost) : false,
-      scheduledUnixTimetamp: isSet(object.scheduledUnixTimetamp) ? Number(object.scheduledUnixTimetamp) : 0,
+      scheduled_unix_timetamp: isSet(object.scheduled_unix_timetamp) ? Number(object.scheduled_unix_timetamp) : 0,
     };
   },
 
@@ -2470,8 +2469,8 @@ export const Post = {
     if (message.platform !== 0) {
       obj.platform = socialPlatformToJSON(message.platform);
     }
-    if (message.subPlatform !== "") {
-      obj.subPlatform = message.subPlatform;
+    if (message.sub_platform !== "") {
+      obj.sub_platform = message.sub_platform;
     }
     if (message.title !== "") {
       obj.title = message.title;
@@ -2488,8 +2487,8 @@ export const Post = {
     if (message.crosspost === true) {
       obj.crosspost = message.crosspost;
     }
-    if (message.scheduledUnixTimetamp !== 0) {
-      obj.scheduledUnixTimetamp = Math.round(message.scheduledUnixTimetamp);
+    if (message.scheduled_unix_timetamp !== 0) {
+      obj.scheduled_unix_timetamp = Math.round(message.scheduled_unix_timetamp);
     }
     return obj;
   },
@@ -2500,13 +2499,13 @@ export const Post = {
   fromPartial<I extends Exact<DeepPartial<Post>, I>>(object: I): Post {
     const message = createBasePost();
     message.platform = object.platform ?? 0;
-    message.subPlatform = object.subPlatform ?? "";
+    message.sub_platform = object.sub_platform ?? "";
     message.title = object.title ?? "";
     message.description = object.description ?? "";
     message.uploaded = object.uploaded ?? false;
     message.url = object.url ?? "";
     message.crosspost = object.crosspost ?? false;
-    message.scheduledUnixTimetamp = object.scheduledUnixTimetamp ?? 0;
+    message.scheduled_unix_timetamp = object.scheduled_unix_timetamp ?? 0;
     return message;
   },
 };
@@ -2589,14 +2588,14 @@ function createBaseVialProfile(): VialProfile {
   return {
     id: 0,
     description: "",
-    slopUl: 0,
-    dispenseVolumeUl: 0,
-    footageDelayMs: 0,
-    footageMinDurationMs: 0,
-    footageSpeedMult: 0,
-    footageIgnore: false,
-    initialVolumeUl: 0,
-    currentVolumeUl: 0,
+    slop_ul: 0,
+    dispense_volume_ul: 0,
+    footage_delay_ms: 0,
+    footage_min_duration_ms: 0,
+    footage_speed_mult: 0,
+    footage_ignore: false,
+    initial_volume_ul: 0,
+    current_volume_ul: 0,
   };
 }
 
@@ -2608,29 +2607,29 @@ export const VialProfile = {
     if (message.description !== "") {
       writer.uint32(18).string(message.description);
     }
-    if (message.slopUl !== 0) {
-      writer.uint32(29).float(message.slopUl);
+    if (message.slop_ul !== 0) {
+      writer.uint32(29).float(message.slop_ul);
     }
-    if (message.dispenseVolumeUl !== 0) {
-      writer.uint32(37).float(message.dispenseVolumeUl);
+    if (message.dispense_volume_ul !== 0) {
+      writer.uint32(37).float(message.dispense_volume_ul);
     }
-    if (message.footageDelayMs !== 0) {
-      writer.uint32(40).uint64(message.footageDelayMs);
+    if (message.footage_delay_ms !== 0) {
+      writer.uint32(40).uint64(message.footage_delay_ms);
     }
-    if (message.footageMinDurationMs !== 0) {
-      writer.uint32(48).uint64(message.footageMinDurationMs);
+    if (message.footage_min_duration_ms !== 0) {
+      writer.uint32(48).uint64(message.footage_min_duration_ms);
     }
-    if (message.footageSpeedMult !== 0) {
-      writer.uint32(61).float(message.footageSpeedMult);
+    if (message.footage_speed_mult !== 0) {
+      writer.uint32(61).float(message.footage_speed_mult);
     }
-    if (message.footageIgnore === true) {
-      writer.uint32(64).bool(message.footageIgnore);
+    if (message.footage_ignore === true) {
+      writer.uint32(64).bool(message.footage_ignore);
     }
-    if (message.initialVolumeUl !== 0) {
-      writer.uint32(77).float(message.initialVolumeUl);
+    if (message.initial_volume_ul !== 0) {
+      writer.uint32(77).float(message.initial_volume_ul);
     }
-    if (message.currentVolumeUl !== 0) {
-      writer.uint32(85).float(message.currentVolumeUl);
+    if (message.current_volume_ul !== 0) {
+      writer.uint32(85).float(message.current_volume_ul);
     }
     return writer;
   },
@@ -2661,56 +2660,56 @@ export const VialProfile = {
             break;
           }
 
-          message.slopUl = reader.float();
+          message.slop_ul = reader.float();
           continue;
         case 4:
           if (tag !== 37) {
             break;
           }
 
-          message.dispenseVolumeUl = reader.float();
+          message.dispense_volume_ul = reader.float();
           continue;
         case 5:
           if (tag !== 40) {
             break;
           }
 
-          message.footageDelayMs = longToNumber(reader.uint64() as Long);
+          message.footage_delay_ms = longToNumber(reader.uint64() as Long);
           continue;
         case 6:
           if (tag !== 48) {
             break;
           }
 
-          message.footageMinDurationMs = longToNumber(reader.uint64() as Long);
+          message.footage_min_duration_ms = longToNumber(reader.uint64() as Long);
           continue;
         case 7:
           if (tag !== 61) {
             break;
           }
 
-          message.footageSpeedMult = reader.float();
+          message.footage_speed_mult = reader.float();
           continue;
         case 8:
           if (tag !== 64) {
             break;
           }
 
-          message.footageIgnore = reader.bool();
+          message.footage_ignore = reader.bool();
           continue;
         case 9:
           if (tag !== 77) {
             break;
           }
 
-          message.initialVolumeUl = reader.float();
+          message.initial_volume_ul = reader.float();
           continue;
         case 10:
           if (tag !== 85) {
             break;
           }
 
-          message.currentVolumeUl = reader.float();
+          message.current_volume_ul = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2725,14 +2724,14 @@ export const VialProfile = {
     return {
       id: isSet(object.id) ? Number(object.id) : 0,
       description: isSet(object.description) ? String(object.description) : "",
-      slopUl: isSet(object.slopUl) ? Number(object.slopUl) : 0,
-      dispenseVolumeUl: isSet(object.dispenseVolumeUl) ? Number(object.dispenseVolumeUl) : 0,
-      footageDelayMs: isSet(object.footageDelayMs) ? Number(object.footageDelayMs) : 0,
-      footageMinDurationMs: isSet(object.footageMinDurationMs) ? Number(object.footageMinDurationMs) : 0,
-      footageSpeedMult: isSet(object.footageSpeedMult) ? Number(object.footageSpeedMult) : 0,
-      footageIgnore: isSet(object.footageIgnore) ? Boolean(object.footageIgnore) : false,
-      initialVolumeUl: isSet(object.initialVolumeUl) ? Number(object.initialVolumeUl) : 0,
-      currentVolumeUl: isSet(object.currentVolumeUl) ? Number(object.currentVolumeUl) : 0,
+      slop_ul: isSet(object.slop_ul) ? Number(object.slop_ul) : 0,
+      dispense_volume_ul: isSet(object.dispense_volume_ul) ? Number(object.dispense_volume_ul) : 0,
+      footage_delay_ms: isSet(object.footage_delay_ms) ? Number(object.footage_delay_ms) : 0,
+      footage_min_duration_ms: isSet(object.footage_min_duration_ms) ? Number(object.footage_min_duration_ms) : 0,
+      footage_speed_mult: isSet(object.footage_speed_mult) ? Number(object.footage_speed_mult) : 0,
+      footage_ignore: isSet(object.footage_ignore) ? Boolean(object.footage_ignore) : false,
+      initial_volume_ul: isSet(object.initial_volume_ul) ? Number(object.initial_volume_ul) : 0,
+      current_volume_ul: isSet(object.current_volume_ul) ? Number(object.current_volume_ul) : 0,
     };
   },
 
@@ -2744,29 +2743,29 @@ export const VialProfile = {
     if (message.description !== "") {
       obj.description = message.description;
     }
-    if (message.slopUl !== 0) {
-      obj.slopUl = message.slopUl;
+    if (message.slop_ul !== 0) {
+      obj.slop_ul = message.slop_ul;
     }
-    if (message.dispenseVolumeUl !== 0) {
-      obj.dispenseVolumeUl = message.dispenseVolumeUl;
+    if (message.dispense_volume_ul !== 0) {
+      obj.dispense_volume_ul = message.dispense_volume_ul;
     }
-    if (message.footageDelayMs !== 0) {
-      obj.footageDelayMs = Math.round(message.footageDelayMs);
+    if (message.footage_delay_ms !== 0) {
+      obj.footage_delay_ms = Math.round(message.footage_delay_ms);
     }
-    if (message.footageMinDurationMs !== 0) {
-      obj.footageMinDurationMs = Math.round(message.footageMinDurationMs);
+    if (message.footage_min_duration_ms !== 0) {
+      obj.footage_min_duration_ms = Math.round(message.footage_min_duration_ms);
     }
-    if (message.footageSpeedMult !== 0) {
-      obj.footageSpeedMult = message.footageSpeedMult;
+    if (message.footage_speed_mult !== 0) {
+      obj.footage_speed_mult = message.footage_speed_mult;
     }
-    if (message.footageIgnore === true) {
-      obj.footageIgnore = message.footageIgnore;
+    if (message.footage_ignore === true) {
+      obj.footage_ignore = message.footage_ignore;
     }
-    if (message.initialVolumeUl !== 0) {
-      obj.initialVolumeUl = message.initialVolumeUl;
+    if (message.initial_volume_ul !== 0) {
+      obj.initial_volume_ul = message.initial_volume_ul;
     }
-    if (message.currentVolumeUl !== 0) {
-      obj.currentVolumeUl = message.currentVolumeUl;
+    if (message.current_volume_ul !== 0) {
+      obj.current_volume_ul = message.current_volume_ul;
     }
     return obj;
   },
@@ -2778,14 +2777,14 @@ export const VialProfile = {
     const message = createBaseVialProfile();
     message.id = object.id ?? 0;
     message.description = object.description ?? "";
-    message.slopUl = object.slopUl ?? 0;
-    message.dispenseVolumeUl = object.dispenseVolumeUl ?? 0;
-    message.footageDelayMs = object.footageDelayMs ?? 0;
-    message.footageMinDurationMs = object.footageMinDurationMs ?? 0;
-    message.footageSpeedMult = object.footageSpeedMult ?? 0;
-    message.footageIgnore = object.footageIgnore ?? false;
-    message.initialVolumeUl = object.initialVolumeUl ?? 0;
-    message.currentVolumeUl = object.currentVolumeUl ?? 0;
+    message.slop_ul = object.slop_ul ?? 0;
+    message.dispense_volume_ul = object.dispense_volume_ul ?? 0;
+    message.footage_delay_ms = object.footage_delay_ms ?? 0;
+    message.footage_min_duration_ms = object.footage_min_duration_ms ?? 0;
+    message.footage_speed_mult = object.footage_speed_mult ?? 0;
+    message.footage_ignore = object.footage_ignore ?? false;
+    message.initial_volume_ul = object.initial_volume_ul ?? 0;
+    message.current_volume_ul = object.current_volume_ul ?? 0;
     return message;
   },
 };
