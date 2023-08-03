@@ -52,8 +52,9 @@ mkdir -p $TYPESCRIPT_OUT_DIR/machinepb
 # protoc --js_out=import_style=commonjs,binary:$TYPESCRIPT_OUT_DIR/machinepb ./machine.proto 
 # protoc --ts_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
 
+# snakeToCamel: json keys are snake, code keys camel, consistent with Go default
 protoc \
 	--ts_proto_opt=esModuleInterop=true \
-	--ts_proto_opt=snakeToCamel=false \
+	--ts_proto_opt=snakeToCamel=keys \
 	--ts_proto_out $TYPESCRIPT_OUT_DIR/machinepb ./machine.proto
 
