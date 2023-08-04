@@ -79,6 +79,13 @@ typedef enum _machine_Status {
     machine_Status_NAVIGATING_OUTER = 75 
 } machine_Status;
 
+typedef enum _machine_RinseStatus { 
+    machine_RinseStatus_RINSE_UNDEFINED = 0, 
+    machine_RinseStatus_RINSE_COMPLETE = 1, 
+    machine_RinseStatus_RINSE_REQUESTED = 2, 
+    machine_RinseStatus_RINSE_EXPELLING = 3 
+} machine_RinseStatus;
+
 typedef enum _machine_FluidType { 
     machine_FluidType_FLUID_UNDEFINED = 0, 
     machine_FluidType_FLUID_DRAIN = 1, 
@@ -298,6 +305,7 @@ typedef struct _machine_StateReport {
     machine_FluidRequest fluid_request;
     bool has_fluid_details;
     machine_FluidDetails fluid_details;
+    machine_RinseStatus rinse_status;
     /* the following are populated by the backend, useful in post-processing */
     bool paused;
     pb_callback_t timestamp_readable;
@@ -335,6 +343,10 @@ typedef struct _machine_VialProfileCollection_ProfilesEntry {
 #define _machine_Status_MAX machine_Status_NAVIGATING_OUTER
 #define _machine_Status_ARRAYSIZE ((machine_Status)(machine_Status_NAVIGATING_OUTER+1))
 
+#define _machine_RinseStatus_MIN machine_RinseStatus_RINSE_UNDEFINED
+#define _machine_RinseStatus_MAX machine_RinseStatus_RINSE_EXPELLING
+#define _machine_RinseStatus_ARRAYSIZE ((machine_RinseStatus)(machine_RinseStatus_RINSE_EXPELLING+1))
+
 #define _machine_FluidType_MIN machine_FluidType_FLUID_UNDEFINED
 #define _machine_FluidType_MAX machine_FluidType_FLUID_MILK
 #define _machine_FluidType_ARRAYSIZE ((machine_FluidType)(machine_FluidType_FLUID_MILK+1))
@@ -358,7 +370,7 @@ extern "C" {
 #define machine_MovementDetails_init_default     {0, 0, 0, 0, 0}
 #define machine_FluidRequest_init_default        {_machine_FluidType_MIN, 0, 0, 0}
 #define machine_FluidDetails_init_default        {0}
-#define machine_StateReport_init_default         {0, 0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default, 0, {{NULL}, NULL}, 0}
+#define machine_StateReport_init_default         {0, 0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_default, false, machine_CollectionRequest_init_default, false, machine_MovementDetails_init_default, false, machine_FluidRequest_init_default, false, machine_FluidDetails_init_default, _machine_RinseStatus_MIN, 0, {{NULL}, NULL}, 0}
 #define machine_StateReportList_init_default     {{{NULL}, NULL}}
 #define machine_SessionStatus_init_default       {0, 0, 0, 0, 0}
 #define machine_StreamStatus_init_default        {0}
@@ -382,7 +394,7 @@ extern "C" {
 #define machine_MovementDetails_init_zero        {0, 0, 0, 0, 0}
 #define machine_FluidRequest_init_zero           {_machine_FluidType_MIN, 0, 0, 0}
 #define machine_FluidDetails_init_zero           {0}
-#define machine_StateReport_init_zero            {0, 0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero, 0, {{NULL}, NULL}, 0}
+#define machine_StateReport_init_zero            {0, 0, _machine_Mode_MIN, _machine_Status_MIN, 0, false, machine_PipetteState_init_zero, false, machine_CollectionRequest_init_zero, false, machine_MovementDetails_init_zero, false, machine_FluidRequest_init_zero, false, machine_FluidDetails_init_zero, _machine_RinseStatus_MIN, 0, {{NULL}, NULL}, 0}
 #define machine_StateReportList_init_zero        {{{NULL}, NULL}}
 #define machine_SessionStatus_init_zero          {0, 0, 0, 0, 0}
 #define machine_StreamStatus_init_zero           {0}
@@ -479,6 +491,7 @@ extern "C" {
 #define machine_StateReport_movement_details_tag 12
 #define machine_StateReport_fluid_request_tag    13
 #define machine_StateReport_fluid_details_tag    14
+#define machine_StateReport_rinse_status_tag     15
 #define machine_StateReport_paused_tag           50
 #define machine_StateReport_timestamp_readable_tag 51
 #define machine_StateReport_latest_dslr_file_number_tag 52
@@ -537,6 +550,7 @@ X(a, STATIC,   OPTIONAL, MESSAGE,  collection_request,  11) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  movement_details,  12) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  fluid_request,    13) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  fluid_details,    14) \
+X(a, STATIC,   SINGULAR, UENUM,    rinse_status,     15) \
 X(a, STATIC,   SINGULAR, BOOL,     paused,           50) \
 X(a, CALLBACK, SINGULAR, STRING,   timestamp_readable,  51) \
 X(a, STATIC,   SINGULAR, UINT64,   latest_dslr_file_number,  52)

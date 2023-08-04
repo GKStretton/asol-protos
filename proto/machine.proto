@@ -86,6 +86,13 @@ enum Status {
 	NAVIGATING_OUTER = 75;
 }
 
+enum RinseStatus {
+	RINSE_UNDEFINED = 0;
+	RINSE_COMPLETE = 1;
+	RINSE_REQUESTED = 2;
+	RINSE_EXPELLING = 3;
+}
+
 message PipetteState {
 	bool spent = 1;
 	uint32 vial_held = 2;
@@ -155,6 +162,7 @@ message StateReport {
 	MovementDetails movement_details = 12;
 	FluidRequest fluid_request = 13;
 	FluidDetails fluid_details = 14;
+	RinseStatus rinse_status = 15;
 	// the following are populated by the backend, useful in post-processing
 	bool paused = 50;
 	string timestamp_readable = 51;
