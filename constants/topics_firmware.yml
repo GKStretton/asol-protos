@@ -19,6 +19,7 @@ constants:
   TOPIC_SET_COVER_SERVO_US: "mega/req/cover-servo-us"
   TOPIC_SET_COVER_OPEN: "mega/req/cover-open"
   TOPIC_SET_COVER_CLOSE: "mega/req/cover-close"
+  TOPIC_RINSE: "mega/req/rinse"
 
   TOPIC_STATE_REPORT_REQUEST: "mega/req/state-report"
   TOPIC_STATE_REPORT_RAW: "mega/state-report"

@@ -15,6 +15,7 @@ const (
 	TOPIC_MARK_SAFE_TO_CALIBRATE string = "mega/req/safe-to-calibrate"
 	TOPIC_PIN_OFF string = "mega/req/pin-off"
 	TOPIC_PIN_ON string = "mega/req/pin-on"
+	TOPIC_RINSE string = "mega/req/rinse"
 	TOPIC_SET_COVER_CLOSE string = "mega/req/cover-close"
 	TOPIC_SET_COVER_OPEN string = "mega/req/cover-open"
 	TOPIC_SET_COVER_SERVO_US string = "mega/req/cover-servo-us"
