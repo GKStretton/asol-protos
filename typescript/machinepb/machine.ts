@@ -39,7 +39,7 @@ export enum Node {
   OUTER_HANDOVER = 90,
   INNER_HANDOVER = 110,
   INVERSE_KINEMATICS_POSITION = 150,
-  IDLE_LOCATION = 8,
+  IDLE_LOCATION = 80,
   UNRECOGNIZED = -1,
 }
 
@@ -126,7 +126,7 @@ export function nodeFromJSON(object: any): Node {
     case 150:
     case "INVERSE_KINEMATICS_POSITION":
       return Node.INVERSE_KINEMATICS_POSITION;
-    case 8:
+    case 80:
     case "IDLE_LOCATION":
       return Node.IDLE_LOCATION;
     case -1:
