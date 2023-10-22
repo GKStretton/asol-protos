@@ -7,7 +7,7 @@ const (
 	PAYLOAD_SMART_SWITCH_ON string = "ON"
 	TOPIC_CLOSE_BLIND string = "asol/close_bedroom_blind"
 	TOPIC_EMAIL_SEND string = "asol/send-email"
-	TOPIC_FRIDGE_SWITCH string = "cmnd/tasmota_sw1/Power1"
+	TOPIC_FRIDGE_SWITCH string = "cmnd/tasmota_sw_fridge/Power1"
 	TOPIC_KV_GET string = "asol/kv/get/"
 	TOPIC_KV_GET_RESP string = "asol/kv/get-resp/"
 	TOPIC_KV_SET string = "asol/kv/set/"
