@@ -7,7 +7,9 @@ This repo contains protos and build code for the protos and topics. Also see oth
 
 ## Usage
 
-View / edit protos in proto/
+View / edit protos in `proto/`
+
+View / edit topics in `constants/`
 
 Build with
 
