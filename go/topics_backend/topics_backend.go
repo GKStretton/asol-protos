@@ -40,4 +40,5 @@ const (
 	TOPIC_TRIGGER_DSLR string = "asol/dslr-crop-capture"
 	TOPIC_TRIGGER_DSLR_RESP string = "asol/dslr-crop-capture-resp"
 	TOPIC_VIDEOS_GENERATED string = "asol/videos-generated"
+	TRIGGER_UPLOAD_FROM_LATEST_CONTENT_PLAN string = "asol/upload-from-latest-content-plan"
 )

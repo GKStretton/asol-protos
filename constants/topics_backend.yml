@@ -50,6 +50,8 @@ constants:
 
   TOPIC_EMAIL_SEND: "asol/send-email"
 
+  TRIGGER_UPLOAD_FROM_LATEST_CONTENT_PLAN: "asol/upload-from-latest-content-plan"
+
   # (VialProfileCollection)
   KV_KEY_ALL_VIAL_PROFILES: "vial-profiles"
   # (SystemVialConfiguration)
