@@ -285,6 +285,7 @@ typedef struct _machine_VialProfile {
     pb_callback_t name;
     machine_VialProfile_VialFluid vial_fluid;
     pb_callback_t colour;
+    pb_callback_t aliases;
 } machine_VialProfile;
 
 typedef struct _machine_DispenseMetadataMap_DispenseMetadataEntry { 
@@ -395,7 +396,7 @@ extern "C" {
 #define machine_ContentTypeStatus_init_default   {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_default                {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
 #define machine_Email_init_default               {{{NULL}, NULL}, {{NULL}, NULL}}
-#define machine_VialProfile_init_default         {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0, {{NULL}, NULL}, _machine_VialProfile_VialFluid_MIN, {{NULL}, NULL}}
+#define machine_VialProfile_init_default         {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0, {{NULL}, NULL}, _machine_VialProfile_VialFluid_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_SystemVialConfiguration_init_default {{{NULL}, NULL}}
 #define machine_SystemVialConfiguration_VialsEntry_init_default {0, 0}
 #define machine_VialProfileCollection_init_default {{{NULL}, NULL}}
@@ -419,7 +420,7 @@ extern "C" {
 #define machine_ContentTypeStatus_init_zero      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_zero                   {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
 #define machine_Email_init_zero                  {{{NULL}, NULL}, {{NULL}, NULL}}
-#define machine_VialProfile_init_zero            {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0, {{NULL}, NULL}, _machine_VialProfile_VialFluid_MIN, {{NULL}, NULL}}
+#define machine_VialProfile_init_zero            {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0, {{NULL}, NULL}, _machine_VialProfile_VialFluid_MIN, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_SystemVialConfiguration_init_zero {{{NULL}, NULL}}
 #define machine_SystemVialConfiguration_VialsEntry_init_zero {0, 0}
 #define machine_VialProfileCollection_init_zero  {{{NULL}, NULL}}
@@ -495,6 +496,7 @@ extern "C" {
 #define machine_VialProfile_name_tag             11
 #define machine_VialProfile_vial_fluid_tag       12
 #define machine_VialProfile_colour_tag           13
+#define machine_VialProfile_aliases_tag          14
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_key_tag 1
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_value_tag 2
 #define machine_StateReport_timestamp_unix_micros_tag 2
@@ -674,7 +676,8 @@ X(a, STATIC,   SINGULAR, FLOAT,    initial_volume_ul,   9) \
 X(a, STATIC,   SINGULAR, FLOAT,    current_volume_ul,  10) \
 X(a, CALLBACK, SINGULAR, STRING,   name,             11) \
 X(a, STATIC,   SINGULAR, UENUM,    vial_fluid,       12) \
-X(a, CALLBACK, SINGULAR, STRING,   colour,           13)
+X(a, CALLBACK, SINGULAR, STRING,   colour,           13) \
+X(a, CALLBACK, REPEATED, STRING,   aliases,          14)
 #define machine_VialProfile_CALLBACK pb_default_field_callback
 #define machine_VialProfile_DEFAULT NULL
 

@@ -310,8 +310,11 @@ message VialProfile {
 	}
 	VialFluid vial_fluid = 12;
 
-	// colour to represent this with in interfaces of the form '#aa22ff'
+	// colour to represent this in interfaces, of the form '#aa22ff'
 	string colour = 13;
+
+	// alternate names that can be used in voting
+	repeated string aliases = 14;
 }
 
 // contains a map of the current vial positions to vial profile ids

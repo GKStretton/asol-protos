@@ -800,8 +800,10 @@ export interface VialProfile {
   /** friendly name for use in interfaces */
   name: string;
   vialFluid: VialProfile_VialFluid;
-  /** colour to represent this with in interfaces of the form '#aa22ff' */
+  /** colour to represent this in interfaces, of the form '#aa22ff' */
   colour: string;
+  /** alternate names that can be used in voting */
+  aliases: string[];
 }
 
 export enum VialProfile_VialFluid {
@@ -2712,6 +2714,7 @@ function createBaseVialProfile(): VialProfile {
     name: "",
     vialFluid: 0,
     colour: "",
+    aliases: [],
   };
 }
 
@@ -2755,6 +2758,9 @@ export const VialProfile = {
     }
     if (message.colour !== "") {
       writer.uint32(106).string(message.colour);
+    }
+    for (const v of message.aliases) {
+      writer.uint32(114).string(v!);
     }
     return writer;
   },
@@ -2857,6 +2863,13 @@ export const VialProfile = {
 
           message.colour = reader.string();
           continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+
+          message.aliases.push(reader.string());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2883,6 +2896,7 @@ export const VialProfile = {
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       vialFluid: isSet(object.vial_fluid) ? vialProfile_VialFluidFromJSON(object.vial_fluid) : 0,
       colour: isSet(object.colour) ? globalThis.String(object.colour) : "",
+      aliases: globalThis.Array.isArray(object?.aliases) ? object.aliases.map((e: any) => globalThis.String(e)) : [],
     };
   },
 
@@ -2927,6 +2941,9 @@ export const VialProfile = {
     if (message.colour !== "") {
       obj.colour = message.colour;
     }
+    if (message.aliases?.length) {
+      obj.aliases = message.aliases;
+    }
     return obj;
   },
 
@@ -2948,6 +2965,7 @@ export const VialProfile = {
     message.name = object.name ?? "";
     message.vialFluid = object.vialFluid ?? 0;
     message.colour = object.colour ?? "";
+    message.aliases = object.aliases?.map((e) => e) || [];
     return message;
   },
 };

@@ -307,8 +307,10 @@ class VialProfile(betterproto.Message):
     # friendly name for use in interfaces
     name: str = betterproto.string_field(11)
     vial_fluid: "VialProfileVialFluid" = betterproto.enum_field(12)
-    # colour to represent this with in interfaces of the form '#aa22ff'
+    # colour to represent this in interfaces, of the form '#aa22ff'
     colour: str = betterproto.string_field(13)
+    # alternate names that can be used in voting
+    aliases: List[str] = betterproto.string_field(14)
 
 
 @dataclass
