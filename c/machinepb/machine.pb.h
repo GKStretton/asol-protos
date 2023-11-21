@@ -112,6 +112,12 @@ typedef enum _machine_SocialPlatform {
     machine_SocialPlatform_SOCIAL_PLATFORM_REDDIT = 6 
 } machine_SocialPlatform;
 
+typedef enum _machine_VialProfile_VialFluid { 
+    machine_VialProfile_VialFluid_VIAL_FLUID_UNDEFINED = 0, 
+    machine_VialProfile_VialFluid_VIAL_FLUID_DYE_WATER_BASED = 1, 
+    machine_VialProfile_VialFluid_VIAL_FLUID_EMULSIFIER = 2 
+} machine_VialProfile_VialFluid;
+
 /* Struct definitions */
 /* emails used for administration, not intended for audience distribution */
 typedef struct _machine_ContentTypeStatus { 
@@ -276,6 +282,9 @@ typedef struct _machine_VialProfile {
     bool footage_ignore;
     float initial_volume_ul;
     float current_volume_ul;
+    pb_callback_t name;
+    machine_VialProfile_VialFluid vial_fluid;
+    pb_callback_t colour;
 } machine_VialProfile;
 
 typedef struct _machine_DispenseMetadataMap_DispenseMetadataEntry { 
@@ -359,6 +368,10 @@ typedef struct _machine_VialProfileCollection_ProfilesEntry {
 #define _machine_SocialPlatform_MAX machine_SocialPlatform_SOCIAL_PLATFORM_REDDIT
 #define _machine_SocialPlatform_ARRAYSIZE ((machine_SocialPlatform)(machine_SocialPlatform_SOCIAL_PLATFORM_REDDIT+1))
 
+#define _machine_VialProfile_VialFluid_MIN machine_VialProfile_VialFluid_VIAL_FLUID_UNDEFINED
+#define _machine_VialProfile_VialFluid_MAX machine_VialProfile_VialFluid_VIAL_FLUID_EMULSIFIER
+#define _machine_VialProfile_VialFluid_ARRAYSIZE ((machine_VialProfile_VialFluid)(machine_VialProfile_VialFluid_VIAL_FLUID_EMULSIFIER+1))
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -382,7 +395,7 @@ extern "C" {
 #define machine_ContentTypeStatus_init_default   {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_default                {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
 #define machine_Email_init_default               {{{NULL}, NULL}, {{NULL}, NULL}}
-#define machine_VialProfile_init_default         {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0}
+#define machine_VialProfile_init_default         {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0, {{NULL}, NULL}, _machine_VialProfile_VialFluid_MIN, {{NULL}, NULL}}
 #define machine_SystemVialConfiguration_init_default {{{NULL}, NULL}}
 #define machine_SystemVialConfiguration_VialsEntry_init_default {0, 0}
 #define machine_VialProfileCollection_init_default {{{NULL}, NULL}}
@@ -406,7 +419,7 @@ extern "C" {
 #define machine_ContentTypeStatus_init_zero      {{{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define machine_Post_init_zero                   {_machine_SocialPlatform_MIN, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}, 0, {{NULL}, NULL}, 0, 0}
 #define machine_Email_init_zero                  {{{NULL}, NULL}, {{NULL}, NULL}}
-#define machine_VialProfile_init_zero            {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0}
+#define machine_VialProfile_init_zero            {0, {{NULL}, NULL}, 0, 0, 0, 0, 0, 0, 0, 0, {{NULL}, NULL}, _machine_VialProfile_VialFluid_MIN, {{NULL}, NULL}}
 #define machine_SystemVialConfiguration_init_zero {{{NULL}, NULL}}
 #define machine_SystemVialConfiguration_VialsEntry_init_zero {0, 0}
 #define machine_VialProfileCollection_init_zero  {{{NULL}, NULL}}
@@ -479,6 +492,9 @@ extern "C" {
 #define machine_VialProfile_footage_ignore_tag   8
 #define machine_VialProfile_initial_volume_ul_tag 9
 #define machine_VialProfile_current_volume_ul_tag 10
+#define machine_VialProfile_name_tag             11
+#define machine_VialProfile_vial_fluid_tag       12
+#define machine_VialProfile_colour_tag           13
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_key_tag 1
 #define machine_DispenseMetadataMap_DispenseMetadataEntry_value_tag 2
 #define machine_StateReport_timestamp_unix_micros_tag 2
@@ -655,7 +671,10 @@ X(a, STATIC,   SINGULAR, UINT64,   footage_min_duration_ms,   6) \
 X(a, STATIC,   SINGULAR, FLOAT,    footage_speed_mult,   7) \
 X(a, STATIC,   SINGULAR, BOOL,     footage_ignore,    8) \
 X(a, STATIC,   SINGULAR, FLOAT,    initial_volume_ul,   9) \
-X(a, STATIC,   SINGULAR, FLOAT,    current_volume_ul,  10)
+X(a, STATIC,   SINGULAR, FLOAT,    current_volume_ul,  10) \
+X(a, CALLBACK, SINGULAR, STRING,   name,             11) \
+X(a, STATIC,   SINGULAR, UENUM,    vial_fluid,       12) \
+X(a, CALLBACK, SINGULAR, STRING,   colour,           13)
 #define machine_VialProfile_CALLBACK pb_default_field_callback
 #define machine_VialProfile_DEFAULT NULL
 
